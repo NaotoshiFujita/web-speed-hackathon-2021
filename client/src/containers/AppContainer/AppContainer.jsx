@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Helmet } from 'react-helmet';
 import { Route, Routes, useLocation } from 'react-router-dom';
-
 import { AppPage } from '../../components/application/AppPage';
 import { useFetch } from '../../hooks/use_fetch';
 import { fetchJSON } from '../../utils/fetchers';
-import { AuthModalContainer } from '../AuthModalContainer';
-import { NewPostModalContainer } from '../NewPostModalContainer';
-import { NotFoundContainer } from '../NotFoundContainer';
-import { PostContainer } from '../PostContainer';
-import { TermContainer } from '../TermContainer';
-import { TimelineContainer } from '../TimelineContainer';
-import { UserProfileContainer } from '../UserProfileContainer';
+
+
+
+const AuthModalContainer    = lazy( () => import( '../AuthModalContainer' ) );
+const NewPostModalContainer = lazy( () => import( '../NewPostModalContainer' ) );
+const NotFoundContainer     = lazy( () => import( '../NotFoundContainer' ) );
+const PostContainer         = lazy( () => import( '../PostContainer' ) );
+const TermContainer         = lazy( () => import( '../TermContainer' ) );
+const TimelineContainer     = lazy( () => import( '../TimelineContainer' ) );
+const UserProfileContainer  = lazy( () => import( '../UserProfileContainer' ) );
 
 /** @type {React.VFC} */
 const AppContainer = () => {
@@ -47,18 +49,25 @@ const AppContainer = () => {
         onRequestOpenPostModal={handleRequestOpenPostModal}
       >
         <Routes>
-          <Route element={<TimelineContainer />} path="/" />
-          <Route element={<UserProfileContainer />} path="/users/:username" />
-          <Route element={<PostContainer />} path="/posts/:postId" />
-          <Route element={<TermContainer />} path="/terms" />
-          <Route element={<NotFoundContainer />} path="*" />
+          <Route element={ <Suspense fallback={ null }><TimelineContainer /></Suspense> } path="/" />
+          <Route element={ <Suspense fallback={ null }><UserProfileContainer /></Suspense> } path="/users/:username"  />
+          <Route element={ <Suspense fallback={ null }><PostContainer /></Suspense> } path="/posts/:postId" />
+          <Route element={ <Suspense fallback={ null }><TermContainer /></Suspense> } path="/terms" />
+          <Route element={ <Suspense fallback={ null }><NotFoundContainer /></Suspense> } path="*" />
         </Routes>
       </AppPage>
 
-      {modalType === 'auth' ? (
-        <AuthModalContainer onRequestCloseModal={handleRequestCloseModal} onUpdateActiveUser={setActiveUser} />
-      ) : null}
-      {modalType === 'post' ? <NewPostModalContainer onRequestCloseModal={handleRequestCloseModal} /> : null}
+      { modalType === 'auth' ? (
+        <Suspense fallback={ null }>
+          <AuthModalContainer onRequestCloseModal={ handleRequestCloseModal } onUpdateActiveUser={ setActiveUser }/>
+        </Suspense>
+      ) : null }
+
+      { modalType === 'post' ? (
+        <Suspense fallback={ null }>
+          <NewPostModalContainer onRequestCloseModal={ handleRequestCloseModal }/>
+        </Suspense>
+      ) : null }
     </>
   );
 };
