@@ -3,8 +3,8 @@ const glob = require( 'glob' );
 const fs   = require( 'fs' );
 
 const ffmpeg = createFFmpeg( { log: true } );
-const BITRATE = '500k';
-const WIDTH   = '640';
+const BITRATE = '300k';
+const WIDTH   = '600';
 
 
 async function convert() {
@@ -21,8 +21,6 @@ async function convert() {
         'gif',
         '-i',
         'source',
-        '-c:v',
-        'libvpx',
         '-quality',
         'good',
         '-b:v',

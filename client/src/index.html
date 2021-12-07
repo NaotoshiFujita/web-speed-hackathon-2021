@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CAwitter</title>
 
-    <link rel="preload" href="/styles/webfont.css" as="style" onload="this.rel='stylesheet'">
+    <link rel="preload" href="/styles/webfont.css" as="style" onload="requestIdleCallback( () =>{this.rel='stylesheet';this.onload=null})">
 
     <script src="/scripts/main.js" defer></script>
   </head>
