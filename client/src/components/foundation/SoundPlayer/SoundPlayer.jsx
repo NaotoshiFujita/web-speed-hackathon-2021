@@ -22,6 +22,8 @@ const SoundPlayer = ({ sound }) => {
     return data !== null ? URL.createObjectURL(new Blob([data])) : null;
   }, [data]);
 
+  const canPlay = ! isLoading && data && blobUrl;
+
   const [currentTimeRatio, setCurrentTimeRatio] = React.useState(0);
   /** @type {React.ReactEventHandler<HTMLAudioElement>} */
   const handleTimeUpdate = React.useCallback((ev) => {
@@ -33,24 +35,26 @@ const SoundPlayer = ({ sound }) => {
   const audioRef = React.useRef(null);
   const [isPlaying, setIsPlaying] = React.useState(false);
   const handleTogglePlaying = React.useCallback(() => {
-    setIsPlaying((isPlaying) => {
-      if (isPlaying) {
-        audioRef.current?.pause();
-      } else {
-        audioRef.current?.play();
-      }
-      return !isPlaying;
-    });
-  }, []);
+    if ( canPlay ) {
+      setIsPlaying( ( isPlaying ) => {
+        if ( isPlaying ) {
+          audioRef.current?.pause();
+        } else {
+          audioRef.current?.play();
+        }
+        return ! isPlaying;
+      } );
+    }
 
-  if (isLoading || data === null || blobUrl === null) {
-    return null;
-  }
+  }, []);
 
   return (
     <div className="flex items-center justify-center w-full h-full bg-gray-300">
-      <audio ref={audioRef} loop={true} onTimeUpdate={handleTimeUpdate} src={blobUrl} />
-      <div className="p-2">
+      { canPlay &&
+      <audio ref={ audioRef } loop={ true } onTimeUpdate={ handleTimeUpdate } src={ blobUrl }/>
+      }
+
+      <div className="p-2" style={ { visibility: canPlay ? 'visible' : 'hidden' } }>
         <button
           className="flex items-center justify-center w-8 h-8 text-white text-sm bg-blue-600 rounded-full hover:opacity-75"
           onClick={handleTogglePlaying}
@@ -59,20 +63,23 @@ const SoundPlayer = ({ sound }) => {
           <FontAwesomeIcon iconType={isPlaying ? 'pause' : 'play'} styleType="solid" />
         </button>
       </div>
+
       <div className="flex flex-col flex-grow flex-shrink pt-2 min-w-0 h-full">
-        <p className="whitespace-nowrap text-sm font-bold overflow-hidden overflow-ellipsis">{sound.title}</p>
-        <p className="text-gray-500 whitespace-nowrap text-sm overflow-hidden overflow-ellipsis">{sound.artist}</p>
+        <p className="whitespace-nowrap text-sm font-bold overflow-hidden overflow-ellipsis">{ sound.title }</p>
+        <p className="text-gray-500 whitespace-nowrap text-sm overflow-hidden overflow-ellipsis">{ sound.artist }</p>
         <div className="pt-2">
-          <AspectRatioBox aspectHeight={1} aspectWidth={10}>
+          <AspectRatioBox aspectHeight={ 1 } aspectWidth={ 10 }>
+            { canPlay &&
             <div className="relative w-full h-full">
               <div className="absolute inset-0 w-full h-full">
-                <SoundWaveSVG soundData={data} />
+                <SoundWaveSVG soundData={ data }/>
               </div>
               <div
                 className="absolute inset-0 w-full h-full bg-gray-300 opacity-75"
-                style={{ left: `${currentTimeRatio * 100}%` }}
+                style={ { left: `${ currentTimeRatio * 100 }%` } }
               ></div>
             </div>
+            }
           </AspectRatioBox>
         </div>
       </div>
