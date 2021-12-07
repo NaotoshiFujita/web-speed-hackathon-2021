@@ -9,7 +9,8 @@ import { convertImage } from '../../converters/convert_image';
 import { UPLOAD_PATH } from '../../paths';
 
 // 変換した画像の拡張子
-const EXTENSION = 'jpg';
+const EXTENSION = 'avif';
+const WIDTH     = 500;
 
 const router = Router();
 
@@ -27,7 +28,7 @@ router.post('/images', async (req, res) => {
     // 画像の拡張子を指定する
     extension: EXTENSION,
     // 画像の縦サイズを指定する (undefined は元画像に合わせる)
-    height: undefined,
+    height: WIDTH,
     // 画像の横サイズを指定する (undefined は元画像に合わせる)
     width: undefined,
   });
