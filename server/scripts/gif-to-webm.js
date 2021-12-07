@@ -3,31 +3,42 @@ const glob = require( 'glob' );
 const fs   = require( 'fs' );
 
 const ffmpeg = createFFmpeg( { log: true } );
-const BITRATE = '1000k';
+const BITRATE = '500k';
 const WIDTH   = '640';
+
 
 async function convert() {
   await ffmpeg.load();
 
   glob( '../public/movies/**/*.gif', {}, async function ( err, files ) {
     for ( const file of files ) {
-      const out  = file.replace( '.gif', '.mp4' );
+      const out  = file.replace( '.gif', '.webm' );
 
       ffmpeg.FS( 'writeFile', 'source', await fetchFile( file ) );
+
       await ffmpeg.run(
         '-f',
         'gif',
         '-i',
         'source',
         '-c:v',
-        'libx264',
+        'libvpx',
+        '-quality',
+        'good',
         '-b:v',
         BITRATE,
+        '-crf',
+        '12',
+        '-pix_fmt',
+        'yuv420p',
+        '-movflags',
+        'faststart',
         '-vf',
         `scale=${ WIDTH }:-1`,
-        'output.mp4'
+        'output.webm'
       );
-      await fs.promises.writeFile( out, ffmpeg.FS( 'readFile', 'output.mp4' ) );
+
+      await fs.promises.writeFile( out, ffmpeg.FS( 'readFile', 'output.webm' ) );
     }
   } );
 }
