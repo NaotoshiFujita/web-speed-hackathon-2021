@@ -22,6 +22,8 @@ export function useFetch( apiPath, fetcher ) {
   } );
 
   React.useEffect( () => {
+    let unmounted;
+
     setResult( () => ( {
       data     : null,
       error    : null,
@@ -30,19 +32,23 @@ export function useFetch( apiPath, fetcher ) {
 
     fetcher( apiPath )
       .then( ( data ) => {
-        setResult( cur => ( {
+        ! unmounted && setResult( cur => ( {
           ...cur,
           data,
           isLoading: false,
         } ) );
       } )
       .catch( ( error ) => {
-        setResult( ( cur ) => ( {
+        ! unmounted && setResult( ( cur ) => ( {
           ...cur,
           error,
           isLoading: false,
         } ) );
       } );
+
+    return () => {
+      unmounted = true;
+    }
   }, [ apiPath, fetcher ] );
 
   return result;

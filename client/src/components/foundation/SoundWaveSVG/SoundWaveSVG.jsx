@@ -66,11 +66,19 @@ const SoundWaveSVG = ({ soundData }) => {
   const uniqueIdRef = React.useRef(Math.random().toString(16));
   const [{ max, peaks }, setPeaks] = React.useState({ max: 0, peaks: [] });
 
-  React.useEffect(() => {
-    calculate(soundData).then(({ max, peaks }) => {
-      setPeaks({ max, peaks });
-    });
-  }, [soundData]);
+  React.useEffect( () => {
+    let unmounted;
+
+    calculate( soundData ).then( ( { max, peaks } ) => {
+      if ( ! unmounted ) {
+        setPeaks( { max, peaks } );
+      }
+    } );
+
+    return () => {
+      unmounted = true;
+    };
+  }, [ soundData ] );
 
   return (
     <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 1">
