@@ -35,17 +35,14 @@ const SoundPlayer = ({ sound }) => {
   const audioRef = React.useRef(null);
   const [isPlaying, setIsPlaying] = React.useState(false);
   const handleTogglePlaying = React.useCallback(() => {
-    if ( canPlay ) {
-      setIsPlaying( ( isPlaying ) => {
-        if ( isPlaying ) {
-          audioRef.current?.pause();
-        } else {
-          audioRef.current?.play();
-        }
-        return ! isPlaying;
-      } );
-    }
-
+    setIsPlaying( ( isPlaying ) => {
+      if ( isPlaying ) {
+        audioRef.current?.pause();
+      } else {
+        audioRef.current?.play();
+      }
+      return ! isPlaying;
+    } );
   }, []);
 
   return (
@@ -57,7 +54,7 @@ const SoundPlayer = ({ sound }) => {
       <div className="p-2" style={ { visibility: canPlay ? 'visible' : 'hidden' } }>
         <button
           className="flex items-center justify-center w-8 h-8 text-white text-sm bg-blue-600 rounded-full hover:opacity-75"
-          onClick={handleTogglePlaying}
+          onClick={ canPlay && handleTogglePlaying || undefined }
           type="button"
         >
           <FontAwesomeIcon iconType={isPlaying ? 'pause' : 'play'} styleType="solid" />
