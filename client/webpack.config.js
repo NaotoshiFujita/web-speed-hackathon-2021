@@ -19,7 +19,7 @@ const config = {
     historyApiFallback: true,
     host: '0.0.0.0',
     port: 8080,
-    http2: true,
+    // http2: true,
     proxy: {
       '/api': 'http://localhost:3000',
     },

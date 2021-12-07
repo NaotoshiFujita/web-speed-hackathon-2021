@@ -8,9 +8,10 @@ import React from 'react';
 
 /** @type {React.VFC<Props>} */
 const FontAwesomeIcon = ({ iconType, styleType }) => {
+  // ignores the styleType since using the subset icons.
   return (
     <svg className="font-awesome inline-block leading-none fill-current">
-      <use xlinkHref={`/sprites/font-awesome/${styleType}.svg#${iconType}`} />
+      <use xlinkHref={`/sprites/font-awesome/icons.svg#${ iconType }`} />
     </svg>
   );
 };
