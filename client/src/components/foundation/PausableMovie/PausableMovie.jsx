@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { GifReader } from 'omggif';
 import React from 'react';
 
 import { useFetch } from '../../../hooks/use_fetch';

@@ -5,14 +5,9 @@ import { gzip } from 'pako';
  * @returns {Promise<ArrayBuffer>}
  */
 async function fetchBinary(url) {
-  const result = await $.ajax({
-    async: false,
-    dataType: 'binary',
-    method: 'GET',
-    responseType: 'arraybuffer',
-    url,
-  });
-  return result;
+  const response    = await fetch( url );
+  const arrayBuffer = await response.arrayBuffer();
+  return arrayBuffer;
 }
 
 /**
@@ -20,13 +15,11 @@ async function fetchBinary(url) {
  * @param {string} url
  * @returns {Promise<T>}
  */
-async function fetchJSON(url) {
-  const result = await $.ajax({
-    async: false,
-    dataType: 'json',
-    method: 'GET',
-    url,
-  });
+async function fetchJSON( url ) {
+  const response = await fetch( url );
+  const result   = await response.json();
+
+  // todo: limit the number (900)
   return result;
 }
 
@@ -37,18 +30,17 @@ async function fetchJSON(url) {
  * @returns {Promise<T>}
  */
 async function sendFile(url, file) {
-  const result = await $.ajax({
-    async: false,
-    data: file,
-    dataType: 'json',
+  const response = await fetch( url, {
+    method: 'POST',
+    cache: 'no-cache',
     headers: {
       'Content-Type': 'application/octet-stream',
     },
-    method: 'POST',
-    processData: false,
-    url,
-  });
-  return result;
+    body: file,
+  } );
+
+  // todo convert?
+  return response.json();
 }
 
 /**
@@ -58,23 +50,22 @@ async function sendFile(url, file) {
  * @returns {Promise<T>}
  */
 async function sendJSON(url, data) {
-  const jsonString = JSON.stringify(data);
-  const uint8Array = new TextEncoder().encode(jsonString);
-  const compressed = gzip(uint8Array);
+  // todo
+  const jsonString = JSON.stringify( data );
+  const uint8Array = new TextEncoder().encode( jsonString );
+  const compressed = gzip( uint8Array );
 
-  const result = await $.ajax({
-    async: false,
-    data: compressed,
-    dataType: 'json',
+  const response = await fetch( url, {
+    method: 'POST',
+    cache: 'no-cache',
     headers: {
       'Content-Encoding': 'gzip',
-      'Content-Type': 'application/json',
+      'Content-Type'    : 'application/json',
     },
-    method: 'POST',
-    processData: false,
-    url,
-  });
-  return result;
+    body: compressed,
+  } );
+
+  return response.json();
 }
 
 export { fetchBinary, fetchJSON, sendFile, sendJSON };
