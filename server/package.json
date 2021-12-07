@@ -65,5 +65,9 @@
       "mkdirp",
       "npm-run-all"
     ]
-  }
+  },
+  "browserslist": [
+    "> 5%",
+    "not dead"
+  ]
 }
