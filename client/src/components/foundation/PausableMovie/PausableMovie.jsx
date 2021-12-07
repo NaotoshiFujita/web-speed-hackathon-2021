@@ -16,14 +16,13 @@ import { FontAwesomeIcon } from '../FontAwesomeIcon';
  * @type {React.VFC<Props>}
  */
 const PausableMovie = ({ src }) => {
-  const { data, isLoading } = useFetch( src, fetchBinary );
   const [ isPlaying, setIsPlaying ] = React.useState( true );
 
   const videoRef = React.useRef( null );
   const videoCallbackRef = React.useCallback(
     el => {
       if ( el ) {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        if ( window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches ) {
           setIsPlaying( false );
           el.pause();
         } else {
@@ -33,18 +32,13 @@ const PausableMovie = ({ src }) => {
 
         videoRef.current = el;
       }
-    },
-    [ data ],
+    }
   );
 
   const handleClick = () => {
     isPlaying ? videoRef.current?.pause() : videoRef.current?.play();
     setIsPlaying( ! isPlaying );
   };
-
-  if ( isLoading || data === null ) {
-    return <AspectRatioBox aspectHeight={1} aspectWidth={1} />;
-  }
 
   return (
     <AspectRatioBox aspectHeight={1} aspectWidth={1}>

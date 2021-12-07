@@ -13,13 +13,16 @@ import { SoundWaveSVG } from '../SoundWaveSVG';
  */
 
 /**
+ * @todo SoundWaveSVG
+ *
  * @type {React.VFC<Props>}
  */
 const SoundPlayer = ({ sound }) => {
   const path = getSoundPath( sound.id );
-  const { data, isLoading } = useFetch( path, fetchBinary );
+  // const { data, isLoading } = useFetch( path, fetchBinary );
 
-  const canPlay = ! isLoading && data;
+  // const canPlay = ! isLoading && data;
+  const canPlay = true;
 
   const [currentTimeRatio, setCurrentTimeRatio] = React.useState(0);
   /** @type {React.ReactEventHandler<HTMLAudioElement>} */
@@ -66,7 +69,7 @@ const SoundPlayer = ({ sound }) => {
             { canPlay &&
             <div className="relative w-full h-full">
               <div className="absolute inset-0 w-full h-full">
-                <SoundWaveSVG soundData={ data }/>
+                {/*<SoundWaveSVG soundData={ data }/>*/}
               </div>
               <div
                 className="absolute inset-0 w-full h-full bg-gray-300 opacity-75"
