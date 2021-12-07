@@ -19,10 +19,11 @@ const config = {
     historyApiFallback: true,
     host: '0.0.0.0',
     port: 8080,
+    http2: true,
     proxy: {
       '/api': 'http://localhost:3000',
     },
-    static: [PUBLIC_PATH, UPLOAD_PATH],
+    static: [ PUBLIC_PATH, UPLOAD_PATH ],
   },
   devtool: ! __prod__ && 'inline-source-map',
   entry: {
