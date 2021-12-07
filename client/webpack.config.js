@@ -1,9 +1,10 @@
 const path = require('path');
 
-const HtmlWebpackPlugin    = require( 'html-webpack-plugin' );
-const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
-const CssMinimizerPlugin   = require( 'css-minimizer-webpack-plugin' );
-const webpack              = require( 'webpack' );
+const HtmlWebpackPlugin          = require( 'html-webpack-plugin' );
+const MiniCssExtractPlugin       = require( 'mini-css-extract-plugin' );
+const CssMinimizerPlugin         = require( 'css-minimizer-webpack-plugin' );
+const HTMLInlineCSSWebpackPlugin = require( 'html-inline-css-webpack-plugin' ).default;
+const webpack                    = require( 'webpack' );
 
 const SRC_PATH    = path.resolve( __dirname, './src' );
 const PUBLIC_PATH = path.resolve( __dirname, '../public' );
@@ -18,8 +19,7 @@ const config = {
   devServer: {
     historyApiFallback: true,
     host: '0.0.0.0',
-    port: 8080,
-    // http2: true,
+    port: __prod__ ? 8001 : 8080,
     proxy: {
       '/api': 'http://localhost:3000',
     },
@@ -42,8 +42,8 @@ const config = {
     rules: [
       {
         exclude: /node_modules/,
-        test: /\.jsx?$/,
-        use: [{ loader: 'babel-loader' }],
+        test   : /\.jsx?$/,
+        use    : [ { loader: 'babel-loader' } ],
       },
       {
         test: /\.css$/i,
@@ -61,7 +61,6 @@ const config = {
   },
   plugins: [
     new webpack.ProvidePlugin( {
-      // AudioContext: ['standardized-audio-context', 'AudioContext'],
       Buffer: [ 'buffer', 'Buffer' ],
     } ),
     new webpack.EnvironmentPlugin( {
@@ -70,13 +69,18 @@ const config = {
       COMMIT_HASH: process.env.SOURCE_VERSION || '',
       NODE_ENV   : __prod__ ? 'production' : 'development',
     } ),
-    new MiniCssExtractPlugin({
+    new MiniCssExtractPlugin( {
       filename: 'styles/[name].css',
-    }),
-    new HtmlWebpackPlugin({
-      inject: false,
-      template: path.resolve(SRC_PATH, './index.html'),
-    }),
+    } ),
+    new HtmlWebpackPlugin( {
+      inject  : false,
+      template: path.resolve( SRC_PATH, './index.html' ),
+    } ),
+    new HTMLInlineCSSWebpackPlugin( {
+      filter(fileName) {
+        return fileName.includes( 'main' ) || fileName.includes( 'index.html' );
+      },
+    } ),
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -86,7 +90,7 @@ const config = {
     },
   },
   optimization: {
-    minimize : __prod__,
+    minimize : true,
     minimizer: [
       '...',
       new CssMinimizerPlugin(),
