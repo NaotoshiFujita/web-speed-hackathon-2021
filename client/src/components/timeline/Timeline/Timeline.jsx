@@ -8,12 +8,12 @@ import { TimelineItem } from '../TimelineItem';
  */
 
 /** @type {React.VFC<Props>} */
-const Timeline = ({ timeline }) => {
+const Timeline = ( { timeline } ) => {
   return (
     <section>
-      {timeline.map((post) => {
-        return <TimelineItem key={post.id} post={post} />;
-      })}
+      { timeline.map( ( post, index ) => {
+        return <TimelineItem key={ post.id } post={ post } index={ index }/>;
+      } ) }
     </section>
   );
 };

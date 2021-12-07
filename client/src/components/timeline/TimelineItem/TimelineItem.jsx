@@ -7,6 +7,9 @@ import { MovieArea } from '../../post/MovieArea';
 import { SoundArea } from '../../post/SoundArea';
 import { Time } from '../../foundation/Time';
 
+
+const LAZYLOAD_MIN_INDEX = 9;
+
 /**
  * @param {Element} target
  * @param {Element} currentTarget
@@ -29,11 +32,13 @@ const isClickedAnchorOrButton = (target, currentTarget) => {
 /**
  * @typedef {object} Props
  * @property {Models.Post} post
+ * @property {number} index
  */
 
 /** @type {React.VFC<Props>} */
-const TimelineItem = ({ post }) => {
+const TimelineItem = ({ post, index }) => {
   const navigate = useNavigate();
+  const lazy     = index >= LAZYLOAD_MIN_INDEX;
 
   /**
    * ボタンやリンク以外の箇所をクリックしたとき かつ 文字が選択されてないとき、投稿詳細ページに遷移する
@@ -57,7 +62,11 @@ const TimelineItem = ({ post }) => {
             className="block w-12 h-12 bg-gray-300 border border-gray-300 rounded-full hover:opacity-75 overflow-hidden sm:w-16 sm:h-16"
             to={`/users/${post.user.username}`}
           >
-            <img alt={post.user.profileImage.alt} src={getProfileImagePath(post.user.profileImage.id)} />
+            <img
+              alt={post.user.profileImage.alt}
+              src={getProfileImagePath(post.user.profileImage.id)}
+              loading={ lazy ? 'lazy' : '' }
+            />
           </Link>
         </div>
         <div className="flex-grow flex-shrink min-w-0">
@@ -76,7 +85,7 @@ const TimelineItem = ({ post }) => {
           <p className="text-gray-800 leading-relaxed">{post.text}</p>
           {post.images?.length > 0 ? (
             <div className="relative mt-2 w-full">
-              <ImageArea images={post.images} />
+              <ImageArea images={post.images} lazy={ lazy } />
             </div>
           ) : null}
           {post.movie ? (
