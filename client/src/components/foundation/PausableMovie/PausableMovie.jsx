@@ -43,7 +43,7 @@ const PausableMovie = ({ src }) => {
   };
 
   if ( isLoading || data === null ) {
-    return null;
+    return <AspectRatioBox aspectHeight={1} aspectWidth={1} />;
   }
 
   return (
