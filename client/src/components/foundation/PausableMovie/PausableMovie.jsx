@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { Animator, Decoder } from 'gifler';
 import { GifReader } from 'omggif';
 import React from 'react';
 
