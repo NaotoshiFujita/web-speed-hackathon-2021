@@ -10,7 +10,7 @@ import { UPLOAD_PATH } from '../../paths';
 import { extractMetadataFromSound } from '../../utils/extract_metadata_from_sound';
 
 // 変換した音声の拡張子
-const EXTENSION = 'mp3';
+const EXTENSION = 'aac';
 
 const router = Router();
 

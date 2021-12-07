@@ -16,13 +16,10 @@ import { SoundWaveSVG } from '../SoundWaveSVG';
  * @type {React.VFC<Props>}
  */
 const SoundPlayer = ({ sound }) => {
-  const { data, isLoading } = useFetch(getSoundPath(sound.id), fetchBinary);
+  const path = getSoundPath( sound.id );
+  const { data, isLoading } = useFetch( path, fetchBinary );
 
-  const blobUrl = React.useMemo(() => {
-    return data !== null ? URL.createObjectURL(new Blob([data])) : null;
-  }, [data]);
-
-  const canPlay = ! isLoading && data && blobUrl;
+  const canPlay = ! isLoading && data;
 
   const [currentTimeRatio, setCurrentTimeRatio] = React.useState(0);
   /** @type {React.ReactEventHandler<HTMLAudioElement>} */
@@ -48,7 +45,7 @@ const SoundPlayer = ({ sound }) => {
   return (
     <div className="flex items-center justify-center w-full h-full bg-gray-300">
       { canPlay &&
-      <audio ref={ audioRef } loop={ true } onTimeUpdate={ handleTimeUpdate } src={ blobUrl }/>
+      <audio ref={ audioRef } loop={ true } onTimeUpdate={ handleTimeUpdate } src={ path }/>
       }
 
       <div className="p-2" style={ { visibility: canPlay ? 'visible' : 'hidden' } }>
