@@ -1,13 +1,17 @@
 const path = require('path');
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const webpack = require('webpack');
+const HtmlWebpackPlugin    = require( 'html-webpack-plugin' );
+const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
+const CssMinimizerPlugin   = require( 'css-minimizer-webpack-plugin' );
+const webpack              = require( 'webpack' );
 
-const SRC_PATH = path.resolve(__dirname, './src');
-const PUBLIC_PATH = path.resolve(__dirname, '../public');
-const UPLOAD_PATH = path.resolve(__dirname, '../upload');
-const DIST_PATH = path.resolve(__dirname, '../dist');
+const SRC_PATH    = path.resolve( __dirname, './src' );
+const PUBLIC_PATH = path.resolve( __dirname, '../public' );
+const UPLOAD_PATH = path.resolve( __dirname, '../upload' );
+const DIST_PATH   = path.resolve( __dirname, '../dist' );
+const __prod__    = process.env.NODE_ENV === 'production';
+
+
 
 /** @type {import('webpack').Configuration} */
 const config = {
@@ -20,15 +24,17 @@ const config = {
     },
     static: [PUBLIC_PATH, UPLOAD_PATH],
   },
-  devtool: 'inline-source-map',
+  devtool: ! __prod__ && 'inline-source-map',
   entry: {
     main: [
-      'core-js',
       'regenerator-runtime/runtime',
       'jquery-binarytransport',
-      path.resolve(SRC_PATH, './index.css'),
-      path.resolve(SRC_PATH, './buildinfo.js'),
-      path.resolve(SRC_PATH, './index.jsx'),
+      path.resolve( SRC_PATH, './index.css' ),
+      path.resolve( SRC_PATH, './buildinfo.js' ),
+      path.resolve( SRC_PATH, './index.jsx' ),
+    ],
+    webfont: [
+      path.resolve( SRC_PATH, './styles/webfont.css' ),
     ],
   },
   mode: 'none',
@@ -60,12 +66,12 @@ const config = {
       Buffer: ['buffer', 'Buffer'],
       'window.jQuery': 'jquery',
     }),
-    new webpack.EnvironmentPlugin({
+    new webpack.EnvironmentPlugin( {
       BUILD_DATE: new Date().toISOString(),
       // Heroku では SOURCE_VERSION 環境変数から commit hash を参照できます
       COMMIT_HASH: process.env.SOURCE_VERSION || '',
-      NODE_ENV: 'development',
-    }),
+      NODE_ENV   : __prod__ ? 'production' : 'development',
+    } ),
     new MiniCssExtractPlugin({
       filename: 'styles/[name].css',
     }),
@@ -80,6 +86,13 @@ const config = {
       fs: false,
       path: false,
     },
+  },
+  optimization: {
+    minimize : __prod__,
+    minimizer: [
+      '...',
+      new CssMinimizerPlugin(),
+    ],
   },
 };
 
