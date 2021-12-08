@@ -1,5 +1,3 @@
-// import { gzip } from 'pako';
-
 /**
  * @param {string} url
  * @returns {Promise<ArrayBuffer>}

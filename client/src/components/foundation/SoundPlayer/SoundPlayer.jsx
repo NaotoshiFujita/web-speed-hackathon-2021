@@ -1,11 +1,8 @@
 import React from 'react';
 
-import { useFetch } from '../../../hooks/use_fetch';
-import { fetchBinary } from '../../../utils/fetchers';
-import { getSoundPath } from '../../../utils/get_path';
+import { getSoundPath, getSoundWavePath } from '../../../utils/get_path';
 import { AspectRatioBox } from '../AspectRatioBox';
 import { FontAwesomeIcon } from '../FontAwesomeIcon';
-import { SoundWaveSVG } from '../SoundWaveSVG';
 
 /**
  * @typedef {object} Props
@@ -19,10 +16,6 @@ import { SoundWaveSVG } from '../SoundWaveSVG';
  */
 const SoundPlayer = ({ sound }) => {
   const path = getSoundPath( sound.id );
-  // const { data, isLoading } = useFetch( path, fetchBinary );
-
-  // const canPlay = ! isLoading && data;
-  const canPlay = true;
 
   const [currentTimeRatio, setCurrentTimeRatio] = React.useState(0);
   /** @type {React.ReactEventHandler<HTMLAudioElement>} */
@@ -47,14 +40,12 @@ const SoundPlayer = ({ sound }) => {
 
   return (
     <div className="flex items-center justify-center w-full h-full bg-gray-300">
-      { canPlay &&
       <audio ref={ audioRef } loop={ true } onTimeUpdate={ handleTimeUpdate } src={ path }/>
-      }
 
-      <div className="p-2" style={ { visibility: canPlay ? 'visible' : 'hidden' } }>
+      <div className="p-2">
         <button
           className="flex items-center justify-center w-8 h-8 text-white text-sm bg-blue-600 rounded-full hover:opacity-75"
-          onClick={ canPlay && handleTogglePlaying || undefined }
+          onClick={ handleTogglePlaying }
           type="button"
         >
           <FontAwesomeIcon iconType={isPlaying ? 'pause' : 'play'} styleType="solid" />
@@ -66,17 +57,15 @@ const SoundPlayer = ({ sound }) => {
         <p className="text-gray-500 whitespace-nowrap text-sm overflow-hidden overflow-ellipsis">{ sound.artist }</p>
         <div className="pt-2">
           <AspectRatioBox aspectHeight={ 1 } aspectWidth={ 10 }>
-            { canPlay &&
             <div className="relative w-full h-full">
               <div className="absolute inset-0 w-full h-full">
-                {/*<SoundWaveSVG soundData={ data }/>*/}
+                <img className="w-full h-full" src={ getSoundWavePath( sound.id ) }/>
               </div>
               <div
                 className="absolute inset-0 w-full h-full bg-gray-300 opacity-75"
                 style={ { left: `${ currentTimeRatio * 100 }%` } }
-              ></div>
+              />
             </div>
-            }
           </AspectRatioBox>
         </div>
       </div>
