@@ -1,13 +1,12 @@
-import { gzip } from 'pako';
+// import { gzip } from 'pako';
 
 /**
  * @param {string} url
  * @returns {Promise<ArrayBuffer>}
  */
 async function fetchBinary(url) {
-  const response    = await fetch( url );
-  const arrayBuffer = await response.arrayBuffer();
-  return arrayBuffer;
+  const response = await fetch( url );
+  return response.ok ? response.arrayBuffer() : Promise.reject();
 }
 
 /**
@@ -17,10 +16,7 @@ async function fetchBinary(url) {
  */
 async function fetchJSON( url ) {
   const response = await fetch( url );
-  const result   = await response.json();
-
-  // todo: limit the number (900)
-  return result;
+  return response.ok ? response.json() : Promise.reject();
 }
 
 /**
@@ -39,8 +35,7 @@ async function sendFile(url, file) {
     body: file,
   } );
 
-  // todo convert?
-  return response.json();
+  return response.ok ? response.json() : Promise.reject();
 }
 
 /**
@@ -50,7 +45,7 @@ async function sendFile(url, file) {
  * @returns {Promise<T>}
  */
 async function sendJSON(url, data) {
-  // todo
+  const { gzip } = await import( 'pako' );
   const jsonString = JSON.stringify( data );
   const uint8Array = new TextEncoder().encode( jsonString );
   const compressed = gzip( uint8Array );
@@ -65,7 +60,7 @@ async function sendJSON(url, data) {
     body: compressed,
   } );
 
-  return response.json();
+  return response.ok ? response.json() : Promise.reject();
 }
 
 export { fetchBinary, fetchJSON, sendFile, sendJSON };
