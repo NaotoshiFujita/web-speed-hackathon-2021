@@ -1,11 +1,9 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useCallback, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { AppPage } from '../../components/application/AppPage';
 import { useFetch } from '../../hooks/use_fetch';
 import { fetchJSON } from '../../utils/fetchers';
-
-
 
 const AuthModalContainer    = lazy( () => import( '../AuthModalContainer' ) );
 const NewPostModalContainer = lazy( () => import( '../NewPostModalContainer' ) );
@@ -18,22 +16,23 @@ const UserProfileContainer  = lazy( () => import( '../UserProfileContainer' ) );
 /** @type {React.VFC} */
 const AppContainer = () => {
   const { pathname } = useLocation();
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+  useEffect( () => {
+    window.scrollTo( 0, 0 );
+  }, [ pathname ] );
 
-  const [activeUser, setActiveUser] = React.useState(null);
-  const { data, isLoading } = useFetch('/api/v1/me', fetchJSON);
-  React.useEffect(() => {
-    setActiveUser(data);
-  }, [data]);
+  const [ activeUser, setActiveUser ] = useState( null );
+  const { data = null, isLoading } = useFetch( '/api/v1/me', fetchJSON );
 
-  const [modalType, setModalType] = React.useState('none');
-  const handleRequestOpenAuthModal = React.useCallback(() => setModalType('auth'), []);
-  const handleRequestOpenPostModal = React.useCallback(() => setModalType('post'), []);
-  const handleRequestCloseModal = React.useCallback(() => setModalType('none'), []);
+  useEffect( () => {
+    setActiveUser( data );
+  }, [ data ] );
 
-  if (isLoading) {
+  const [ modalType, setModalType ] = useState( 'none' );
+  const handleRequestOpenAuthModal = useCallback( () => setModalType( 'auth' ), [] );
+  const handleRequestOpenPostModal = useCallback( () => setModalType( 'post' ), [] );
+  const handleRequestCloseModal    = useCallback( () => setModalType( 'none' ), [] );
+
+  if ( isLoading ) {
     return (
       <Helmet>
         <title>読込中 - CAwitter</title>
@@ -44,7 +43,7 @@ const AppContainer = () => {
   return (
     <>
       <AppPage
-        activeUser={activeUser}
+        activeUser={ activeUser }
         onRequestOpenAuthModal={handleRequestOpenAuthModal}
         onRequestOpenPostModal={handleRequestOpenPostModal}
       >
