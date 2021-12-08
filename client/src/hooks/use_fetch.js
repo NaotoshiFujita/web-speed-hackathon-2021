@@ -1,5 +1,4 @@
 import React from 'react';
-import { useQuery } from 'react-query';
 
 /**
  * @template T
@@ -16,43 +15,41 @@ import { useQuery } from 'react-query';
  * @returns {ReturnValues<T>}
  */
 export function useFetch( apiPath, fetcher ) {
-  return useQuery( apiPath, () => fetcher( apiPath ) );
+  const [ result, setResult ] = React.useState( {
+    data     : null,
+    error    : null,
+    isLoading: true,
+  } );
 
-  // const [ result, setResult ] = React.useState( {
-  //   data     : null,
-  //   error    : null,
-  //   isLoading: true,
-  // } );
-  //
-  // React.useEffect( () => {
-  //   let unmounted;
-  //
-  //   setResult( () => ( {
-  //     data     : null,
-  //     error    : null,
-  //     isLoading: true,
-  //   } ) );
-  //
-  //   fetcher( apiPath )
-  //     .then( ( data ) => {
-  //       ! unmounted && setResult( cur => ( {
-  //         ...cur,
-  //         data,
-  //         isLoading: false,
-  //       } ) );
-  //     } )
-  //     .catch( ( error ) => {
-  //       ! unmounted && setResult( ( cur ) => ( {
-  //         ...cur,
-  //         error,
-  //         isLoading: false,
-  //       } ) );
-  //     } );
-  //
-  //   return () => {
-  //     unmounted = true;
-  //   }
-  // }, [ apiPath, fetcher ] );
-  //
-  // return result;
+  React.useEffect( () => {
+    let unmounted;
+
+    setResult( () => ( {
+      data     : null,
+      error    : null,
+      isLoading: true,
+    } ) );
+
+    fetcher( apiPath )
+      .then( ( data ) => {
+        ! unmounted && setResult( cur => ( {
+          ...cur,
+          data,
+          isLoading: false,
+        } ) );
+      } )
+      .catch( ( error ) => {
+        ! unmounted && setResult( ( cur ) => ( {
+          ...cur,
+          error,
+          isLoading: false,
+        } ) );
+      } );
+
+    return () => {
+      unmounted = true;
+    }
+  }, [ apiPath, fetcher ] );
+
+  return result;
 }

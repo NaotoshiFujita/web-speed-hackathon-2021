@@ -23,7 +23,7 @@ const InfiniteScroll = ( { children, fetchMore, items } ) => {
   return (
     <>
       { children }
-      <InView as="div" onChange={ onChange } className="w-full h-px"/>
+      <InView rootMargin="200px" as="div" onChange={ onChange } className="w-full h-px"/>
     </>
   );
 };
