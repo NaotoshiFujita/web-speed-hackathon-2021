@@ -9,6 +9,7 @@ import { Time } from '../../foundation/Time';
 
 
 const LAZYLOAD_MIN_INDEX = 9;
+const PROFILE_IMAGE_SIZE = 100;
 
 /**
  * @param {Element} target
@@ -66,6 +67,8 @@ const TimelineItem = ({ post, index }) => {
               alt={post.user.profileImage.alt}
               src={getProfileImagePath(post.user.profileImage.id)}
               loading={ lazy ? 'lazy' : '' }
+              width={ PROFILE_IMAGE_SIZE }
+              height={ PROFILE_IMAGE_SIZE }
             />
           </Link>
         </div>
