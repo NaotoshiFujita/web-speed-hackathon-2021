@@ -14,13 +14,11 @@ const queryClient = new QueryClient( {
   },
 } );
 
-document.addEventListener( 'DOMContentLoaded', () => {
-  ReactDOM.render(
-    <BrowserRouter>
-      <QueryClientProvider client={ queryClient }>
-        <AppContainer />
-      </QueryClientProvider>
-    </BrowserRouter>,
-    document.getElementById( 'app' ),
-  );
-} );
+ReactDOM.render(
+  <BrowserRouter>
+    <QueryClientProvider client={ queryClient }>
+      <AppContainer />
+    </QueryClientProvider>
+  </BrowserRouter>,
+  document.getElementById( 'app' ),
+);
