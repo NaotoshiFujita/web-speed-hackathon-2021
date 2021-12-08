@@ -1,4 +1,9 @@
 module.exports = {
   darkMode: false,
-  purge   : [ 'src/index.html', 'src/**/*.jsx' ],
+  purge   : {
+    content: [ 'src/index.html', 'src/**/*.jsx' ],
+    options: {
+      keyframes: true,
+    },
+  },
 };
