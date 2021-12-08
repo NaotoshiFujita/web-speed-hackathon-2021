@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { AspectRatioBox } from '../AspectRatioBox';
 import { FontAwesomeIcon } from '../FontAwesomeIcon';
@@ -17,7 +17,7 @@ const PausableMovie = ({ src }) => {
   const [ isPlaying, setIsPlaying ] = React.useState( true );
 
   const videoRef = React.useRef( null );
-  const videoCallbackRef = React.useCallback(
+  const videoCallbackRef = useCallback(
     el => {
       if ( el ) {
         if ( window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches ) {
@@ -25,18 +25,25 @@ const PausableMovie = ({ src }) => {
           el.pause();
         } else {
           setIsPlaying( true );
-          el.play();
+          el.play()
         }
 
         videoRef.current = el;
       }
-    }
+    },
+    []
   );
 
-  const handleClick = () => {
-    isPlaying ? videoRef.current?.pause() : videoRef.current?.play();
-    setIsPlaying( ! isPlaying );
-  };
+  const handleClick = useCallback( () => {
+    const { current } = videoRef;
+
+    if ( current ) {
+      setIsPlaying( isPlaying => {
+        isPlaying ? current.pause() : current.play();
+        return ! isPlaying;
+      } );
+    }
+  }, [] );
 
   return (
     <AspectRatioBox aspectHeight={1} aspectWidth={1}>
@@ -46,7 +53,6 @@ const PausableMovie = ({ src }) => {
           className="w-full h-full object-cover"
           src={ src }
           disablePictureInPicture
-          disableRemotePlayback
           loop
           muted
           playsInline

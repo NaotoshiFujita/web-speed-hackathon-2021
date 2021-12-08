@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 
 import { getSoundPath, getSoundWavePath } from '../../../utils/get_path';
 import { AspectRatioBox } from '../AspectRatioBox';
@@ -14,20 +14,29 @@ import { FontAwesomeIcon } from '../FontAwesomeIcon';
  *
  * @type {React.VFC<Props>}
  */
-const SoundPlayer = ({ sound }) => {
-  const path = getSoundPath( sound.id );
-
-  const [currentTimeRatio, setCurrentTimeRatio] = React.useState(0);
+const SoundPlayer = ( { sound } ) => {
+  const [currentTimeRatio, setCurrentTimeRatio] = useState(0);
   /** @type {React.ReactEventHandler<HTMLAudioElement>} */
-  const handleTimeUpdate = React.useCallback((ev) => {
+  const handleTimeUpdate = useCallback( ( ev ) => {
     const el = ev.currentTarget;
-    setCurrentTimeRatio(el.currentTime / el.duration);
-  }, []);
+    setCurrentTimeRatio( el.currentTime / el.duration );
+  }, [] );
 
   /** @type {React.RefObject<HTMLAudioElement>} */
-  const audioRef = React.useRef(null);
-  const [isPlaying, setIsPlaying] = React.useState(false);
-  const handleTogglePlaying = React.useCallback(() => {
+  const audioRef = useRef( null );
+  const [ initialized, setInitialized ] = useState( false );
+  const handleClick = useCallback( () => {
+    setInitialized( true );
+  }, [] );
+
+  useEffect( () => {
+    if ( initialized ) {
+      handleTogglePlaying();
+    }
+  }, [ initialized ] );
+
+  const [isPlaying, setIsPlaying] = useState(false);
+  const handleTogglePlaying = useCallback( () => {
     setIsPlaying( ( isPlaying ) => {
       if ( isPlaying ) {
         audioRef.current?.pause();
@@ -36,16 +45,23 @@ const SoundPlayer = ({ sound }) => {
       }
       return ! isPlaying;
     } );
-  }, []);
+  }, [] );
 
   return (
     <div className="flex items-center justify-center w-full h-full bg-gray-300">
-      <audio ref={ audioRef } loop={ true } onTimeUpdate={ handleTimeUpdate } src={ path }/>
+      { initialized &&
+      <audio
+        ref={ audioRef }
+        loop={ true }
+        onTimeUpdate={ handleTimeUpdate }
+        src={ getSoundPath( sound.id ) }
+      />
+      }
 
       <div className="p-2">
         <button
           className="flex items-center justify-center w-8 h-8 text-white text-sm bg-blue-600 rounded-full hover:opacity-75"
-          onClick={ handleTogglePlaying }
+          onClick={ initialized ? handleTogglePlaying : handleClick }
           type="button"
         >
           <FontAwesomeIcon iconType={isPlaying ? 'pause' : 'play'} styleType="solid" />

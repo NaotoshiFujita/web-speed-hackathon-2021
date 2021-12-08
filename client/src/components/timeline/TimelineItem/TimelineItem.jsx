@@ -8,7 +8,7 @@ import { SoundArea } from '../../post/SoundArea';
 import { Time } from '../../foundation/Time';
 
 
-const LAZYLOAD_MIN_INDEX = 9;
+const LAZYLOAD_MIN_INDEX = 4;
 const PROFILE_IMAGE_SIZE = 100;
 
 /**
@@ -56,7 +56,11 @@ const TimelineItem = ({ post, index }) => {
   );
 
   return (
-    <article className="px-1 hover:bg-gray-50 sm:px-4" onClick={handleClick}>
+    <article
+      className="px-1 hover:bg-gray-50 sm:px-4"
+      onClick={handleClick}
+      style={ { contain: 'content' } }
+    >
       <div className="flex pb-4 pt-2 px-2 border-b border-gray-300 sm:px-4">
         <div className="flex-grow-0 flex-shrink-0 pr-2 sm:pr-4">
           <Link
