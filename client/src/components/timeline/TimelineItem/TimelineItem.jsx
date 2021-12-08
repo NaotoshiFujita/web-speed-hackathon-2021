@@ -9,7 +9,7 @@ import { Time } from '../../foundation/Time';
 
 
 const LAZYLOAD_MIN_INDEX = 4;
-const PROFILE_IMAGE_SIZE = 100;
+const PROFILE_IMAGE_SIZE = 80;
 
 /**
  * @param {Element} target
