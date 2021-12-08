@@ -6,7 +6,16 @@
     <title>CAwitter</title>
 
     <link rel="preload" href="/scripts/main.js" as="script">
-    <link rel="preload" href="/styles/webfont.css" as="style" onload="requestIdleCallback( () =>{this.rel='stylesheet';this.onload=null})">
+    <link rel="preload" href="/styles/webfont.css" as="style" onload="onLoad( this )">
+
+    <script>
+      function onLoad( link ) {
+        link.onload = null;
+        setTimeout( () => {
+          link.rel = 'stylesheet';
+        }, 500 );
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>
