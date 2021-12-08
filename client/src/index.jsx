@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { AppContainer } from './containers/AppContainer';
 
+
 const queryClient = new QueryClient( {
   defaultOptions: {
     queries: {
@@ -13,14 +14,13 @@ const queryClient = new QueryClient( {
   },
 } );
 
-
-window.addEventListener('load', () => {
+document.addEventListener( 'DOMContentLoaded', () => {
   ReactDOM.render(
     <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={ queryClient }>
         <AppContainer />
       </QueryClientProvider>
     </BrowserRouter>,
-    document.getElementById('app'),
+    document.getElementById( 'app' ),
   );
-});
+} );
