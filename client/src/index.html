@@ -7,20 +7,19 @@
 
     <link rel="preload" href="/scripts/main.js" as="script">
     <link rel="preload" href="/api/v1/posts?limit=7&offset=0" as="fetch" crossorigin="anonymous">
-    <link rel="preload" href="/styles/webfont.css" as="style" onload="onLoad( this )">
-
-    <script>
-      function onLoad( link ) {
-        link.onload = null;
-        setTimeout( () => {
-          link.rel = 'stylesheet';
-        }, 500 );
-      }
-    </script>
   </head>
   <body>
     <div id="app"></div>
     <div id="modal"></div>
     <script src="/scripts/main.js"></script>
+    <link rel="preload" href="/styles/webfont.css" as="style" onload="onLoad( this )">
+    <script>
+      function onLoad( link ) {
+        link.onload = null;
+        setTimeout( () => {
+          link.rel = 'stylesheet';
+        }, 300 );
+      }
+    </script>
   </body>
 </html>

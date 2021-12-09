@@ -8,8 +8,9 @@ import { SoundArea } from '../../post/SoundArea';
 import { Time } from '../../foundation/Time';
 
 
+// todo
 const LAZYLOAD_MIN_INDEX = 4;
-const PROFILE_IMAGE_SIZE = 80;
+// const PROFILE_IMAGE_SIZE = 80;
 
 /**
  * @param {Element} target
@@ -66,14 +67,16 @@ const TimelineItem = ({ post, index }) => {
           <Link
             className="block w-12 h-12 bg-gray-300 border border-gray-300 rounded-full hover:opacity-75 overflow-hidden sm:w-16 sm:h-16"
             to={`/users/${post.user.username}`}
+            style={ { background: `center/cover no-repeat url("${ getProfileImagePath( post.user.profileImage.id ) }")` } }
+            ariaLabel={ post.user.profileImage.alt }
           >
-            <img
-              alt={post.user.profileImage.alt}
-              src={getProfileImagePath(post.user.profileImage.id)}
-              loading={ lazy ? 'lazy' : '' }
-              width={ PROFILE_IMAGE_SIZE }
-              height={ PROFILE_IMAGE_SIZE }
-            />
+            {/*<img*/}
+            {/*  alt={post.user.profileImage.alt}*/}
+            {/*  src={getProfileImagePath(post.user.profileImage.id)}*/}
+            {/*  loading={ lazy ? 'lazy' : '' }*/}
+            {/*  width={ PROFILE_IMAGE_SIZE }*/}
+            {/*  height={ PROFILE_IMAGE_SIZE }*/}
+            {/*/>*/}
           </Link>
         </div>
         <div className="flex-grow flex-shrink min-w-0">
