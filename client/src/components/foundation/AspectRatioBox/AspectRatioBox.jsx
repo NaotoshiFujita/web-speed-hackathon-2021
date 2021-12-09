@@ -14,10 +14,11 @@ import React from 'react';
 const AspectRatioBox = ({ aspectHeight, aspectWidth, children }) => {
   return (
     <div
-      className="relative w-full"
-      style={ { aspectRatio: `${ aspectWidth }/${ aspectHeight }`, contain: 'strict' } }
+      className="relative w-full contain-strict"
+      style={ { aspectRatio: `${ aspectWidth }/${ aspectHeight }` } }
     >
-      <div className="absolute inset-0">{ children }</div>
+      {/*<div className="absolute inset-0">{ children }</div>*/}
+      { children }
     </div>
   );
 };
