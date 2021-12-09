@@ -13,13 +13,16 @@ import React from 'react';
  */
 const CoveredImage = ({ alt, src, lazy = true }) => {
   return (
-    <div className="relative w-full h-full overflow-hidden">
-      <img
-        alt={ alt }
-        className={ 'relative w-full h-full object-cover' }
-        src={ src }
-        loading={ lazy ? 'lazy' : '' }
-      />
+    <div
+      className="relative w-full h-full overflow-hidden"
+      style={ { background: `center/cover no-repeat url("${ src }")` } }
+    >
+      {/*<img*/}
+      {/*  alt={ alt }*/}
+      {/*  className={ 'relative w-full h-full object-cover' }*/}
+      {/*  src={ src }*/}
+      {/*  loading={ lazy ? 'lazy' : '' }*/}
+      {/*/>*/}
     </div>
   );
 };
