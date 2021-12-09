@@ -22,10 +22,11 @@ const PostItem = ({ post }) => {
             <Link
               className="block w-14 h-14 bg-gray-300 border border-gray-300 rounded-full hover:opacity-95 overflow-hidden sm:w-16 sm:h-16"
               to={ `/users/${ post.user.username }` }
-              style={ { background: `center/cover no-repeat url("${ getProfileImagePath( post.user.profileImage.id ) }")` } }
-              ariaLabel={ post.user.profileImage.alt }
             >
-              {/*<img alt={ post.user.profileImage.alt } src={ getProfileImagePath( post.user.profileImage.id ) }/>*/}
+              <img
+                alt={ post.user.profileImage.alt }
+                src={ getProfileImagePath( post.user.profileImage.id ) }
+              />
             </Link>
           </div>
           <div className="flex-grow flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis">
