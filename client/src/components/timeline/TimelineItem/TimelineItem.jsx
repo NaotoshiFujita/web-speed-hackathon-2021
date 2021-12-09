@@ -55,14 +55,13 @@ const TimelineItem = ({ post, index }) => {
 
   return (
     <article
-      className="px-1 hover:bg-gray-50 sm:px-4"
+      className="px-1 hover:bg-gray-50 sm:px-4 contain-content"
       onClick={handleClick}
-      style={ { contain: 'content' } }
     >
       <div className="flex pb-4 pt-2 px-2 border-b border-gray-300 sm:px-4">
         <div className="flex-grow-0 flex-shrink-0 pr-2 sm:pr-4">
           <Link
-            className="block w-12 h-12 bg-gray-300 border border-gray-300 rounded-full hover:opacity-75 overflow-hidden sm:w-16 sm:h-16"
+            className="block w-12 h-12 bg-gray-300 border border-gray-300 rounded-full hover:opacity-75 overflow-hidden sm:w-16 sm:h-16 contain-strict"
             to={`/users/${post.user.username}`}
           >
             <img
@@ -74,7 +73,7 @@ const TimelineItem = ({ post, index }) => {
             />
           </Link>
         </div>
-        <div className="flex-grow flex-shrink min-w-0">
+        <div className="flex-grow flex-shrink min-w-0 contain-content">
           <p className="whitespace-nowrap text-sm overflow-hidden overflow-ellipsis">
             <Link className="pr-1 text-gray-800 hover:underline font-bold" to={`/users/${post.user.username}`}>
               {post.user.name}

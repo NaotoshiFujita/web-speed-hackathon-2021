@@ -12,14 +12,18 @@ import { NavLink } from 'react-router-dom';
 
 /** @type {React.VFC<Props>} */
 const NavigationItem = ({ href, icon, onClick, text }) => {
+  const wrapperClasses = 'flex flex-col items-center justify-center w-12 h-12 hover:bg-green-50 rounded-full sm:px-2 sm:w-24 sm:h-auto sm:rounded lg:flex-row lg:justify-start lg:px-4 lg:py-2 lg:w-auto lg:h-auto lg:rounded-full';
+  const iconClasses = 'text-xl lg:pr-2 lg:text-3xl';
+  const textClasses = 'hidden sm:inline sm:text-sm lg:text-xl lg:font-bold';
+
   return (
-    <li>
+    <li className="contain-content">
       {href !== undefined ? (
         <NavLink
           end
           className={({ isActive }) =>
             classNames(
-              'flex flex-col items-center justify-center w-12 h-12 hover:bg-green-50 rounded-full sm:px-2 sm:w-24 sm:h-auto sm:rounded lg:flex-row lg:justify-start lg:px-4 lg:py-2 lg:w-auto lg:h-auto lg:rounded-full',
+              wrapperClasses,
               {
                 'text-green-800': isActive,
               },
@@ -28,16 +32,16 @@ const NavigationItem = ({ href, icon, onClick, text }) => {
           onClick={onClick}
           to={href}
         >
-          <span className="text-xl lg:pr-2 lg:text-3xl">{icon}</span>
-          <span className="hidden sm:inline sm:text-sm lg:text-xl lg:font-bold">{text}</span>
+          <span className={ iconClasses }>{icon}</span>
+          <span className={ textClasses }>{text}</span>
         </NavLink>
       ) : (
         <button
-          className="flex flex-col items-center justify-center w-12 h-12 hover:bg-green-50 rounded-full sm:px-2 sm:w-24 sm:h-auto sm:rounded lg:flex-row lg:justify-start lg:px-4 lg:py-2 lg:w-auto lg:h-auto lg:rounded-full"
+          className={ wrapperClasses }
           onClick={onClick}
         >
-          <span className="text-xl lg:pr-2 lg:text-3xl">{icon}</span>
-          <span className="hidden sm:inline sm:text-sm lg:text-xl lg:font-bold">{text}</span>
+          <span className={ iconClasses }>{icon}</span>
+          <span className={ textClasses }>{text}</span>
         </button>
       )}
     </li>
