@@ -4,6 +4,7 @@ const HtmlWebpackPlugin          = require( 'html-webpack-plugin' );
 const MiniCssExtractPlugin       = require( 'mini-css-extract-plugin' );
 const CssMinimizerPlugin         = require( 'css-minimizer-webpack-plugin' );
 const HTMLInlineCSSWebpackPlugin = require( 'html-inline-css-webpack-plugin' ).default;
+const BrotliPlugin               = require( 'brotli-webpack-plugin' );
 const webpack                    = require( 'webpack' );
 
 const SRC_PATH    = path.resolve( __dirname, './src' );
@@ -87,6 +88,10 @@ const config = {
       filter(fileName) {
         return fileName.includes( 'main' ) || fileName.includes( 'index.html' );
       },
+    } ),
+    new BrotliPlugin( {
+      asset: '[file].br',
+      test : /\.(js|css)$/,
     } ),
   ],
   resolve: {
