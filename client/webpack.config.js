@@ -17,6 +17,7 @@ const __prod__    = process.env.NODE_ENV === 'production';
 
 /** @type {import('webpack').Configuration} */
 const config = {
+  // todo
   devServer: {
     historyApiFallback: true,
     host: '0.0.0.0',
@@ -84,11 +85,12 @@ const config = {
         removeStyleLinkTypeAttributes: true,
       }
     } ),
-    new HTMLInlineCSSWebpackPlugin( {
-      filter(fileName) {
-        return fileName.includes( 'main' ) || fileName.includes( 'index.html' );
-      },
-    } ),
+    // todo
+    // new HTMLInlineCSSWebpackPlugin( {
+    //   filter(fileName) {
+    //     return fileName.includes( 'main' ) || fileName.includes( 'index.html' );
+    //   },
+    // } ),
     new BrotliPlugin( {
       asset: '[file].br',
       test : /\.(js|css)$/,
@@ -100,12 +102,13 @@ const config = {
       fs: false,
       path: false,
     },
-    alias: {
-      'react'               : 'preact/compat',
-      'react-dom/test-utils': 'preact/test-utils',
-      'react-dom'           : 'preact/compat',
-      'react/jsx-runtime'   : 'preact/jsx-runtime',
-    },
+    // todo
+    // alias: {
+    //   'react'               : 'preact/compat',
+    //   'react-dom/test-utils': 'preact/test-utils',
+    //   'react-dom'           : 'preact/compat',
+    //   'react/jsx-runtime'   : 'preact/jsx-runtime',
+    // },
   },
   optimization: {
     minimize : __prod__,

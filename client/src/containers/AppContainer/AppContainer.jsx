@@ -1,27 +1,26 @@
-import React, { Suspense, lazy, useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { AppPage } from '../../components/application/AppPage';
 import { useFetch } from '../../hooks/use_fetch';
 import { fetchJSON } from '../../utils/fetchers';
 import { Font } from '../../components/foundation/Font';
+import { Helmet } from 'react-helmet';
 import TimelineContainer from '../TimelineContainer';
 import PostContainer from '../PostContainer';
 import TermContainer from '../TermContainer';
 import UserProfileContainer from '../UserProfileContainer';
+import AuthModalContainer from '../AuthModalContainer';
+import NewPostModalContainer from '../NewPostModalContainer';
+import NotFoundContainer from '../NotFoundContainer';
 
-const AuthModalContainer    = lazy( () => import( '../AuthModalContainer' ) );
-const NewPostModalContainer = lazy( () => import( '../NewPostModalContainer' ) );
-const NotFoundContainer     = lazy( () => import( '../NotFoundContainer' ) );
 
-
-/** @type {React.VFC} */
-const AppContainer = () => {
+const AppContainer = ( props ) => {
   const { pathname } = useLocation();
   useEffect( () => {
     window.scrollTo( 0, 0 );
   }, [ pathname ] );
 
-  const [ activeUser, setActiveUser ] = useState( null );
+  const [ activeUser, setActiveUser ] = useState( props.activeUser || null );
   const { data = null, isLoading } = useFetch( '/api/v1/me', fetchJSON );
 
   useEffect( () => {
@@ -33,33 +32,37 @@ const AppContainer = () => {
   const handleRequestOpenPostModal = useCallback( () => setModalType( 'post' ), [] );
   const handleRequestCloseModal    = useCallback( () => setModalType( 'none' ), [] );
 
+  if ( isLoading && ! props.isSSR ) {
+    return (
+      <Helmet>
+        <title>読込中 - CAwitter</title>
+      </Helmet>
+    )
+  }
+
+  // todo isLoading
   return (
     <>
       <AppPage
         activeUser={ activeUser }
         onRequestOpenAuthModal={ handleRequestOpenAuthModal }
         onRequestOpenPostModal={ handleRequestOpenPostModal }
-        isLoading={ isLoading }
       >
         <Routes>
-          <Route element={ <TimelineContainer />} path="/" />
+          <Route element={ <TimelineContainer posts={ props.posts } />} path="/" />
           <Route element={ <UserProfileContainer /> } path="/users/:username"  />
           <Route element={ <PostContainer /> } path="/posts/:postId" />
           <Route element={ <TermContainer /> } path="/terms" />
-          <Route element={ <Suspense fallback={ null }><NotFoundContainer /></Suspense> } path="*" />
+          <Route element={ <NotFoundContainer /> } path="*" />
         </Routes>
       </AppPage>
 
       { modalType === 'auth' ? (
-        <Suspense fallback={ null }>
-          <AuthModalContainer onRequestCloseModal={ handleRequestCloseModal } onUpdateActiveUser={ setActiveUser }/>
-        </Suspense>
+        <AuthModalContainer onRequestCloseModal={ handleRequestCloseModal } onUpdateActiveUser={ setActiveUser }/>
       ) : null }
 
       { modalType === 'post' ? (
-        <Suspense fallback={ null }>
-          <NewPostModalContainer onRequestCloseModal={ handleRequestCloseModal }/>
-        </Suspense>
+        <NewPostModalContainer onRequestCloseModal={ handleRequestCloseModal }/>
       ) : null }
 
       <Font />

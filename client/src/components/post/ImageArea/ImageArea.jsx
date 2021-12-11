@@ -3,7 +3,6 @@ import React from 'react';
 
 import { getImagePath } from '../../../utils/get_path';
 import { AspectRatioBox } from '../../foundation/AspectRatioBox';
-import { CoveredImage } from '../../foundation/CoveredImage';
 
 /**
  * @typedef {object} Props
@@ -11,6 +10,7 @@ import { CoveredImage } from '../../foundation/CoveredImage';
  * @property {boolean} lazy
  */
 
+// todo
 /** @type {React.VFC<Props>} */
 const ImageArea = ({ images, lazy = true }) => {
   return (
@@ -21,14 +21,20 @@ const ImageArea = ({ images, lazy = true }) => {
             <div
               key={image.id}
               // CSS Grid で表示領域を指定する
-              className={classNames('bg-gray-300', {
+              className={classNames('bg-gray-300 overflow-hidden', {
                 'col-span-1': images.length !== 1,
                 'col-span-2': images.length === 1,
                 'row-span-1': images.length > 2 && (images.length !== 3 || idx !== 0),
                 'row-span-2': images.length <= 2 || (images.length === 3 && idx === 0),
               })}
             >
-              <CoveredImage alt={ image.alt } src={ getImagePath( image.id ) } lazy={ lazy }/>
+              <img
+                alt={ image.alt }
+                className="w-full h-full object-cover"
+                src={ getImagePath( image.id ) }
+                loading={ lazy ? 'lazy' : '' }
+                decoding="async"
+              />
             </div>
           );
         })}

@@ -15,13 +15,14 @@ const LIMIT = 7;
  * @template T
  * @param {string} apiPath
  * @param {(apiPath: string) => Promise<T[]>} fetcher
+ * @param {T[]} initialData
  * @returns {ReturnValues<T>}
  */
-export function useInfiniteFetch(apiPath, fetcher) {
+export function useInfiniteFetch(apiPath, fetcher, initialData = []) {
   const internalRef = React.useRef({ isLoading: false, offset: 0 });
 
   const [result, setResult] = React.useState({
-    data: [],
+    data: initialData || [],
     error: null,
     isLoading: true,
   });
@@ -79,7 +80,9 @@ export function useInfiniteFetch(apiPath, fetcher) {
       offset: 0,
     };
 
-    fetchMore();
+    if ( ! initialData.length ) {
+      fetchMore();
+    }
   }, [fetchMore]);
 
   return {
