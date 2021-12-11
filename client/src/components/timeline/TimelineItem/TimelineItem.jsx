@@ -67,7 +67,7 @@ const TimelineItem = ({ post, index }) => {
             <img
               alt={ post.user.profileImage.alt }
               src={ getProfileImagePath( post.user.profileImage.id ) }
-              loading="lazy"
+              loading={ lazy ? 'lazy' : '' }
               width={ PROFILE_IMAGE_SIZE }
               height={ PROFILE_IMAGE_SIZE }
               decoding="async"
@@ -89,17 +89,17 @@ const TimelineItem = ({ post, index }) => {
           </p>
           <p className="text-gray-800 leading-relaxed">{post.text}</p>
           {post.images?.length > 0 ? (
-            <div className="relative mt-2 w-full">
+            <div className="mt-2">
               <ImageArea images={post.images} lazy={ lazy } />
             </div>
           ) : null}
           {post.movie ? (
-            <div className="relative mt-2 w-full">
+            <div className="mt-2">
               <MovieArea movie={post.movie} />
             </div>
           ) : null}
           {post.sound ? (
-            <div className="relative mt-2 w-full">
+            <div className="mt-2">
               <SoundArea sound={post.sound} />
             </div>
           ) : null}

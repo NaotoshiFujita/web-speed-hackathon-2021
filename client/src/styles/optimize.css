@@ -1,9 +1,9 @@
 .contain-content {
-  /*contain: content;*/
+  contain: content;
 }
 
 .contain-strict {
-  /*contain: strict;*/
+  contain: strict;
 }
 
 .content-visibility {

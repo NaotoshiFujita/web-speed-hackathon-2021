@@ -1,4 +1,5 @@
 import React from 'react';
+import { useInfiniteQuery } from 'react-query';
 
 const LIMIT = 7;
 
@@ -18,82 +19,20 @@ const LIMIT = 7;
  * @param {T[]} initialData
  * @returns {ReturnValues<T>}
  */
-export function useInfiniteFetch(apiPath, fetcher, initialData = []) {
-  const internalRef = React.useRef({ isLoading: false, offset: 0 });
-
-  const [result, setResult] = React.useState({
-    data: initialData || [],
-    error: null,
-    isLoading: true,
-  });
-
-  const fetchMore = React.useCallback(() => {
-    const { isLoading, offset } = internalRef.current;
-    if (isLoading) {
-      return;
+export function useInfiniteFetch( apiPath, fetcher, initialData = [] ) {
+  const { data = {}, isLoading, error, fetchNextPage } = useInfiniteQuery(
+    apiPath,
+    ( { pageParam = 0 } ) => fetcher( `${ apiPath }?limit=${ LIMIT }&offset=${ pageParam * LIMIT }` ),
+    {
+      initialData,
+      getNextPageParam: ( lastPage, allPages ) => allPages.length,
     }
-
-    setResult((cur) => ({
-      ...cur,
-      isLoading: true,
-    }));
-    internalRef.current = {
-      isLoading: true,
-      offset,
-    };
-
-    const promise = fetcher( buildPath( apiPath, LIMIT, offset ) );
-
-    promise.then((allData) => {
-      setResult((cur) => ({
-        ...cur,
-        data: [...cur.data, ...allData],
-        isLoading: false,
-      }));
-      internalRef.current = {
-        isLoading: false,
-        offset: offset + LIMIT,
-      };
-    });
-
-    promise.catch((error) => {
-      setResult((cur) => ({
-        ...cur,
-        error,
-        isLoading: false,
-      }));
-      internalRef.current = {
-        isLoading: false,
-        offset,
-      };
-    });
-  }, [apiPath, fetcher]);
-
-  React.useEffect(() => {
-    setResult(() => ({
-      data: [],
-      error: null,
-      isLoading: true,
-    }));
-    internalRef.current = {
-      isLoading: false,
-      offset: 0,
-    };
-
-    if ( ! initialData.length ) {
-      fetchMore();
-    }
-  }, [fetchMore]);
+  );
 
   return {
-    ...result,
-    fetchMore,
+    data: [].concat( ...( data.pages || [] ) ),
+    error,
+    isLoading,
+    fetchMore: fetchNextPage,
   };
-}
-
-function buildPath( path, limit, offset ) {
-  const params = new URLSearchParams();
-  params.set( 'limit', limit );
-  params.set( 'offset', offset );
-  return `${ path }?${ params.toString() }`;
 }

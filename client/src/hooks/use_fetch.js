@@ -1,4 +1,5 @@
 import React from 'react';
+import { useQuery } from 'react-query';
 
 /**
  * @template T
@@ -15,41 +16,5 @@ import React from 'react';
  * @returns {ReturnValues<T>}
  */
 export function useFetch( apiPath, fetcher ) {
-  const [ result, setResult ] = React.useState( {
-    data     : null,
-    error    : null,
-    isLoading: true,
-  } );
-
-  React.useEffect( () => {
-    let unmounted;
-
-    setResult( () => ( {
-      data     : null,
-      error    : null,
-      isLoading: true,
-    } ) );
-
-    fetcher( apiPath )
-      .then( ( data ) => {
-        ! unmounted && setResult( cur => ( {
-          ...cur,
-          data,
-          isLoading: false,
-        } ) );
-      } )
-      .catch( ( error ) => {
-        ! unmounted && setResult( ( cur ) => ( {
-          ...cur,
-          error,
-          isLoading: false,
-        } ) );
-      } );
-
-    return () => {
-      unmounted = true;
-    }
-  }, [ apiPath, fetcher ] );
-
-  return result;
+  return useQuery( apiPath, () => fetcher( apiPath ) );
 }
