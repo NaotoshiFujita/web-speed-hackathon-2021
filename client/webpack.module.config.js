@@ -59,6 +59,7 @@ const config = {
       react             : 'react',
       'react-dom'       : 'react-dom',
       'react-router-dom': 'react-router-dom',
+      'react-query'     : 'react-query',
     },
   ],
 };

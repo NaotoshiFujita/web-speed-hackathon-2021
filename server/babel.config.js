@@ -1,5 +1,6 @@
 module.exports = {
   presets: [
+    '@babel/preset-react',
     [
       '@babel/preset-env',
       {
@@ -8,6 +9,14 @@ module.exports = {
           node: 'current',
         },
       },
+    ],
+  ],
+  plugins: [
+    [
+      'transform-react-jsx',
+      // {
+      //   pragma: 'h',
+      // },
     ],
   ],
 };

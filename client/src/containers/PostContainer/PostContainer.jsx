@@ -13,8 +13,9 @@ import NotFoundContainer from '../NotFoundContainer';
 const PostContainer = () => {
   const { postId } = useParams();
 
-  const { data: post, isLoading: isLoadingPost } = useFetch(`/api/v1/posts/${postId}`, fetchJSON);
+  const { data: post = null, isLoading: isLoadingPost } = useFetch(`/api/v1/posts/${postId}`, fetchJSON);
 
+  // todo
   const { data: comments, fetchMore } = useInfiniteFetch(`/api/v1/posts/${postId}/comments`, fetchJSON);
 
   if (isLoadingPost) {

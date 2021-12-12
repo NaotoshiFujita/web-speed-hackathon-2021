@@ -8,17 +8,19 @@ import * as Util from 'music-metadata/lib/common/Util';
  * @returns {string}
  */
 // eslint-disable-next-line no-import-assign
-Util.decodeString = function decodeString(buffer) {
-  const detected = jschardet.detect(buffer);
-  const encoding = detected.encoding || 'windows-1252';
+Object.defineProperty( Util, 'decodeString', {
+  value: buffer => {
+    const detected = jschardet.detect( buffer );
+    const encoding = detected.encoding || 'windows-1252';
 
-  if (!iconv.encodingExists(encoding)) {
-    throw new Error('Cannot detect charset.');
-  }
+    if ( ! iconv.encodingExists( encoding ) ) {
+      throw new Error( 'Cannot detect charset.' );
+    }
 
-  const decoded = iconv.decode(buffer, encoding);
-  return decoded;
-};
+    const decoded = iconv.decode( buffer, encoding );
+    return decoded;
+  },
+} );
 
 /**
  *

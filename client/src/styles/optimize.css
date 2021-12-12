@@ -1,9 +1,10 @@
 .contain-content {
-  contain: content;
+  /* todo causes the slight difference of rendering. */
+  /*contain: content;*/
 }
 
 .contain-strict {
-  contain: strict;
+  /*contain: strict;*/
 }
 
 .content-visibility {

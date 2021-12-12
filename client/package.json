@@ -6,12 +6,13 @@
   "scripts": {
     "analyze": "cross-env NODE_ENV=production webpack --analyze",
     "prebuild": "rimraf ../dist",
-    "build": "cross-env NODE_ENV=production webpack",
+    "build": "cross-env NODE_ENV=production webpack && yarn run build:module",
     "build:module": "cross-env NODE_ENV=production webpack --config webpack.module.config.js",
     "develop": "cross-env NODE_ENV=development webpack serve",
     "preview": "cross-env NODE_ENV=production webpack serve"
   },
   "dependencies": {
+    "@loadable/component": "^5.15.2",
     "buffer": "6.0.3",
     "classnames": "2.3.1",
     "fast-average-color": "7.0.1",
@@ -22,7 +23,7 @@
     "react-dom": "17.0.2",
     "react-helmet": "6.1.0",
     "react-intersection-observer": "^8.32.5",
-    "react-query": "^3.34.0",
+    "react-query": "^3.34.2",
     "react-router-dom": "6.0.2",
     "regenerator-runtime": "0.13.9",
     "standardized-audio-context": "25.3.15",
@@ -45,7 +46,6 @@
     "cross-env": "7.0.3",
     "css-loader": "6.5.1",
     "css-minimizer-webpack-plugin": "^3.2.0",
-    "html-inline-css-webpack-plugin": "^1.11.1",
     "html-webpack-plugin": "5.5.0",
     "mini-css-extract-plugin": "2.4.5",
     "postcss": "8.3.11",

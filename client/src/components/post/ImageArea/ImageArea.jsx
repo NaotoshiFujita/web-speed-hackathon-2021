@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import React from 'react';
-
 import { getImagePath } from '../../../utils/get_path';
 import { AspectRatioBox } from '../../foundation/AspectRatioBox';
+
 
 /**
  * @typedef {object} Props
@@ -33,7 +33,6 @@ const ImageArea = ({ images, lazy = true }) => {
                 className="w-full h-full object-cover"
                 src={ getImagePath( image.id ) }
                 loading={ lazy ? 'lazy' : '' }
-                decoding="async"
               />
             </div>
           );

@@ -3,7 +3,6 @@ const path = require('path');
 const HtmlWebpackPlugin          = require( 'html-webpack-plugin' );
 const MiniCssExtractPlugin       = require( 'mini-css-extract-plugin' );
 const CssMinimizerPlugin         = require( 'css-minimizer-webpack-plugin' );
-const HTMLInlineCSSWebpackPlugin = require( 'html-inline-css-webpack-plugin' ).default;
 const BrotliPlugin               = require( 'brotli-webpack-plugin' );
 const webpack                    = require( 'webpack' );
 
@@ -85,12 +84,6 @@ const config = {
         removeStyleLinkTypeAttributes: true,
       }
     } ),
-    // todo
-    // new HTMLInlineCSSWebpackPlugin( {
-    //   filter(fileName) {
-    //     return fileName.includes( 'main' ) || fileName.includes( 'index.html' );
-    //   },
-    // } ),
     new BrotliPlugin( {
       asset: '[file].br',
       test : /\.(js|css)$/,

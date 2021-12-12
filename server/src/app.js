@@ -5,6 +5,7 @@ import session from 'express-session';
 import { apiRouter } from './routes/api';
 import { staticRouter } from './routes/static';
 import { compressionRouter } from './routes/compression';
+import { pageRouter } from './routes/page';
 
 
 const app = Express();
@@ -23,8 +24,10 @@ app.use(
 app.use( bodyParser.json() );
 app.use( bodyParser.raw( { limit: '10mb' } ) );
 
+
 app.use( '/api/v1', apiRouter );
 app.use( compressionRouter );
+app.use( pageRouter );
 app.use( staticRouter );
 
 export { app };

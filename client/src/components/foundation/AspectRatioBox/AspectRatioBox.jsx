@@ -13,8 +13,8 @@ import React from 'react';
  */
 const AspectRatioBox = ({ aspectHeight, aspectWidth, children }) => {
   return (
-    <div className="contain-strict" style={ { aspectRatio: `${ aspectWidth }/${ aspectHeight }` } }>
-      { children }
+    <div className="relative contain-strict" style={ { aspectRatio: `${ aspectWidth }/${ aspectHeight }` } }>
+      <div className="absolute inset-0">{ children }</div>
     </div>
   );
 };

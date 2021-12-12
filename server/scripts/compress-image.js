@@ -1,7 +1,7 @@
 const sharp = require( 'sharp' );
 const glob  = require( 'glob' );
 
-const GENERAL_IMAGE_WIDTH = 500;
+const GENERAL_IMAGE_WIDTH = 600;
 const PROFILE_IMAGE_WIDTH = 128;
 
 glob( '../public/images/**/*.jpg', {}, function ( err, files ) {
@@ -11,8 +11,8 @@ glob( '../public/images/**/*.jpg', {}, function ( err, files ) {
     sharp( path )
       .resize({ width: isProfile ? PROFILE_IMAGE_WIDTH : GENERAL_IMAGE_WIDTH })
       .avif( {
-        quality: isProfile ? 20 : 30,
-        speed: 0,
+        // quality: isProfile ? 20 : 30,
+        speed: 1,
       } )
       .toFile( path.replace( '.jpg', '.avif' ) );
   } );

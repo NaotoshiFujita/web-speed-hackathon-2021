@@ -2,25 +2,33 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { AppContainer } from './containers/AppContainer';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
+import { requestIdleCallback } from './utils/requestIdleCallback';
 
-// Array.from( document.getElementsByTagName( 'img' ) ).forEach( img => {
-//   new Image().src = img.src;
-// } );
+
+// todo
+const dehydratedState = window.__REACT_QUERY_STATE__;
 
 const queryClient = new QueryClient( {
   defaultOptions: {
     queries: {
       retry: false,
+      refetchOnWindowFocus: false,
     },
   },
 } );
 
-ReactDOM.hydrate(
-  <BrowserRouter>
-    <QueryClientProvider client={ queryClient }>
-      <AppContainer/>
-    </QueryClientProvider>
-  </BrowserRouter>,
-  document.getElementById( 'app' ),
-);
+window.addEventListener( 'load', () => {
+  requestIdleCallback( () => {
+    ReactDOM.hydrate(
+      <BrowserRouter>
+        <QueryClientProvider client={ queryClient }>
+          <Hydrate state={ dehydratedState }>
+            <AppContainer/>
+          </Hydrate>
+        </QueryClientProvider>
+      </BrowserRouter>,
+      document.getElementById( 'app' ),
+    );
+  } )
+} );
