@@ -5,22 +5,31 @@ import { useFetch } from '../../hooks/use_fetch';
 import { fetchJSON } from '../../utils/fetchers';
 import { Font } from '../../components/foundation/Font';
 import { Helmet } from 'react-helmet';
-import TimelineContainer from '../TimelineContainer';
-import PostContainer from '../PostContainer';
-import TermContainer from '../TermContainer';
-import UserProfileContainer from '../UserProfileContainer';
-import AuthModalContainer from '../AuthModalContainer';
-import NewPostModalContainer from '../NewPostModalContainer';
-import NotFoundContainer from '../NotFoundContainer';
+// import TimelineContainer from '../TimelineContainer';
+// import PostContainer from '../PostContainer';
+// import TermContainer from '../TermContainer';
+// import UserProfileContainer from '../UserProfileContainer';
+// import AuthModalContainer from '../AuthModalContainer';
+// import NewPostModalContainer from '../NewPostModalContainer';
+// import NotFoundContainer from '../NotFoundContainer';
+import loadable from '@loadable/component';
+
+const TimelineContainer     = loadable( () => import( '../TimelineContainer' ) );
+const PostContainer         = loadable( () => import( '../PostContainer' ) );
+const TermContainer         = loadable( () => import( '../TermContainer' ) );
+const UserProfileContainer  = loadable( () => import( '../UserProfileContainer' ) );
+const AuthModalContainer    = loadable( () => import( '../AuthModalContainer' ) );
+const NewPostModalContainer = loadable( () => import( '../NewPostModalContainer' ) );
+const NotFoundContainer     = loadable( () => import( '../NotFoundContainer' ) );
 
 
-const AppContainer = ( props ) => {
+const AppContainer = () => {
   const { pathname } = useLocation();
   useEffect( () => {
     window.scrollTo( 0, 0 );
   }, [ pathname ] );
 
-  const [ activeUser, setActiveUser ] = useState( props.activeUser || null );
+  const [ activeUser, setActiveUser ] = useState( null );
   const { data = null, isLoading } = useFetch( '/api/v1/me', fetchJSON );
 
   useEffect( () => {
@@ -32,7 +41,7 @@ const AppContainer = ( props ) => {
   const handleRequestOpenPostModal = useCallback( () => setModalType( 'post' ), [] );
   const handleRequestCloseModal    = useCallback( () => setModalType( 'none' ), [] );
 
-  if ( isLoading && ! props.isSSR ) {
+  if ( isLoading && typeof window !== 'undefined' ) {
     return (
       <Helmet>
         <title>読込中 - CAwitter</title>
@@ -40,7 +49,6 @@ const AppContainer = ( props ) => {
     )
   }
 
-  // todo isLoading
   return (
     <>
       <AppPage
@@ -49,7 +57,7 @@ const AppContainer = ( props ) => {
         onRequestOpenPostModal={ handleRequestOpenPostModal }
       >
         <Routes>
-          <Route element={ <TimelineContainer posts={ props.posts } />} path="/" />
+          <Route element={ <TimelineContainer />} path="/" />
           <Route element={ <UserProfileContainer /> } path="/users/:username"  />
           <Route element={ <PostContainer /> } path="/posts/:postId" />
           <Route element={ <TermContainer /> } path="/terms" />

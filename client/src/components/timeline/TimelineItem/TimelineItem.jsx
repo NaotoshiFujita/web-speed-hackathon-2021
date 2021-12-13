@@ -64,14 +64,14 @@ const TimelineItem = ({ post, index }) => {
             className="block w-12 h-12 bg-gray-300 border border-gray-300 rounded-full hover:opacity-75 overflow-hidden sm:w-16 sm:h-16 contain-strict"
             to={`/users/${post.user.username}`}
           >
-            {/*<img*/}
-            {/*  alt={ post.user.profileImage.alt }*/}
-            {/*  src={ getProfileImagePath( post.user.profileImage.id ) }*/}
-            {/*  loading={ lazy ? 'lazy' : '' }*/}
-            {/*  width={ PROFILE_IMAGE_SIZE }*/}
-            {/*  height={ PROFILE_IMAGE_SIZE }*/}
-            {/*  decoding="async"*/}
-            {/*/>*/}
+            <img
+              alt={ post.user.profileImage.alt }
+              src={ getProfileImagePath( post.user.profileImage.id ) }
+              loading={ lazy ? 'lazy' : '' }
+              width={ PROFILE_IMAGE_SIZE }
+              height={ PROFILE_IMAGE_SIZE }
+              decoding="async"
+            />
           </Link>
         </div>
         <div className="flex-grow flex-shrink min-w-0 contain-content">

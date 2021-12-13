@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AppContainer } from './containers/AppContainer';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { requestIdleCallback } from './utils/requestIdleCallback';
+import { loadableReady } from '@loadable/component';
 
 
 // todo
@@ -18,17 +19,29 @@ const queryClient = new QueryClient( {
   },
 } );
 
-window.addEventListener( 'load', () => {
-  requestIdleCallback( () => {
-    ReactDOM.hydrate(
-      <BrowserRouter>
-        <QueryClientProvider client={ queryClient }>
-          <Hydrate state={ dehydratedState }>
-            <AppContainer/>
-          </Hydrate>
-        </QueryClientProvider>
-      </BrowserRouter>,
-      document.getElementById( 'app' ),
-    );
-  } )
+// window.addEventListener( 'load', () => {
+//   requestIdleCallback( () => {
+loadableReady( () => {
+  ReactDOM.hydrate(
+    <BrowserRouter>
+      <QueryClientProvider client={ queryClient }>
+        <Hydrate state={ dehydratedState }>
+          <AppContainer/>
+        </Hydrate>
+      </QueryClientProvider>
+    </BrowserRouter>,
+    document.getElementById( 'app' )
+  );
 } );
+      // ReactDOM.hydrate(
+      // <BrowserRouter>
+      //   <QueryClientProvider client={ queryClient }>
+      //     <Hydrate state={ dehydratedState }>
+      //       <AppContainer/>
+      //     </Hydrate>
+      //   </QueryClientProvider>
+      // </BrowserRouter>,
+      // document.getElementById( 'app' ),
+    // );
+  // } )
+// } );

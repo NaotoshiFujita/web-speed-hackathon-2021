@@ -1,19 +1,17 @@
-const path = require('path');
-
+const path    = require( 'path' );
 const webpack = require( 'webpack' );
 
-const SRC_PATH    = path.resolve( __dirname, './src' );
-const DIST_PATH   = path.resolve( __dirname, '../dist' );
-const __prod__    = process.env.NODE_ENV === 'production';
+const SRC_PATH  = path.resolve( __dirname, './src' );
+const DIST_PATH = path.resolve( __dirname, '../dist' );
 
 
-// todo should be included to the build process
 const config = {
   entry: {
     app: [
       path.resolve( SRC_PATH, './containers/AppContainer/index.js' ),
     ],
   },
+  target: 'node',
   module: {
     rules: [
       {
@@ -31,6 +29,9 @@ const config = {
     library : {
       type: 'commonjs2',
     },
+    chunkFilename: ( pathData, assetInfo ) => {
+      return `chunks/${ pathData.chunk.name || pathData.chunk.id }.js`;
+    },
   },
   plugins: [
     new webpack.ProvidePlugin( {
@@ -44,16 +45,17 @@ const config = {
       path: false,
     },
     // todo
-    // alias: {
-    //   'react'               : 'preact/compat',
-    //   'react-dom/test-utils': 'preact/test-utils',
-    //   'react-dom'           : 'preact/compat',
-    //   'react/jsx-runtime'   : 'preact/jsx-runtime',
-    // },
+    alias: {
+      'react'               : 'preact/compat',
+      'react-dom/test-utils': 'preact/test-utils',
+      'react-dom'           : 'preact/compat',
+      'react/jsx-runtime'   : 'preact/jsx-runtime',
+    },
   },
   optimization: {
     minimize : false,
   },
+  // todo
   externals: [
     {
       react             : 'react',
@@ -61,6 +63,7 @@ const config = {
       'react-router-dom': 'react-router-dom',
       'react-query'     : 'react-query',
     },
+    '@loadable/component',
   ],
 };
 

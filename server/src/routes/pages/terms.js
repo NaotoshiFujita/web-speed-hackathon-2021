@@ -1,4 +1,3 @@
-import React from 'react';
 import Router from 'express-promise-router';
 import { QueryClient } from 'react-query';
 import { render } from '../../ssr/render';
@@ -9,7 +8,7 @@ const router = Router();
 
 router.get( '/terms', async ( req, res ) => {
   const queryClient = new QueryClient();
-  const html        = render( req.url, queryClient );
+  const html        = await render( req.url, queryClient );
   const br          = await brotli( html );
 
   return res

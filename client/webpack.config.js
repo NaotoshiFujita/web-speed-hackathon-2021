@@ -1,10 +1,11 @@
 const path = require('path');
 
-const HtmlWebpackPlugin          = require( 'html-webpack-plugin' );
-const MiniCssExtractPlugin       = require( 'mini-css-extract-plugin' );
-const CssMinimizerPlugin         = require( 'css-minimizer-webpack-plugin' );
-const BrotliPlugin               = require( 'brotli-webpack-plugin' );
-const webpack                    = require( 'webpack' );
+const HtmlWebpackPlugin    = require( 'html-webpack-plugin' );
+const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
+const CssMinimizerPlugin   = require( 'css-minimizer-webpack-plugin' );
+const BrotliPlugin         = require( 'brotli-webpack-plugin' );
+const LoadablePlugin       = require( '@loadable/webpack-plugin' );
+const webpack              = require( 'webpack' );
 
 const SRC_PATH    = path.resolve( __dirname, './src' );
 const PUBLIC_PATH = path.resolve( __dirname, '../public' );
@@ -59,6 +60,10 @@ const config = {
   output: {
     filename: 'scripts/[name].js',
     path: DIST_PATH,
+    publicPath: '',
+    chunkFilename: ( pathData, assetInfo ) => {
+      return `chunks/${ pathData.chunk.name|| pathData.chunk.id }.js`;
+    },
   },
   plugins: [
     new webpack.ProvidePlugin( {
@@ -88,6 +93,7 @@ const config = {
       asset: '[file].br',
       test : /\.(js|css)$/,
     } ),
+    new LoadablePlugin(),
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -96,12 +102,12 @@ const config = {
       path: false,
     },
     // todo
-    // alias: {
-    //   'react'               : 'preact/compat',
-    //   'react-dom/test-utils': 'preact/test-utils',
-    //   'react-dom'           : 'preact/compat',
-    //   'react/jsx-runtime'   : 'preact/jsx-runtime',
-    // },
+    alias: {
+      'react'               : 'preact/compat',
+      'react-dom/test-utils': 'preact/test-utils',
+      'react-dom'           : 'preact/compat',
+      'react/jsx-runtime'   : 'preact/jsx-runtime',
+    },
   },
   optimization: {
     minimize : __prod__,

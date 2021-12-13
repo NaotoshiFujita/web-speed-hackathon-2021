@@ -1,4 +1,3 @@
-import React from 'react';
 import Router from 'express-promise-router';
 import { QueryClient } from 'react-query';
 import { render } from '../../ssr/render';
@@ -18,7 +17,7 @@ router.get( '/users/:username', async ( req, res ) => {
     await queryClient.prefetchInfiniteQuery( `/api/v1/users/${ username }/posts`, () => getPosts( user.id ) );
   }
 
-  const html = render( req.url, queryClient );
+  const html = await render( req.url, queryClient );
   const br   = await brotli( html );
 
   return res

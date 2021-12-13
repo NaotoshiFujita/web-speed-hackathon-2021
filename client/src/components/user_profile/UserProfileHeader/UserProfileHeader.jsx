@@ -1,4 +1,4 @@
-import FastAverageColor from 'fast-average-color';
+import FastAverageColor from 'fast-average-color'; // todo
 import React from 'react';
 
 import { getProfileImagePath } from '../../../utils/get_path';
