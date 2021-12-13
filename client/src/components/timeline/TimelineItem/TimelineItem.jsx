@@ -68,7 +68,7 @@ const TimelineItem = ({ post, index }) => {
             <img
               alt={ post.user.profileImage.alt }
               src={ getProfileImagePath( post.user.profileImage.id ) }
-              loading={ lazy ? 'lazy' : '' }
+              loading="lazy"
               width={ PROFILE_IMAGE_SIZE }
               height={ PROFILE_IMAGE_SIZE }
               decoding="async"

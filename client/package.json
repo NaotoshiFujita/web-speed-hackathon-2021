@@ -71,5 +71,9 @@
     "ignorePackages": [
       "core-js"
     ]
-  }
+  },
+  "browserslist": [
+    "> 5%",
+    "not dead"
+  ]
 }
