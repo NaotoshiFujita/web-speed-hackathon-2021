@@ -11,3 +11,7 @@ export async function brotli( string ) {
     },
   } );
 }
+
+export function canUseBrotli( req ) {
+  return req.header( 'Accept-Encoding' ).includes( 'br' );
+}

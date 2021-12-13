@@ -17,7 +17,7 @@ const NavigationItem = ({ href, icon, onClick, text }) => {
   const textClasses = 'hidden sm:inline sm:text-sm lg:text-xl lg:font-bold';
 
   return (
-    <li className="contain-content">
+    <li>
       {href !== undefined ? (
         <NavLink
           end

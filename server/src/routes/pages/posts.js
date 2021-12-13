@@ -1,7 +1,7 @@
 import Router from 'express-promise-router';
 import { QueryClient } from 'react-query';
 import { render } from '../../ssr/render';
-import { brotli } from '../../utils/brotli';
+import { brotli, canUseBrotli } from '../../utils/brotli';
 import { Comment, Post } from '../../models';
 
 
@@ -17,16 +17,18 @@ router.get( '/posts/:postId', async ( req, res ) => {
     await queryClient.prefetchInfiniteQuery( `/api/v1/posts/${ postId }/comments`, () => getComments( postId ) );
   }
 
-  const html = await render( req.url, queryClient );
-  const br   = await brotli( html );
+  const html   = await render( req.url, queryClient );
+  const canUse = canUseBrotli( req );
+
+  if ( canUse ) {
+    res.set( 'Content-Encoding', 'br' )
+  }
 
   return res
-    .set( 'Content-Encoding', 'br' )
     .set( 'Content-Type', 'text/html; charset=UTF-8' )
     .set( 'Cache-control', 'max-age=0, no-store' )
-    .vary( 'Accept-Encoding' )
-    .status( post ? 200 : 404 )
-    .send( br );
+    .status( 200 )
+    .send( canUse ? await brotli( html ) : html );
 } );
 
 async function getComments( postId ) {

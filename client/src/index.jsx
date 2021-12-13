@@ -7,8 +7,7 @@ import { requestIdleCallback } from './utils/requestIdleCallback';
 import { loadableReady } from '@loadable/component';
 
 
-// todo
-const dehydratedState = window.__REACT_QUERY_STATE__;
+const dehydratedState = document.getElementById( 'query-state' ).textContent;
 
 const queryClient = new QueryClient( {
   defaultOptions: {
@@ -22,17 +21,17 @@ const queryClient = new QueryClient( {
 
 if ( dehydratedState ) {
   loadableReady( () => {
-    requestIdleCallback( hydrate );
+    requestIdleCallback( render );
   } );
 } else {
-  hydrate()
+  render()
 }
 
-function hydrate() {
+function render() {
   ReactDOM.hydrate(
     <BrowserRouter>
       <QueryClientProvider client={ queryClient }>
-        <Hydrate state={ dehydratedState }>
+        <Hydrate state={ JSON.parse( dehydratedState ) }>
           <AppContainer/>
         </Hydrate>
       </QueryClientProvider>

@@ -30,14 +30,9 @@ const config = {
       type: 'commonjs2',
     },
     chunkFilename: ( pathData, assetInfo ) => {
-      return `chunks/${ pathData.chunk.name || pathData.chunk.id }.js`;
+      return `modules/chunks/${ pathData.chunk.name || pathData.chunk.id }.js`;
     },
   },
-  plugins: [
-    new webpack.ProvidePlugin( {
-      Buffer: [ 'buffer', 'Buffer' ],
-    } ),
-  ],
   resolve: {
     extensions: ['.js', '.jsx'],
     fallback: {
@@ -53,7 +48,7 @@ const config = {
     // },
   },
   optimization: {
-    minimize : false,
+    minimize : true,
   },
   // todo
   externals: [

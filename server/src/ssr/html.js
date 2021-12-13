@@ -20,7 +20,7 @@ export function buildHtml( {
     ${ app }
   </div>
   <div id="modal"></div>
-  <script>
+  <script type="application/json" id="query-state">
     ${ queryState }
   </script>
   ${ scripts }

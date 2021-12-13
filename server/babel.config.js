@@ -11,12 +11,4 @@ module.exports = {
       },
     ],
   ],
-  plugins: [
-    [
-      'transform-react-jsx',
-      // {
-      //   pragma: 'h',
-      // },
-    ],
-  ],
 };

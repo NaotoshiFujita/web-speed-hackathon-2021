@@ -27,7 +27,7 @@ export async function render( url, queryClient ) {
   const css  = await extractor.getCssString();
 
   return buildHtml( {
-    queryState: `window.__REACT_QUERY_STATE__ = ${ JSON.stringify( dehydratedState ) };`,
+    queryState: JSON.stringify( dehydratedState ),
     app       : html,
     scripts   : extractor.getScriptTags( { async: true, importance: 'low' } ),
     // links     : extractor.getLinkTags(),
