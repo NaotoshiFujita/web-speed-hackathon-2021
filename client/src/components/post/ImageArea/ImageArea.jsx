@@ -32,6 +32,7 @@ const ImageArea = ({ images, lazy = true }) => {
                 alt={ image.alt }
                 className="w-full h-full object-cover"
                 src={ getImagePath( image.id ) }
+                importance={ lazy ? '' : 'high' }
                 loading={ lazy ? 'lazy' : '' }
               />
             </div>

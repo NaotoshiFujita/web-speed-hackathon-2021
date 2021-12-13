@@ -15,33 +15,22 @@ const queryClient = new QueryClient( {
     queries: {
       retry: false,
       refetchOnWindowFocus: false,
+      refetchOnMount: false,
     },
   },
 } );
 
-// window.addEventListener( 'load', () => {
-//   requestIdleCallback( () => {
 loadableReady( () => {
-  ReactDOM.hydrate(
-    <BrowserRouter>
-      <QueryClientProvider client={ queryClient }>
-        <Hydrate state={ dehydratedState }>
-          <AppContainer/>
-        </Hydrate>
-      </QueryClientProvider>
-    </BrowserRouter>,
-    document.getElementById( 'app' )
-  );
+  requestIdleCallback( () => {
+    ReactDOM.hydrate(
+      <BrowserRouter>
+        <QueryClientProvider client={ queryClient }>
+          <Hydrate state={ dehydratedState }>
+            <AppContainer/>
+          </Hydrate>
+        </QueryClientProvider>
+      </BrowserRouter>,
+      document.getElementById( 'app' )
+    );
+  } );
 } );
-      // ReactDOM.hydrate(
-      // <BrowserRouter>
-      //   <QueryClientProvider client={ queryClient }>
-      //     <Hydrate state={ dehydratedState }>
-      //       <AppContainer/>
-      //     </Hydrate>
-      //   </QueryClientProvider>
-      // </BrowserRouter>,
-      // document.getElementById( 'app' ),
-    // );
-  // } )
-// } );

@@ -7,6 +7,7 @@ import { MovieArea } from '../../post/MovieArea';
 import { SoundArea } from '../../post/SoundArea';
 import { Time } from '../../foundation/Time';
 import { LAZYLOAD_MIN_INDEX, PROFILE_IMAGE_SIZE } from '../../../constants/image';
+import classNames from 'classnames';
 
 
 /**
@@ -55,7 +56,7 @@ const TimelineItem = ({ post, index }) => {
 
   return (
     <article
-      className="px-1 hover:bg-gray-50 sm:px-4 contain-content"
+      className={ classNames( 'px-1 hover:bg-gray-50 sm:px-4 contain-content', lazy && 'content-visibility' ) }
       onClick={ handleClick }
     >
       <div className="flex pb-4 pt-2 px-2 border-b border-gray-300 sm:px-4">

@@ -29,7 +29,7 @@ export async function render( url, queryClient ) {
   return buildHtml( {
     queryState: `window.__REACT_QUERY_STATE__ = ${ JSON.stringify( dehydratedState ) };`,
     app       : html,
-    scripts   : extractor.getScriptTags(),
+    scripts   : extractor.getScriptTags( { async: true, importance: 'low' } ),
     // links     : extractor.getLinkTags(),
     css,
   } );
