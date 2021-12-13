@@ -19,7 +19,7 @@ const LIMIT = 7;
  * @param {T[]} initialData
  * @returns {ReturnValues<T>}
  */
-export function useInfiniteFetch( apiPath, fetcher, initialData = [] ) {
+export function useInfiniteFetch( apiPath, fetcher, initialData ) {
   const { data = {}, isLoading, error, fetchNextPage } = useInfiniteQuery(
     apiPath,
     ( { pageParam = 0 } ) => fetcher( `${ apiPath }?limit=${ LIMIT }&offset=${ pageParam * LIMIT }` ),

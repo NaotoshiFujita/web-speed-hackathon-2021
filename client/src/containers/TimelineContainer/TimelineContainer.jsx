@@ -7,9 +7,8 @@ import { useInfiniteFetch } from '../../hooks/use_infinite_fetch';
 import { fetchJSON } from '../../utils/fetchers';
 
 /** @type {React.VFC} */
-const TimelineContainer = ( props ) => {
-  // todo hydrate data
-  const { data: posts, fetchMore } = useInfiniteFetch( '/api/v1/posts', fetchJSON, props.posts );
+const TimelineContainer = () => {
+  const { data: posts, fetchMore } = useInfiniteFetch( '/api/v1/posts', fetchJSON );
 
   return (
     <InfiniteScroll fetchMore={fetchMore} items={posts}>

@@ -60,7 +60,7 @@ const config = {
   output: {
     filename: 'scripts/[name].js',
     path: DIST_PATH,
-    publicPath: '',
+    publicPath: '/',
     chunkFilename: ( pathData, assetInfo ) => {
       return `chunks/${ pathData.chunk.name|| pathData.chunk.id }.js`;
     },
@@ -102,12 +102,12 @@ const config = {
       path: false,
     },
     // todo
-    alias: {
-      'react'               : 'preact/compat',
-      'react-dom/test-utils': 'preact/test-utils',
-      'react-dom'           : 'preact/compat',
-      'react/jsx-runtime'   : 'preact/jsx-runtime',
-    },
+    // alias: {
+    //   'react'               : 'preact/compat',
+    //   'react-dom/test-utils': 'preact/test-utils',
+    //   'react-dom'           : 'preact/compat',
+    //   'react/jsx-runtime'   : 'preact/jsx-runtime',
+    // },
   },
   optimization: {
     minimize : __prod__,

@@ -24,7 +24,7 @@ const config = {
   output: {
     filename    : 'modules/[name].js',
     path        : DIST_PATH,
-    publicPath  : '',
+    publicPath  : '/',
     globalObject: 'this',
     library : {
       type: 'commonjs2',
@@ -45,12 +45,12 @@ const config = {
       path: false,
     },
     // todo
-    alias: {
-      'react'               : 'preact/compat',
-      'react-dom/test-utils': 'preact/test-utils',
-      'react-dom'           : 'preact/compat',
-      'react/jsx-runtime'   : 'preact/jsx-runtime',
-    },
+    // alias: {
+    //   'react'               : 'preact/compat',
+    //   'react-dom/test-utils': 'preact/test-utils',
+    //   'react-dom'           : 'preact/compat',
+    //   'react/jsx-runtime'   : 'preact/jsx-runtime',
+    // },
   },
   optimization: {
     minimize : false,

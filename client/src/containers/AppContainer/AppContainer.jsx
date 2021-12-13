@@ -5,13 +5,6 @@ import { useFetch } from '../../hooks/use_fetch';
 import { fetchJSON } from '../../utils/fetchers';
 import { Font } from '../../components/foundation/Font';
 import { Helmet } from 'react-helmet';
-// import TimelineContainer from '../TimelineContainer';
-// import PostContainer from '../PostContainer';
-// import TermContainer from '../TermContainer';
-// import UserProfileContainer from '../UserProfileContainer';
-// import AuthModalContainer from '../AuthModalContainer';
-// import NewPostModalContainer from '../NewPostModalContainer';
-// import NotFoundContainer from '../NotFoundContainer';
 import loadable from '@loadable/component';
 
 const TimelineContainer     = loadable( () => import( '../TimelineContainer' ) );

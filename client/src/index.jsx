@@ -20,17 +20,23 @@ const queryClient = new QueryClient( {
   },
 } );
 
-loadableReady( () => {
-  requestIdleCallback( () => {
-    ReactDOM.hydrate(
-      <BrowserRouter>
-        <QueryClientProvider client={ queryClient }>
-          <Hydrate state={ dehydratedState }>
-            <AppContainer/>
-          </Hydrate>
-        </QueryClientProvider>
-      </BrowserRouter>,
-      document.getElementById( 'app' )
-    );
+if ( dehydratedState ) {
+  loadableReady( () => {
+    requestIdleCallback( hydrate );
   } );
-} );
+} else {
+  hydrate()
+}
+
+function hydrate() {
+  ReactDOM.hydrate(
+    <BrowserRouter>
+      <QueryClientProvider client={ queryClient }>
+        <Hydrate state={ dehydratedState }>
+          <AppContainer/>
+        </Hydrate>
+      </QueryClientProvider>
+    </BrowserRouter>,
+    document.getElementById( 'app' )
+  );
+}
