@@ -5,7 +5,7 @@
   "license": "MPL-2.0",
   "main": "src/index.js",
   "scripts": {
-    "build": "webpack",
+    "build": "cross-env NODE_ENV=production webpack",
     "prestart": "npm-run-all prestart:clean prestart:init",
     "start": "node --experimental-wasm-threads dist/index.js",
     "prestart:clean": "rimraf ../upload",

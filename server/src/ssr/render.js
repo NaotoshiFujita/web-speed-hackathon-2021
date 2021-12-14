@@ -23,16 +23,12 @@ export async function render( url, queryClient, links = '' ) {
     </StaticRouter>
   ) );
 
-  const html = renderToString( app );
-  const css  = await extractor.getCssString();
-
   return buildHtml( {
     queryState: JSON.stringify( dehydratedState ),
-    app       : html,
+    app       : renderToString( app ),
     scripts   : extractor.getScriptTags( { defer: true, importance: 'low' } ),
     // links     : extractor.getLinkTags(),
     links,
-    css,
   } );
 }
 

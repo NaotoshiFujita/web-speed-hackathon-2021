@@ -1,8 +1,12 @@
+import fs from 'fs';
+import { join } from 'path';
+import { CLIENT_DIST_PATH } from '../paths';
+
+
 export function buildHtml( {
   queryState = '',
   app,
   scripts = '',
-  css = '',
   links = ''
 } ) {
   return `
@@ -13,7 +17,7 @@ export function buildHtml( {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CAwitter</title>
   ${ links }
-  <style>${ css }</style>
+  <style>${ readCSS() }</style>
 </head>
 <body>
   <div id="app">
@@ -27,4 +31,8 @@ export function buildHtml( {
 </body>
 </html>
 `.trim();
+}
+
+function readCSS() {
+  return fs.readFileSync( join( CLIENT_DIST_PATH, 'styles/main.css' ), 'utf-8' );
 }
