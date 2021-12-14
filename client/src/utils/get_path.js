@@ -3,7 +3,7 @@
  * @returns {string}
  */
 function getImagePath(imageId) {
-  return `/images/${imageId}.webp`;
+  return `/images/${imageId}.avif`;
 }
 
 /**
@@ -35,7 +35,7 @@ function getSoundWavePath(soundId) {
  * @returns {string}
  */
 function getProfileImagePath(profileImageId) {
-  return `/images/profiles/${profileImageId}.webp`;
+  return `/images/profiles/${profileImageId}.avif`;
 }
 
 export { getImagePath, getMoviePath, getSoundPath, getSoundWavePath, getProfileImagePath };

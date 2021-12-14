@@ -58,12 +58,10 @@ const config = {
     ],
   },
   output: {
-    filename: 'scripts/[name].js',
-    path: DIST_PATH,
-    publicPath: '/',
-    chunkFilename: ( pathData, assetInfo ) => {
-      return `chunks/${ pathData.chunk.name|| pathData.chunk.id }.js`;
-    },
+    filename     : 'scripts/[name].js',
+    path         : DIST_PATH,
+    publicPath   : '',
+    chunkFilename: 'chunks/[name].[fullhash].js',
   },
   plugins: [
     new webpack.EnvironmentPlugin( {

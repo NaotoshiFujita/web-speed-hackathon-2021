@@ -24,14 +24,12 @@ const config = {
   output: {
     filename    : 'modules/[name].js',
     path        : DIST_PATH,
-    publicPath  : '/',
+    publicPath  : '',
     globalObject: 'this',
     library : {
       type: 'commonjs2',
     },
-    chunkFilename: ( pathData, assetInfo ) => {
-      return `modules/chunks/${ pathData.chunk.name || pathData.chunk.id }.js`;
-    },
+    chunkFilename: 'chunks/[name].[fullhash].js',
   },
   resolve: {
     extensions: ['.js', '.jsx'],

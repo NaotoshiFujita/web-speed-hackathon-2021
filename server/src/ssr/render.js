@@ -9,7 +9,7 @@ import { CLIENT_DIST_PATH } from '../paths';
 import { ChunkExtractor } from '@loadable/server';
 
 
-export async function render( url, queryClient ) {
+export async function render( url, queryClient, links = '' ) {
   const dehydratedState = dehydrate( queryClient );
   const extractor       = createExtractor();
 
@@ -29,8 +29,9 @@ export async function render( url, queryClient ) {
   return buildHtml( {
     queryState: JSON.stringify( dehydratedState ),
     app       : html,
-    scripts   : extractor.getScriptTags( { async: true, importance: 'low' } ),
+    scripts   : extractor.getScriptTags( { defer: true, importance: 'low' } ),
     // links     : extractor.getLinkTags(),
+    links,
     css,
   } );
 }
