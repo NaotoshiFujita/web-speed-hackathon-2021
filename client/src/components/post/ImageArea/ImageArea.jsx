@@ -31,7 +31,7 @@ const ImageArea = ({ images, lazy = true }) => {
               <img
                 alt={ image.alt }
                 className="w-full h-full object-cover"
-                src={ getImagePath( image.id ) }
+                src={ getImagePath( image.id, images.length > 3 ) }
               />
             </div>
           );

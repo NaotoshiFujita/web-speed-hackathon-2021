@@ -1,4 +1,4 @@
-const path = require('path');
+const { resolve } = require('path');
 
 const HtmlWebpackPlugin    = require( 'html-webpack-plugin' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
@@ -7,21 +7,20 @@ const BrotliPlugin         = require( 'brotli-webpack-plugin' );
 const LoadablePlugin       = require( '@loadable/webpack-plugin' );
 const webpack              = require( 'webpack' );
 
-const SRC_PATH    = path.resolve( __dirname, './src' );
-const PUBLIC_PATH = path.resolve( __dirname, '../public' );
-const UPLOAD_PATH = path.resolve( __dirname, '../upload' );
-const DIST_PATH   = path.resolve( __dirname, '../dist' );
+const SRC_PATH    = resolve( __dirname, './src' );
+const PUBLIC_PATH = resolve( __dirname, '../public' );
+const UPLOAD_PATH = resolve( __dirname, '../upload' );
+const DIST_PATH   = resolve( __dirname, '../dist' );
 const __prod__    = process.env.NODE_ENV === 'production';
 
 
 
 /** @type {import('webpack').Configuration} */
 const config = {
-  // todo
   devServer: {
     historyApiFallback: true,
     host: '0.0.0.0',
-    port: __prod__ ? 8001 : 8080,
+    port: __prod__ ? 8090 : 8080,
     proxy: {
       '/api': 'http://localhost:3000',
     },
@@ -30,13 +29,12 @@ const config = {
   devtool: ! __prod__ && 'inline-source-map',
   entry: {
     main: [
-      'regenerator-runtime/runtime',
-      path.resolve( SRC_PATH, './index.css' ),
-      path.resolve( SRC_PATH, './buildinfo.js' ),
-      path.resolve( SRC_PATH, './index.jsx' ),
+      resolve( SRC_PATH, './index.css' ),
+      resolve( SRC_PATH, './buildinfo.js' ),
+      resolve( SRC_PATH, './index.jsx' ),
     ],
     webfont: [
-      path.resolve( SRC_PATH, './styles/webfont.css' ),
+      resolve( SRC_PATH, './styles/webfont.css' ),
     ],
   },
   mode: 'none',
@@ -60,7 +58,7 @@ const config = {
   output: {
     filename     : 'scripts/[name].js',
     path         : DIST_PATH,
-    publicPath   : '',
+    publicPath   : '/',
     chunkFilename: 'chunks/[name].[fullhash].js',
   },
   plugins: [
@@ -75,14 +73,7 @@ const config = {
     } ),
     new HtmlWebpackPlugin( {
       inject  : false,
-      template: path.resolve( SRC_PATH, './index.html' ),
-      minify: {
-        collapseWhitespace           : true,
-        removeComments               : true,
-        removeRedundantAttributes    : true,
-        removeScriptTypeAttributes   : true,
-        removeStyleLinkTypeAttributes: true,
-      }
+      template: resolve( SRC_PATH, './index.html' ),
     } ),
     new BrotliPlugin( {
       asset: '[file].br',
@@ -93,7 +84,7 @@ const config = {
   resolve: {
     extensions: ['.js', '.jsx'],
     fallback: {
-      fs: false,
+      fs  : false,
       path: false,
     },
     // todo

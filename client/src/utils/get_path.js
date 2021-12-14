@@ -3,10 +3,11 @@ const IMAGE_FORMAT = 'webp';
 
 /**
  * @param {string} imageId
+ * @param {boolean} small
  * @returns {string}
  */
-function getImagePath(imageId) {
-  return `/images/${imageId}.${ IMAGE_FORMAT }`;
+function getImagePath(imageId, small = false) {
+  return `/images/${imageId}${ small ? '.small' : '' }.${ IMAGE_FORMAT }`;
 }
 
 /**
@@ -35,10 +36,11 @@ function getSoundWavePath(soundId) {
 
 /**
  * @param {string} profileImageId
+ * @param {boolean} small
  * @returns {string}
  */
-function getProfileImagePath(profileImageId) {
-  return `/images/profiles/${profileImageId}.${ IMAGE_FORMAT }`;
+function getProfileImagePath(profileImageId, small = false) {
+  return `/images/profiles/${profileImageId}${ small ? '.small' : '' }.${ IMAGE_FORMAT }`;
 }
 
 export { getImagePath, getMoviePath, getSoundPath, getSoundWavePath, getProfileImagePath };
