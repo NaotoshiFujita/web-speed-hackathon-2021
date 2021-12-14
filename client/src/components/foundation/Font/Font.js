@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 
-export function Font( { delay = 300 } ) {
+export function Font( { delay = 0 } ) {
   const [ shouldLoad, setShouldLoad ] = useState( false );
 
   let timer = setTimeout( () => {

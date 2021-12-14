@@ -1,16 +1,16 @@
 import Router from 'express-promise-router';
-import { QueryClient } from 'react-query';
 import { render } from '../../ssr/render';
 import { brotli, canUseBrotli } from '../../utils/brotli';
 import { Post, User } from '../../models';
+import { PAGES } from '../../constants/pages';
 
 
 const router = Router();
 
-router.get( '/users/:username', async ( req, res ) => {
+router.get( PAGES.users, async ( req, res ) => {
   const { username } = req.params;
-  const user        = await User.findOne( { where: { username } } );
-  const queryClient = new QueryClient();
+  const { queryClient } = res.locals;
+  const user = await User.findOne( { where: { username } } );
 
   if ( user ) {
     await queryClient.prefetchQuery( `/api/v1/users/${ username }`, () => Promise.resolve( user ) );

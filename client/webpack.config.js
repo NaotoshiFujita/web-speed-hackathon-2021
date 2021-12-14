@@ -74,13 +74,6 @@ const config = {
     new HtmlWebpackPlugin( {
       inject  : false,
       template: path.resolve( SRC_PATH, './index.html' ),
-      minify: {
-        collapseWhitespace           : true,
-        removeComments               : true,
-        removeRedundantAttributes    : true,
-        removeScriptTypeAttributes   : true,
-        removeStyleLinkTypeAttributes: true,
-      }
     } ),
     new BrotliPlugin( {
       asset: '[file].br',
@@ -94,13 +87,12 @@ const config = {
       fs: false,
       path: false,
     },
-    // todo
-    // alias: {
-    //   'react'               : 'preact/compat',
-    //   'react-dom/test-utils': 'preact/test-utils',
-    //   'react-dom'           : 'preact/compat',
-    //   'react/jsx-runtime'   : 'preact/jsx-runtime',
-    // },
+    alias: {
+      'react'               : 'preact/compat',
+      'react-dom/test-utils': 'preact/test-utils',
+      'react-dom'           : 'preact/compat',
+      'react/jsx-runtime'   : 'preact/jsx-runtime',
+    },
   },
   optimization: {
     minimize : __prod__,

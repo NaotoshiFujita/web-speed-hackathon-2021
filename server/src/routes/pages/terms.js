@@ -1,15 +1,14 @@
 import Router from 'express-promise-router';
-import { QueryClient } from 'react-query';
 import { render } from '../../ssr/render';
 import { brotli, canUseBrotli } from '../../utils/brotli';
+import { PAGES } from '../../constants/pages';
 
 
 const router = Router();
 
-router.get( '/terms', async ( req, res ) => {
-  const queryClient = new QueryClient();
-  const html        = await render( req.url, queryClient );
-  const canUse      = canUseBrotli( req );
+router.get( PAGES.terms, async ( req, res ) => {
+  const html   = await render( req.url, res.locals.queryClient );
+  const canUse = canUseBrotli( req );
 
   if ( canUse ) {
     res.set( 'Content-Encoding', 'br' )

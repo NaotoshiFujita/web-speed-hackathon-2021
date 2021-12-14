@@ -5,6 +5,7 @@ import { AppContainer } from './containers/AppContainer';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { requestIdleCallback } from './utils/requestIdleCallback';
 import { loadableReady } from '@loadable/component';
+import { hydrate } from 'preact';
 
 
 const dehydratedState = document.getElementById( 'query-state' ).textContent;
@@ -28,7 +29,7 @@ if ( dehydratedState ) {
 }
 
 function render() {
-  ReactDOM.hydrate(
+  hydrate(
     <BrowserRouter>
       <QueryClientProvider client={ queryClient }>
         <Hydrate state={ JSON.parse( dehydratedState ) }>

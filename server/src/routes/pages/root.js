@@ -1,18 +1,17 @@
 import Router from 'express-promise-router';
-import { Post, User } from '../../models';
-import { QueryClient } from 'react-query';
+import { Post } from '../../models';
 import { render } from '../../ssr/render';
 import { brotli, canUseBrotli } from '../../utils/brotli';
 import { IMAGE_FORMAT } from '../../constants/image';
+import { PAGES } from '../../constants/pages';
 
 
 const router = Router();
 
-router.get( '/', async ( req, res ) => {
-  const queryClient = new QueryClient();
-  const posts       = await getPosts(); // todo
+router.get( PAGES.root, async ( req, res ) => {
+  const { queryClient } = res.locals;
 
-  await queryClient.prefetchQuery( '/api/v1/me', () => findUser( req ) );
+  const posts = await getPosts(); // todo
   await queryClient.prefetchInfiniteQuery( '/api/v1/posts', () => Promise.resolve( posts ) );
 
   const html   = await render( req.url, queryClient );
@@ -29,30 +28,24 @@ router.get( '/', async ( req, res ) => {
     .send( canUse ? await brotli( html ) : html );
 } );
 
-
-async function findUser( req ) {
-  const { userId } = req.session;
-  return userId && await User.findByPk( userId );
-}
-
 // todo
 async function getPosts() {
   return await Post.findAll( { limit : 7, offset: 0 } );
 }
 
 // todo
-function collectImages( posts ) {
-  const images = [];
-
-  if ( posts ) {
-    posts.forEach( post => {
-      images.push( ...post.images.map( image => `/images/${ image.id }.${ IMAGE_FORMAT }` ) );
-      images.push( `/images/profiles/${ post.user.profileImage.id}.${ IMAGE_FORMAT }` );
-    } );
-  }
-
-  return images;
-}
+// function collectImages( posts ) {
+//   const images = [];
+//
+//   if ( posts ) {
+//     posts.forEach( post => {
+//       images.push( ...post.images.map( image => `/images/${ image.id }.${ IMAGE_FORMAT }` ) );
+//       images.push( `/images/profiles/${ post.user.profileImage.id}.${ IMAGE_FORMAT }` );
+//     } );
+//   }
+//
+//   return images;
+// }
 
 
 export { router as rootRouter };
