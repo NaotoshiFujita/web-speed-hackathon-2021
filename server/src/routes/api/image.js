@@ -7,9 +7,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { convertImage } from '../../converters/convert_image';
 import { UPLOAD_PATH } from '../../paths';
+import { IMAGE_FORMAT } from '../../constants/image';
 
 // 変換した画像の拡張子
-const EXTENSION = 'avif';
+const EXTENSION = IMAGE_FORMAT;
 const WIDTH     = 500;
 
 const router = Router();

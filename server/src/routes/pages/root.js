@@ -3,6 +3,7 @@ import { Post, User } from '../../models';
 import { QueryClient } from 'react-query';
 import { render } from '../../ssr/render';
 import { brotli, canUseBrotli } from '../../utils/brotli';
+import { IMAGE_FORMAT } from '../../constants/image';
 
 
 const router = Router();
@@ -45,8 +46,8 @@ function collectImages( posts ) {
 
   if ( posts ) {
     posts.forEach( post => {
-      images.push( ...post.images.map( image => `/images/${ image.id }.avif` ) );
-      images.push( `/images/profiles/${ post.user.profileImage.id}.avif` );
+      images.push( ...post.images.map( image => `/images/${ image.id }.${ IMAGE_FORMAT }` ) );
+      images.push( `/images/profiles/${ post.user.profileImage.id}.${ IMAGE_FORMAT }` );
     } );
   }
 
