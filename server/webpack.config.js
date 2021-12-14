@@ -27,13 +27,12 @@ const config = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
-    alias: {
-      'react'            : 'preact/compat',
-      'react-dom'        : 'preact/compat',
-      'react/jsx-runtime': 'preact/jsx-runtime',
-    },
   },
-  externals: [ nodeExternals() ],
+  externals: [
+    nodeExternals( {
+      modulesFromFile: true,
+    } ),
+  ],
   plugins: [
     new webpack.IgnorePlugin( {
       resourceRegExp: /\.(css|html|br)$/,

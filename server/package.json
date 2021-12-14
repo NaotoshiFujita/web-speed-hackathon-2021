@@ -5,9 +5,9 @@
   "license": "MPL-2.0",
   "main": "src/index.js",
   "scripts": {
-    "build": "echo noop",
+    "build": "cross-env NODE_ENV=production webpack",
     "prestart": "npm-run-all prestart:clean prestart:init",
-    "start": "babel-node --experimental-wasm-threads src/index.js",
+    "start": "node --experimental-wasm-threads dist/index.js",
     "prestart:clean": "rimraf ../upload",
     "prestart:init": "mkdirp ../upload/images ../upload/movies ../upload/sounds"
   },
@@ -18,6 +18,9 @@
     "@babel/preset-react": "^7.16.0",
     "@ffmpeg/core": "0.10.0",
     "@ffmpeg/ffmpeg": "0.10.1",
+    "@loadable/babel-plugin": "^5.13.2",
+    "@loadable/component": "^5.15.2",
+    "@loadable/server": "^5.15.2",
     "bcrypt": "5.0.1",
     "body-parser": "1.19.0",
     "connect-history-api-fallback": "1.6.0",
@@ -31,6 +34,10 @@
     "mkdirp": "1.0.4",
     "music-metadata": "7.11.4",
     "npm-run-all": "4.1.5",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-query": "^3.34.2",
+    "react-router-dom": "^6.0.2",
     "rimraf": "3.0.2",
     "sequelize": "6.11.0",
     "serve-static": "1.14.1",
@@ -41,9 +48,6 @@
     "web-audio-api": "^0.2.2"
   },
   "devDependencies": {
-    "@loadable/babel-plugin": "^5.13.2",
-    "@loadable/component": "^5.15.2",
-    "@loadable/server": "^5.15.2",
     "@types/bcrypt": "10.0.28-alpha",
     "@types/body-parser": "1.19.2",
     "@types/connect-history-api-fallback": "1.3.5",
@@ -54,10 +58,10 @@
     "@types/sharp": "0.29.4",
     "@types/sqlite3": "3.1.7",
     "@types/uuid": "8.3.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-query": "^3.34.2",
-    "react-router-dom": "^6.0.2"
+    "cross-env": "^7.0.3",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-node-externals": "^3.0.0"
   },
   "engines": {
     "node": "16.x.x"
