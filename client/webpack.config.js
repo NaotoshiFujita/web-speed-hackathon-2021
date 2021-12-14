@@ -17,11 +17,10 @@ const __prod__    = process.env.NODE_ENV === 'production';
 
 /** @type {import('webpack').Configuration} */
 const config = {
-  // todo
   devServer: {
     historyApiFallback: true,
     host: '0.0.0.0',
-    port: __prod__ ? 8001 : 8080,
+    port: __prod__ ? 8090 : 8080,
     proxy: {
       '/api': 'http://localhost:3000',
     },
@@ -65,10 +64,9 @@ const config = {
   },
   plugins: [
     new webpack.EnvironmentPlugin( {
-      BUILD_DATE: new Date().toISOString(),
-      // Heroku では SOURCE_VERSION 環境変数から commit hash を参照できます
+      BUILD_DATE : new Date().toISOString(),
       COMMIT_HASH: process.env.SOURCE_VERSION || '',
-      NODE_ENV   : __prod__ ? 'production' : 'development',
+      NODE_ENV   : process.env.NODE_ENV,
     } ),
     new MiniCssExtractPlugin( {
       filename: 'styles/[name].css',
