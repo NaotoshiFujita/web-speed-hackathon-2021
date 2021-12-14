@@ -3,19 +3,25 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { AppContainer } from './containers/AppContainer';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
-import { requestIdleCallback } from './utils/requestIdleCallback';
 import { loadableReady } from '@loadable/component';
-import { hydrate } from 'preact';
+import { requestIdleCallback } from './utils/requestIdleCallback';
 
 
-const dehydratedState = document.getElementById( 'query-state' ).textContent;
+let dehydratedState;
+
+try {
+  const queryState = document.getElementById( 'query-state' );
+  dehydratedState = queryState && JSON.parse( queryState.textContent );
+} catch ( e ) {
+  console.error( e );
+}
 
 const queryClient = new QueryClient( {
   defaultOptions: {
     queries: {
-      retry: false,
+      retry               : false,
       refetchOnWindowFocus: false,
-      refetchOnMount: false,
+      refetchOnMount      : false,
     },
   },
 } );
@@ -29,10 +35,10 @@ if ( dehydratedState ) {
 }
 
 function render() {
-  hydrate(
+  ReactDOM.hydrate(
     <BrowserRouter>
       <QueryClientProvider client={ queryClient }>
-        <Hydrate state={ JSON.parse( dehydratedState ) }>
+        <Hydrate state={ dehydratedState }>
           <AppContainer/>
         </Hydrate>
       </QueryClientProvider>

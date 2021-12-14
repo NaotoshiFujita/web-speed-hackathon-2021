@@ -57,7 +57,7 @@ const config = {
     ],
   },
   output: {
-    filename     : 'scripts/[name].js',
+    filename     : 'scripts/[name].[fullhash].js',
     path         : DIST_PATH,
     publicPath   : '/',
     chunkFilename: 'chunks/[name].[fullhash].js',
@@ -72,7 +72,7 @@ const config = {
       filename: 'styles/[name].css',
     } ),
     new HtmlWebpackPlugin( {
-      inject  : false,
+      inject  : true,
       template: path.resolve( SRC_PATH, './index.html' ),
     } ),
     new BrotliPlugin( {
