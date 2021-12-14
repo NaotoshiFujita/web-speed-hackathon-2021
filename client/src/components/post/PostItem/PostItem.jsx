@@ -25,7 +25,7 @@ const PostItem = ({ post }) => {
             >
               <img
                 alt={ post.user.profileImage.alt }
-                src={ getProfileImagePath( post.user.profileImage.id ) }
+                src={ getProfileImagePath( post.user.profileImage.id, true ) }
               />
             </Link>
           </div>

@@ -1,19 +1,29 @@
 const sharp = require( 'sharp' );
 const glob  = require( 'glob' );
 
-const GENERAL_IMAGE_WIDTH = 600;
-const PROFILE_IMAGE_WIDTH = 128;
+const IMAGE_FORMAT        = 'webp';
+const GENERAL_WIDTH       = 600;
+const GENERAL_SMALL_WIDTH = 400;
+const PROFILE_WIDTH       = 128;
+const PROFILE_SMALL_WIDTH = 80;
+const OPTIONS             = { quality: 30, alphaQuality: 0 };
+
 
 glob( '../public/images/**/*.jpg', {}, function ( err, files ) {
   files.forEach( path => {
-    const isProfile = path.includes( '/profiles/' );
-
-    sharp( path )
-      .resize({ width: isProfile ? PROFILE_IMAGE_WIDTH : GENERAL_IMAGE_WIDTH })
-      .webp( {
-        quality: 30,
-        alphaQuality: 0,
-      } )
-      .toFile( path.replace( '.jpg', '.webp' ) );
+    if ( path.includes( '/profiles/' ) ) {
+      compress( path, PROFILE_WIDTH );
+      compress( path, PROFILE_SMALL_WIDTH, '.small' );
+    } else {
+      compress( path, GENERAL_WIDTH );
+      compress( path, GENERAL_SMALL_WIDTH, '.small' );
+    }
   } );
 } );
+
+function compress( path, width, suffix = '' ) {
+  sharp( path )
+    .resize( { width } )
+    .webp( OPTIONS )
+    .toFile( path.replace( '.jpg', `${ suffix }.${ IMAGE_FORMAT }` ) );
+}
