@@ -60,7 +60,7 @@ const config = {
   output: {
     filename     : 'scripts/[name].js',
     path         : DIST_PATH,
-    publicPath   : '',
+    publicPath   : '/',
     chunkFilename: 'chunks/[name].[fullhash].js',
   },
   plugins: [
