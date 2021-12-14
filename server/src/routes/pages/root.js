@@ -14,7 +14,11 @@ router.get( PAGES.root, async ( req, res ) => {
   const posts = await getPosts(); // todo
   await queryClient.prefetchInfiniteQuery( '/api/v1/posts', () => Promise.resolve( posts ) );
 
-  const html   = await render( req.url, queryClient );
+  const html   = await render(
+    req.url,
+    queryClient,
+    collectImages( posts ).map( path => `<link rel="preload" href="${ path }" as="image">` ).join( '' )
+  );
   const canUse = canUseBrotli( req );
 
   if ( canUse ) {
@@ -34,18 +38,20 @@ async function getPosts() {
 }
 
 // todo
-// function collectImages( posts ) {
-//   const images = [];
-//
-//   if ( posts ) {
-//     posts.forEach( post => {
-//       images.push( ...post.images.map( image => `/images/${ image.id }.${ IMAGE_FORMAT }` ) );
-//       images.push( `/images/profiles/${ post.user.profileImage.id}.${ IMAGE_FORMAT }` );
-//     } );
-//   }
-//
-//   return images;
-// }
+function collectImages( posts ) {
+  const images = [];
+
+  if ( posts ) {
+    posts.forEach( post => {
+      images.push( ...post.images.map( image => {
+        return `/images/${ image.id }${ images.length > 3 ? '.small' : '' }.${ IMAGE_FORMAT }`;
+      } ) );
+      // images.push( `/images/profiles/${ post.user.profileImage.id}.${ IMAGE_FORMAT }` );
+    } );
+  }
+
+  return images;
+}
 
 
 export { router as rootRouter };
