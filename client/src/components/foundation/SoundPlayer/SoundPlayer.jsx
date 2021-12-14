@@ -75,7 +75,7 @@ const SoundPlayer = ( { sound } ) => {
           <AspectRatioBox aspectHeight={ 1 } aspectWidth={ 10 }>
             <div className="relative w-full h-full">
               <div className="absolute inset-0 w-full h-full">
-                {/*<img className="w-full h-full" src={ getSoundWavePath( sound.id ) } width="100" height="100" />*/}
+                <img className="w-full h-full" src={ getSoundWavePath( sound.id ) } width="100" height="100" />
               </div>
               <div
                 className="absolute inset-0 w-full h-full bg-gray-300 opacity-75"
