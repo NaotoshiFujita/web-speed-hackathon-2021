@@ -4,6 +4,7 @@ const nodeExternals = require( 'webpack-node-externals' );
 
 const SRC_PATH    = resolve( __dirname, './src' );
 const DIST_PATH   = resolve( __dirname, './dist' );
+const PUBLIC_PATH = resolve( __dirname, './public' );
 
 
 const config = {
@@ -20,14 +21,17 @@ const config = {
     ],
   },
   output: {
-    path    : DIST_PATH,
-    filename: 'index.js',
-    library : {
+    path      : DIST_PATH,
+    filename  : 'index.js',
+    publicPath: PUBLIC_PATH,
+    library   : {
       type: 'commonjs2',
     },
   },
   resolve: {
-    extensions: [ '.js', '.jsx' ],
+    extensions    : [ '.js', '.jsx' ],
+    preferAbsolute: true,
+    roots         : [ SRC_PATH ],
   },
   externals: [
     nodeExternals( {
@@ -40,7 +44,7 @@ const config = {
     } ),
   ],
   optimization: {
-    minimize: true,
+    minimize: false,
   }
 };
 

@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { AppContainer } from './containers/AppContainer';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
+import { requestIdleCallback } from './utils/requestIdleCallback';
 import { loadableReady } from '@loadable/component';
 
 
-const queryState = document.getElementById( 'query-state' );
+const dehydratedState = document.getElementById( 'query-state' ).textContent;
 
 const queryClient = new QueryClient( {
   defaultOptions: {
@@ -18,8 +19,10 @@ const queryClient = new QueryClient( {
   },
 } );
 
-if ( queryState ) {
-  loadableReady( () => setTimeout( render ) );
+if ( dehydratedState ) {
+  loadableReady( () => {
+    requestIdleCallback( render );
+  } );
 } else {
   render()
 }
@@ -28,7 +31,7 @@ function render() {
   ReactDOM.hydrate(
     <BrowserRouter>
       <QueryClientProvider client={ queryClient }>
-        <Hydrate state={ queryState ? JSON.parse( queryState.textContent ) : null }>
+        <Hydrate state={ JSON.parse( dehydratedState ) }>
           <AppContainer/>
         </Hydrate>
       </QueryClientProvider>
