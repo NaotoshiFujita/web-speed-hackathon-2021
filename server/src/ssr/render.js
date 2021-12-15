@@ -27,7 +27,7 @@ export async function render( url, queryClient, links = '' ) {
     queryState: JSON.stringify( dehydratedState ),
     app       : renderToString( app ),
     scripts   : extractor.getScriptTags( { defer: true, importance: 'low' } ),
-    // links     : extractor.getLinkTags(),
+    // links     : links + extractor.getLinkTags(),
     links,
   } );
 }

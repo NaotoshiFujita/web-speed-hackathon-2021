@@ -6,7 +6,7 @@ import { ImageArea } from '../../post/ImageArea';
 import { MovieArea } from '../../post/MovieArea';
 import { SoundArea } from '../../post/SoundArea';
 import { Time } from '../../foundation/Time';
-import { LAZYLOAD_MIN_INDEX, PROFILE_IMAGE_SIZE } from '../../../constants/image';
+import { LAZYLOAD_MIN_INDEX, PROFILE_IMAGE_SIZE, PROFILE_IMAGE_SMALL_SIZE } from '../../../constants/image';
 
 
 /**
@@ -67,8 +67,9 @@ const TimelineItem = ({ post, index }) => {
             <img
               alt={ post.user.profileImage.alt }
               src={ getProfileImagePath( post.user.profileImage.id, true ) }
-              width={ PROFILE_IMAGE_SIZE }
-              height={ PROFILE_IMAGE_SIZE }
+              width={ PROFILE_IMAGE_SMALL_SIZE }
+              height={ PROFILE_IMAGE_SMALL_SIZE }
+              loading={ lazy ? 'lazy' : null }
             />
           </Link>
         </div>

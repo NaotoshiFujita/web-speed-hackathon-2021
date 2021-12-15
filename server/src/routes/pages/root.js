@@ -14,7 +14,7 @@ router.get( PAGES.root, async ( req, res ) => {
   const posts = await getPosts(); // todo
   await queryClient.prefetchInfiniteQuery( '/api/v1/posts', () => Promise.resolve( posts ) );
 
-  const html   = await render( req.url, queryClient, collectLinks( posts ) );
+  const html   = await render( req.url, queryClient );
   const canUse = canUseBrotli( req );
 
   if ( canUse ) {
