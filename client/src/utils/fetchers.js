@@ -43,19 +43,13 @@ async function sendFile(url, file) {
  * @returns {Promise<T>}
  */
 async function sendJSON(url, data) {
-  const { gzip } = await import( 'pako' );
-  const jsonString = JSON.stringify( data );
-  const uint8Array = new TextEncoder().encode( jsonString );
-  const compressed = gzip( uint8Array );
-
   const response = await fetch( url, {
     method: 'POST',
     cache: 'no-cache',
     headers: {
-      'Content-Encoding': 'gzip',
-      'Content-Type'    : 'application/json',
+      'Content-Type': 'application/json',
     },
-    body: compressed,
+    body: JSON.stringify( data ),
   } );
 
   return response.ok ? response.json() : Promise.reject();

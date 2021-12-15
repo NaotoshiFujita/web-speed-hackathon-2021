@@ -29,7 +29,6 @@ const config = {
   devtool: ! __prod__ && 'inline-source-map',
   entry: {
     main: [
-      'regenerator-runtime/runtime',
       path.resolve( SRC_PATH, './index.css' ),
       path.resolve( SRC_PATH, './buildinfo.js' ),
       path.resolve( SRC_PATH, './index.jsx' ),

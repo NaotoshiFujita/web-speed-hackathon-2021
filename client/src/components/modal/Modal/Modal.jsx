@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'wicg-inert';
 
 /**
  * @typedef {object} Props
@@ -15,14 +14,6 @@ const Modal = ({ children, onRequestCloseModal }) => {
     document.body.style.setProperty('overflow', 'hidden');
     return () => {
       document.body.style.removeProperty('overflow');
-    };
-  }, []);
-
-  // inert 属性を #app に付与して、アプリケーションが操作できないようにする
-  React.useEffect(() => {
-    document.getElementById('app').inert = true;
-    return () => {
-      document.getElementById('app').inert = false;
     };
   }, []);
 

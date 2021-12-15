@@ -23,8 +23,8 @@ export function buildHtml( {
     ${ app }
   </div>
   <div id="modal"></div>
-  <script type="application/json" id="query-state">
-    ${ queryState }
+  <script>
+    window.__REACT_QUERY_STATE__ = ${ queryState }
   </script>
   ${ scripts }
 </body>

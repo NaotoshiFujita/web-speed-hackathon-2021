@@ -7,42 +7,37 @@ import { loadableReady } from '@loadable/component';
 import { requestIdleCallback } from './utils/requestIdleCallback';
 
 
-let dehydratedState;
+window.addEventListener( 'load', () => {
+  const dehydratedState = window.__REACT_QUERY_STATE__;
 
-try {
-  const queryState = document.getElementById( 'query-state' );
-  dehydratedState = queryState && JSON.parse( queryState.textContent );
-} catch ( e ) {
-  console.error( e );
-}
-
-const queryClient = new QueryClient( {
-  defaultOptions: {
-    queries: {
-      retry               : false,
-      refetchOnWindowFocus: false,
-      refetchOnMount      : false,
+  const queryClient = new QueryClient( {
+    defaultOptions: {
+      queries: {
+        retry               : false,
+        refetchOnWindowFocus: false,
+        refetchOnMount      : false,
+      },
     },
-  },
-} );
-
-if ( dehydratedState ) {
-  loadableReady( () => {
-    requestIdleCallback( render );
   } );
-} else {
-  render()
-}
 
-function render() {
-  ReactDOM.hydrate(
-    <BrowserRouter>
-      <QueryClientProvider client={ queryClient }>
-        <Hydrate state={ dehydratedState }>
-          <AppContainer/>
-        </Hydrate>
-      </QueryClientProvider>
-    </BrowserRouter>,
-    document.getElementById( 'app' )
-  );
-}
+  if ( dehydratedState ) {
+    loadableReady( () => {
+      requestIdleCallback( render );
+    } );
+  } else {
+    render()
+  }
+
+  function render() {
+    ReactDOM.hydrate(
+      <BrowserRouter>
+        <QueryClientProvider client={ queryClient }>
+          <Hydrate state={ dehydratedState }>
+            <AppContainer/>
+          </Hydrate>
+        </QueryClientProvider>
+      </BrowserRouter>,
+      document.getElementById( 'app' )
+    );
+  }
+} );
