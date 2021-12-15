@@ -13,18 +13,15 @@ import { Title } from '../../components/head/Title';
 /** @type {React.VFC} */
 const PostContainer = () => {
   const { postId } = useParams();
-
-  const { data: post = null, isLoading: isLoadingPost } = useFetch(`/api/v1/posts/${postId}`, fetchJSON);
-
-  // todo
+  const { data: post, isLoading: isLoadingPost } = useFetch(`/api/v1/posts/${postId}`, fetchJSON);
   const { data: comments, fetchMore } = useInfiniteFetch(`/api/v1/posts/${postId}/comments`, fetchJSON);
 
-  if (isLoadingPost) {
-    return <Loading />
+  if ( isLoadingPost ) {
+    return <Loading/>;
   }
 
-  if (post === null) {
-    return <NotFoundContainer />;
+  if ( ! post ) {
+    return <NotFoundContainer/>;
   }
 
   return (

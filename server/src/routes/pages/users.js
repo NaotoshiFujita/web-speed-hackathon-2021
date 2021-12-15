@@ -9,15 +9,15 @@ const router = Router();
 
 router.get( PAGES.users, async ( req, res ) => {
   const { username } = req.params;
-  const { queryClient } = res.locals;
+  const { fallback } = res.locals;
   const user = await User.findOne( { where: { username } } );
 
   if ( user ) {
-    await queryClient.prefetchQuery( `/api/v1/users/${ username }`, () => Promise.resolve( user ) );
-    await queryClient.prefetchInfiniteQuery( `/api/v1/users/${ username }/posts`, () => getPosts( user.id ) );
+    fallback[ `/api/v1/users/${ username }` ] = user;
+    fallback[ `/api/v1/users/${ username }/posts` ] = [ await getPosts( user.id ) ];
   }
 
-  const html   = await render( req.url, queryClient );
+  const html   = await render( req.url, fallback );
   const canUse = canUseBrotli( req );
 
   if ( canUse ) {

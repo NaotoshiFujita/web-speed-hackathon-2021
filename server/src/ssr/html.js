@@ -4,7 +4,7 @@ import { CLIENT_DIST_PATH } from '../paths';
 
 
 export function buildHtml( {
-  queryState = '',
+  fallback = '',
   app,
   scripts = '',
   links = ''
@@ -24,7 +24,7 @@ export function buildHtml( {
   </div>
   <div id="modal"></div>
   <script>
-    window.__REACT_QUERY_STATE__ = ${ queryState }
+    window.__SWR_FALLBACK__ = ${ fallback };
   </script>
   ${ scripts }
 </body>

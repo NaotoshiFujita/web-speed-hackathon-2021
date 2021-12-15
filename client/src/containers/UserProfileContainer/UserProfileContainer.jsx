@@ -13,11 +13,10 @@ import { Title } from '../../components/head/Title';
 /** @type {React.VFC} */
 const UserProfileContainer = () => {
   const { username } = useParams();
-
-  const { data: user = null, isLoading: isLoadingUser } = useFetch(`/api/v1/users/${username}`, fetchJSON);
+  const { data: user = null, isLoading } = useFetch(`/api/v1/users/${username}`, fetchJSON);
   const { data: posts, fetchMore } = useInfiniteFetch(`/api/v1/users/${username}/posts`, fetchJSON);
 
-  if (isLoadingUser) {
+  if ( isLoading ) {
     return <Loading />
   }
 

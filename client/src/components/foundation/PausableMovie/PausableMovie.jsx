@@ -56,7 +56,7 @@ const PausableMovie = ({ src }) => {
           loop
           muted
           playsInline
-          preload="metadata"
+          preload="none"
         />
         <div
           className={classNames(

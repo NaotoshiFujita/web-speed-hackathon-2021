@@ -7,7 +7,7 @@ import { PAGES } from '../../constants/pages';
 const router = Router();
 
 router.get( PAGES.terms, async ( req, res ) => {
-  const html   = await render( req.url, res.locals.queryClient );
+  const html   = await render( req.url, res.locals.fallback );
   const canUse = canUseBrotli( req );
 
   if ( canUse ) {

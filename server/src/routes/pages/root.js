@@ -9,12 +9,12 @@ import { PAGES } from '../../constants/pages';
 const router = Router();
 
 router.get( PAGES.root, async ( req, res ) => {
-  const { queryClient } = res.locals;
+  const { fallback } = res.locals;
 
   const posts = await getPosts(); // todo
-  await queryClient.prefetchInfiniteQuery( '/api/v1/posts', () => Promise.resolve( posts ) );
+  fallback[ '/api/v1/posts' ] = [ posts ];
 
-  const html   = await render( req.url, queryClient );
+  const html   = await render( req.url, fallback );
   const canUse = canUseBrotli( req );
 
   if ( canUse ) {

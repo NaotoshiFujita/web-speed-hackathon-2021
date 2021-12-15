@@ -9,15 +9,15 @@ const router = Router();
 
 router.get( PAGES.posts, async ( req, res ) => {
   const { postId } = req.params;
-  const { queryClient } = res.locals;
+  const { fallback } = res.locals;
   const post = await Post.findByPk( postId );
 
   if ( post ) {
-    await queryClient.prefetchQuery( `/api/v1/posts/${ postId }`, () => Promise.resolve( post ) );
-    await queryClient.prefetchInfiniteQuery( `/api/v1/posts/${ postId }/comments`, () => getComments( postId ) );
+    fallback[ `/api/v1/posts/${ postId }` ] = post;
+    fallback[ `/api/v1/posts/${ postId }/comments` ] = [ await getComments( postId ) ];
   }
 
-  const html   = await render( req.url, queryClient );
+  const html   = await render( req.url, fallback );
   const canUse = canUseBrotli( req );
 
   if ( canUse ) {

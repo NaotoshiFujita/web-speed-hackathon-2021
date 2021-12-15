@@ -37,13 +37,12 @@ const config = {
       fs: false,
       path: false,
     },
-    // todo
-    // alias: {
-    //   'react'               : 'preact/compat',
-    //   'react-dom/test-utils': 'preact/test-utils',
-    //   'react-dom'           : 'preact/compat',
-    //   'react/jsx-runtime'   : 'preact/jsx-runtime',
-    // },
+    alias: {
+      'react'               : 'preact/compat',
+      'react-dom/test-utils': 'preact/test-utils',
+      'react-dom'           : 'preact/compat',
+      'react/jsx-runtime'   : 'preact/jsx-runtime',
+    },
   },
   optimization: {
     minimize : true,
@@ -54,9 +53,9 @@ const config = {
       react             : 'react',
       'react-dom'       : 'react-dom',
       'react-router-dom': 'react-router-dom',
-      'react-query'     : 'react-query',
     },
     '@loadable/component',
+    'swr',
   ],
 };
 

@@ -1,38 +1,29 @@
 import React from 'react';
-import { useInfiniteQuery } from 'react-query';
+import useSWRInfinite, { unstable_serialize } from 'swr/infinite'
+import { useSWRConfig } from 'swr';
 
 const LIMIT = 7;
 
-/**
- * @template T
- * @typedef {object} ReturnValues
- * @property {Array<T>} data
- * @property {Error | null} error
- * @property {boolean} isLoading
- * @property {() => Promise<void>} fetchMore
- */
-
-/**
- * @template T
- * @param {string} apiPath
- * @param {(apiPath: string) => Promise<T[]>} fetcher
- * @param {T[]} initialData
- * @returns {ReturnValues<T>}
- */
-export function useInfiniteFetch( apiPath, fetcher, initialData ) {
-  const { data = {}, isLoading, error, fetchNextPage } = useInfiniteQuery(
-    apiPath,
-    ( { pageParam = 0 } ) => fetcher( `${ apiPath }?limit=${ LIMIT }&offset=${ pageParam * LIMIT }` ),
-    {
-      initialData,
-      getNextPageParam: ( lastPage, allPages ) => allPages.length,
+export function useInfiniteFetch( apiPath, fetcher ) {
+  const getKey = ( pageIndex, previousPageData ) => {
+    if ( previousPageData && ! previousPageData.length ) {
+      return null;
     }
-  );
+
+    return `${ apiPath }?limit=${ LIMIT }&offset=${ pageIndex * LIMIT }`
+  }
+
+  const { fallback } = useSWRConfig();
+  const { data = [], isLoading, error, size, setSize } = useSWRInfinite( getKey, fetcher, {
+    fallback: {
+      [ unstable_serialize( getKey ) ]: fallback[ apiPath ],
+    }
+  } );
 
   return {
-    data: [].concat( ...( data.pages || [] ) ),
+    data: [].concat( ...data ),
     error,
     isLoading,
-    fetchMore: fetchNextPage,
+    fetchMore: () => setSize( size + 1 ),
   };
 }
