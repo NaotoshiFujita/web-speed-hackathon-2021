@@ -46,7 +46,7 @@ function collectImages( posts ) {
       images.push( ...post.images.map( image => {
         return `/images/${ image.id }${ images.length > 3 ? '.small' : '' }.${ IMAGE_FORMAT }`;
       } ) );
-      // images.push( `/images/profiles/${ post.user.profileImage.id}.${ IMAGE_FORMAT }` );
+      images.push( `/images/profiles/${ post.user.profileImage.id}.${ IMAGE_FORMAT }` );
     } );
   }
 
