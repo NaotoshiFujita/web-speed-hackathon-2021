@@ -4,8 +4,8 @@ import { AppPage } from '../../components/application/AppPage';
 import { useFetch } from '../../hooks/use_fetch';
 import { fetchJSON } from '../../utils/fetchers';
 import { Font } from '../../components/foundation/Font';
-import { Helmet } from 'react-helmet';
 import loadable from '@loadable/component';
+import { Loading } from '../../components/foundation/Loading';
 
 const TimelineContainer     = loadable( () => import( '../TimelineContainer' ) );
 const PostContainer         = loadable( () => import( '../PostContainer' ) );
@@ -35,11 +35,7 @@ const AppContainer = () => {
   const handleRequestCloseModal    = useCallback( () => setModalType( 'none' ), [] );
 
   if ( isLoading && typeof window !== 'undefined' ) {
-    return (
-      <Helmet>
-        <title>読込中 - CAwitter</title>
-      </Helmet>
-    )
+    return <Loading />
   }
 
   return (

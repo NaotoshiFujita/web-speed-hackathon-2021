@@ -6,7 +6,7 @@ const IMAGE_FORMAT = 'webp';
  * @param {boolean} small
  * @returns {string}
  */
-function getImagePath(imageId, small = true) {
+function getImagePath(imageId, small) {
   return `/images/${imageId}${ small ? '.small' : '' }.${ IMAGE_FORMAT }`;
 }
 
@@ -39,7 +39,7 @@ function getSoundWavePath(soundId) {
  * @param {boolean} small
  * @returns {string}
  */
-function getProfileImagePath(profileImageId, small = true) {
+function getProfileImagePath(profileImageId, small) {
   return `/images/profiles/${profileImageId}${ small ? '.small' : '' }.${ IMAGE_FORMAT }`;
 }
 

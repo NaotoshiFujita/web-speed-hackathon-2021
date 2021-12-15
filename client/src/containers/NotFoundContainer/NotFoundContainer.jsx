@@ -1,15 +1,13 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
 
 import { NotFoundPage } from '../../components/application/NotFoundPage';
+import { Title } from '../../components/head/Title';
 
 /** @type {React.VFC} */
 const NotFoundContainer = () => {
   return (
     <>
-      <Helmet>
-        <title>ページが見つかりません - CAwitter</title>
-      </Helmet>
+      <Title title={ `ページが見つかりません - CAwitter` } />
       <NotFoundPage />
     </>
   );

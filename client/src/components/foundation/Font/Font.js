@@ -1,24 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
+import React, { useEffect } from 'react';
+
 
 export function Font( { delay = 100 } ) {
-  const [ shouldLoad, setShouldLoad ] = useState( false );
-
-  let timer = setTimeout( () => {
-    setShouldLoad( true );
-  }, delay );
-
   useEffect( () => {
+    const timer = setTimeout( () => {
+      document.head.insertAdjacentHTML( 'beforeend', '<link rel="stylesheet" href="/styles/webfont.css">' );
+    }, delay );
+
     return () => { clearTimeout( timer ) };
-  } );
+  }, [] );
 
-  if ( ! shouldLoad ) {
-    return null;
-  }
-
-  return (
-    <Helmet>
-      <link rel="stylesheet" href="/styles/webfont.css" />
-    </Helmet>
-  );
+  return null;
 }

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
 
 import { InfiniteScroll } from '../../components/foundation/InfiniteScroll';
 import { TimelinePage } from '../../components/timeline/TimelinePage';
 import { useInfiniteFetch } from '../../hooks/use_infinite_fetch';
 import { fetchJSON } from '../../utils/fetchers';
+import { Title } from '../../components/head/Title';
 
 /** @type {React.VFC} */
 const TimelineContainer = () => {
@@ -12,9 +12,7 @@ const TimelineContainer = () => {
 
   return (
     <InfiniteScroll fetchMore={fetchMore} items={posts}>
-      <Helmet>
-        <title>タイムライン - CAwitter</title>
-      </Helmet>
+      <Title title={ `タイムライン - CAwitter` } />
       <TimelinePage timeline={posts} />
     </InfiniteScroll>
   );
