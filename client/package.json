@@ -66,13 +66,9 @@
   "typesync": {
     "ignoreDeps": [
       "dev"
-    ],
-    "ignorePackages": [
-      "core-js"
     ]
   },
   "browserslist": [
-    "> 5%",
-    "not dead"
+    "last 2 Chrome versions"
   ]
 }

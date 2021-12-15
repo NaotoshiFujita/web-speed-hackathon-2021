@@ -22,7 +22,7 @@ const AppPage = ({ activeUser, children, onRequestOpenAuthModal, onRequestOpenPo
             onRequestOpenPostModal={onRequestOpenPostModal}
           />
         </aside>
-        <main className="relative z-0 flex-shrink pb-12 w-screen min-w-0 max-w-screen-sm lg:pb-0">{children}</main>
+        <main className="flex-shrink pb-12 w-screen min-w-0 max-w-screen-sm lg:pb-0">{children}</main>
       </div>
     </div>
   );

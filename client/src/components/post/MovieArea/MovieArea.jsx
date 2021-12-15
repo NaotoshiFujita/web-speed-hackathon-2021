@@ -11,7 +11,7 @@ import { PausableMovie } from '../../foundation/PausableMovie';
 /** @type {React.VFC<Props>} */
 const MovieArea = ({ movie }) => {
   return (
-    <div className="relative w-full h-full bg-gray-300 border border-gray-300 rounded-lg overflow-hidden">
+    <div className="h-full bg-gray-300 border border-gray-300 rounded-lg overflow-hidden">
       <PausableMovie src={getMoviePath(movie.id)} />
     </div>
   );

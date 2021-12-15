@@ -14,7 +14,8 @@ import React from 'react';
 const AspectRatioBox = ({ aspectHeight, aspectWidth, children }) => {
   return (
     <div className="relative" style={ { aspectRatio: `${ aspectWidth }/${ aspectHeight }` } }>
-      <div className="absolute inset-0">{ children }</div>
+      { children }
+      {/*<div className="absolute inset-0">{ children }</div>*/}
     </div>
   );
 };

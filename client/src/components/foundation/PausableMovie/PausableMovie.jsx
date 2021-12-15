@@ -47,7 +47,7 @@ const PausableMovie = ({ src }) => {
 
   return (
     <AspectRatioBox aspectHeight={1} aspectWidth={1}>
-      <button className="group relative block w-full h-full" onClick={ handleClick } type="button">
+      <button className="group relative block h-full" onClick={ handleClick } type="button">
         <video
           ref={ videoCallbackRef }
           className="w-full h-full object-cover"
@@ -66,7 +66,7 @@ const PausableMovie = ({ src }) => {
             },
           )}
         >
-          <FontAwesomeIcon iconType={ isPlaying ? 'pause' : 'play' } styleType="solid" />
+          <FontAwesomeIcon iconType={ isPlaying ? 'pause' : 'play' } />
         </div>
       </button>
     </AspectRatioBox>

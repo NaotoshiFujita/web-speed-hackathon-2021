@@ -109,19 +109,19 @@ const NewPostModalPage = ({ hasError, isLoading, onResetError, onSubmit }) => {
           <AttachFileInputButton
             accept="image/*"
             active={params.images.length !== 0}
-            icon={<FontAwesomeIcon iconType="images" styleType="solid" />}
+            icon={<FontAwesomeIcon iconType="images" />}
             onChange={handleChangeImages}
           />
           <AttachFileInputButton
             accept="audio/*"
             active={params.sound !== undefined}
-            icon={<FontAwesomeIcon iconType="music" styleType="solid" />}
+            icon={<FontAwesomeIcon iconType="music" />}
             onChange={handleChangeSound}
           />
           <AttachFileInputButton
             accept="video/*"
             active={params.movie !== undefined}
-            icon={<FontAwesomeIcon iconType="video" styleType="solid" />}
+            icon={<FontAwesomeIcon iconType="video" />}
             onChange={handleChangeMovie}
           />
         </p>

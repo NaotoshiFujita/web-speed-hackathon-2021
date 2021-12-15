@@ -24,11 +24,11 @@ const Navigation = ({ activeUser, onRequestOpenAuthModal, onRequestOpenPostModal
 
 const NavigationItems = ( { activeUser, onRequestOpenAuthModal, onRequestOpenPostModal } ) => {
   return (
-    <ul className="relative grid grid-flow-col items-center justify-evenly lg:fixed lg:gap-2 lg:grid-flow-row lg:justify-start lg:p-2 lg:w-48 lg:h-full lg:auto-rows-min">
-      <NavigationItem href="/" icon={<FontAwesomeIcon iconType="home" styleType="solid" />} text="ホーム" />
+    <ul className="grid grid-flow-col items-center justify-evenly lg:fixed lg:gap-2 lg:grid-flow-row lg:justify-start lg:p-2 lg:w-48 lg:h-full lg:auto-rows-min">
+      <NavigationItem href="/" icon={<FontAwesomeIcon iconType="home" />} text="ホーム" />
       {activeUser !== null ? (
         <NavigationItem
-          icon={<FontAwesomeIcon iconType="edit" styleType="solid" />}
+          icon={<FontAwesomeIcon iconType="edit" />}
           onClick={onRequestOpenPostModal}
           text="投稿する"
         />
@@ -36,20 +36,20 @@ const NavigationItems = ( { activeUser, onRequestOpenAuthModal, onRequestOpenPos
       {activeUser !== null ? (
         <NavigationItem
           href={`/users/${activeUser.username}`}
-          icon={<FontAwesomeIcon iconType="user" styleType="solid" />}
+          icon={<FontAwesomeIcon iconType="user" />}
           text="マイページ"
         />
       ) : null}
       {activeUser === null ? (
         <NavigationItem
-          icon={<FontAwesomeIcon iconType="sign-in-alt" styleType="solid" />}
+          icon={<FontAwesomeIcon iconType="sign-in-alt" />}
           onClick={onRequestOpenAuthModal}
           text="サインイン"
         />
       ) : null}
       <NavigationItem
         href="/terms"
-        icon={<FontAwesomeIcon iconType="balance-scale" styleType="solid" />}
+        icon={<FontAwesomeIcon iconType="balance-scale" />}
         text="利用規約"
       />
     </ul>

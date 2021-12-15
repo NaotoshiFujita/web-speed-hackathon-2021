@@ -44,23 +44,23 @@ const PostItem = ({ post }) => {
         </div>
         <div className="pt-2 sm:pt-4">
           <p className="text-gray-800 text-xl leading-relaxed">{post.text}</p>
-          {post.images?.length > 0 ? (
-            <div className="relative mt-2 w-full">
-              <ImageArea images={post.images} />
+          { post.images?.length > 0 && (
+            <div className="mt-2">
+              <ImageArea images={ post.images }/>
             </div>
-          ) : null}
-          {post.movie ? (
-            <div className="relative mt-2 w-full">
-              <MovieArea movie={post.movie} />
+          ) }
+          { post.movie && (
+            <div className="mt-2">
+              <MovieArea movie={ post.movie }/>
             </div>
-          ) : null}
-          {post.sound ? (
-            <div className="relative mt-2 w-full">
-              <SoundArea sound={post.sound} />
+          ) }
+          { post.sound && (
+            <div className="mt-2">
+              <SoundArea sound={ post.sound }/>
             </div>
-          ) : null}
+          ) }
           <p className="mt-2 text-sm sm:mt-4">
-            <Link className="text-gray-500 hover:underline" to={`/posts/${post.id}`}>
+            <Link className="text-gray-500 hover:underline" to={ `/posts/${ post.id }` }>
               <Time time={ post.createdAt }/>
             </Link>
           </p>

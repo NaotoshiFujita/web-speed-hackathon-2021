@@ -24,17 +24,6 @@ const SoundPlayer = ( { sound } ) => {
 
   /** @type {React.RefObject<HTMLAudioElement>} */
   const audioRef = useRef( null );
-  const [ initialized, setInitialized ] = useState( false );
-  const handleClick = useCallback( () => {
-    setInitialized( true );
-  }, [] );
-
-  useEffect( () => {
-    if ( initialized ) {
-      handleTogglePlaying();
-    }
-  }, [ initialized ] );
-
   const [isPlaying, setIsPlaying] = useState(false);
   const handleTogglePlaying = useCallback( () => {
     setIsPlaying( ( isPlaying ) => {
@@ -49,22 +38,21 @@ const SoundPlayer = ( { sound } ) => {
 
   return (
     <div className="flex items-center justify-center w-full h-full bg-gray-300">
-      { initialized &&
       <audio
         ref={ audioRef }
         loop={ true }
         onTimeUpdate={ handleTimeUpdate }
         src={ getSoundPath( sound.id ) }
+        preload="none"
       />
-      }
 
       <div className="p-2">
         <button
           className="flex items-center justify-center w-8 h-8 text-white text-sm bg-blue-600 rounded-full hover:opacity-75"
-          onClick={ initialized ? handleTogglePlaying : handleClick }
+          onClick={ handleTogglePlaying }
           type="button"
         >
-          <FontAwesomeIcon iconType={isPlaying ? 'pause' : 'play'} styleType="solid" />
+          <FontAwesomeIcon iconType={isPlaying ? 'pause' : 'play'} />
         </button>
       </div>
 
@@ -73,15 +61,13 @@ const SoundPlayer = ( { sound } ) => {
         <p className="text-gray-500 whitespace-nowrap text-sm overflow-hidden overflow-ellipsis">{ sound.artist }</p>
         <div className="pt-2">
           <AspectRatioBox aspectHeight={ 1 } aspectWidth={ 10 }>
-            <div className="relative w-full h-full">
-              <div className="absolute inset-0 w-full h-full">
-                <img className="w-full h-full" src={ getSoundWavePath( sound.id ) } width="100" height="100" />
-              </div>
-              <div
-                className="absolute inset-0 w-full h-full bg-gray-300 opacity-75"
-                style={ { left: `${ currentTimeRatio * 100 }%` } }
-              />
+            <div className="absolute inset-0 w-full h-full">
+              <img className="w-full h-full" src={ getSoundWavePath( sound.id ) } width="100" height="100" />
             </div>
+            <div
+              className="absolute inset-0 w-full h-full bg-gray-300 opacity-75"
+              style={ { left: `${ currentTimeRatio * 100 }%` } }
+            />
           </AspectRatioBox>
         </div>
       </div>
