@@ -16,8 +16,8 @@ export function buildHtml( {
   <meta charSet="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CAwitter</title>
-  <style>${ readCSS() }</style>
   ${ links }<link rel="preload" as="style" href="/styles/webfont.css" onload="onLoad.bind(this)()">
+  <style>${ readCSS() }</style>
   ${ scripts }
 </head>
 <body>
