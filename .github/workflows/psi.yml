@@ -29,5 +29,19 @@ jobs:
       uses: jakepartusch/psi-action@v1.2
       id: terms
       with:
-        url: "https://web-speed-hackathon-335112.an.r.appspot.com/"
+        url: "https://web-speed-hackathon-335112.an.r.appspot.com/terms"
+        strategy: desktop
+        
+    - name: Measuring the post page
+      uses: jakepartusch/psi-action@v1.2
+      id: post
+      with:
+        url: "https://web-speed-hackathon-335112.an.r.appspot.com/posts/01EXH20KRBVP34RYHYDTSX8JS2"
+        strategy: desktop
+        
+    - name: Measuring the profile page
+      uses: jakepartusch/psi-action@v1.2
+      id: profile
+      with:
+        url: "https://web-speed-hackathon-335112.an.r.appspot.com/users/mexicandraggle"
         strategy: desktop
