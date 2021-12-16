@@ -1,5 +1,4 @@
 @import './styles/normalize.css';
-@import './styles/optimize.css';
 
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';

@@ -26,7 +26,7 @@
     "regenerator-runtime": "0.13.9",
     "standardized-audio-context": "25.3.15",
     "swr": "^1.1.1",
-    "tailwindcss": "2.2.19",
+    "tailwindcss": "3.0.0",
     "wicg-inert": "3.1.1"
   },
   "devDependencies": {

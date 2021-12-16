@@ -62,7 +62,7 @@ const AppContainer = () => {
         <NewPostModalContainer onRequestCloseModal={ handleRequestCloseModal }/>
       ) : null }
 
-      <Font />
+      {/*<Font />*/}
     </>
   );
 };

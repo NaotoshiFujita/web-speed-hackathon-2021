@@ -3,19 +3,23 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { AppContainer } from './containers/AppContainer';
 import { loadableReady } from '@loadable/component';
-import { requestIdleCallback } from './utils/requestIdleCallback';
 import { SWRConfig } from 'swr';
 
 
 window.addEventListener( 'load', () => {
-  const fallback = window.__SWR_FALLBACK__;
+  const fallbackElm = document.getElementById( 'swr-fallback' );
+  let fallback = {};
 
-  if ( fallback ) {
-    loadableReady( () => {
-      requestIdleCallback( render );
-    } );
+  if ( fallbackElm ) {
+    try {
+      fallback = JSON.parse( fallbackElm.textContent );
+    } catch ( e ) {
+      console.error( e );
+    }
+
+    loadableReady( render );
   } else {
-    render()
+    render();
   }
 
   const config = {

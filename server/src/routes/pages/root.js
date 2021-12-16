@@ -37,7 +37,7 @@ function collectLinks( posts ) {
   const images = [];
 
   if ( posts ) {
-    posts.forEach( post => {
+    posts.slice( 0, 4 ).forEach( post => {
       images.push( ...post.images.map( image => {
         return `/images/${ image.id }${ images.length > 3 ? '.small' : '' }.${ IMAGE_FORMAT }`;
       } ) );

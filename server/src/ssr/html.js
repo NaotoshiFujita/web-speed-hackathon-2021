@@ -16,20 +16,31 @@ export function buildHtml( {
   <meta charSet="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CAwitter</title>
-  ${ links }<style>${ readCSS() }</style>
+  <style>${ readCSS() }</style>
+  ${ links }<link rel="preload" as="style" href="/styles/webfont.css" onload="onLoad.bind(this)()">
+  ${ scripts }
 </head>
 <body>
   <div id="app">
     ${ app }
   </div>
   <div id="modal"></div>
-  <script>
-    window.__SWR_FALLBACK__ = ${ fallback };
+  <script id="swr-fallback" type="application/json">
+    ${ fallback }
   </script>
-  ${ scripts }
+  <script>
+    function onLoad() {
+      this.onload = null;
+      if ( 'requestIdleCallback' in window ) {
+        requestIdleCallback( () => { this.rel = 'stylesheet' } );
+      } else {
+        window.addEventListener( 'load', () => { this.rel = 'stylesheet' } );
+      }
+    }
+  </script>
 </body>
 </html>
-`.trim();
+`.replace( /\s\s+/g, '' ).replace( /\n/g, '' );
 }
 
 function readCSS() {

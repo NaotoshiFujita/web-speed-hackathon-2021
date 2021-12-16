@@ -15,13 +15,7 @@ import { AspectRatioBox } from '../../foundation/AspectRatioBox';
 const ImageArea = ({ images, lazy = true }) => {
   return (
     <AspectRatioBox aspectHeight={9} aspectWidth={16}>
-      <div
-        className={ classNames(
-          'grid gap-1 grid-cols-2 grid-rows-2 w-full h-full border border-gray-300 rounded-lg overflow-hidden',
-          'content-visibility',
-        ) }
-        // className="grid gap-1 grid-cols-2 grid-rows-2 w-full h-full border border-gray-300 rounded-lg overflow-hidden"
-      >
+      <div className="grid gap-1 grid-cols-2 grid-rows-2 w-full h-full border border-gray-300 rounded-lg overflow-hidden">
         {images.map((image, idx) => {
           const { length } = images;
 
@@ -38,7 +32,7 @@ const ImageArea = ({ images, lazy = true }) => {
             >
               <img
                 alt={ image.alt }
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover overflow-hidden"
                 src={ getImagePath( image.id, length > 3 ) }
                 loading={ lazy ? 'lazy' : null }
               />
