@@ -17,8 +17,7 @@ export function buildHtml( {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CAwitter</title>
   <style>${ readCSS() }</style>
-  ${ links }<link rel="preload" as="style" href="/styles/webfont.css" onload="onLoad.bind(this)()">
-  ${ scripts }
+  ${ links }
 </head>
 <body>
   <div id="app">
@@ -28,16 +27,8 @@ export function buildHtml( {
   <script id="swr-fallback" type="application/json">
     ${ fallback }
   </script>
-  <script>
-    function onLoad() {
-      this.onload = null;
-      if ( 'requestIdleCallback' in window ) {
-        requestIdleCallback( () => { this.rel = 'stylesheet' } );
-      } else {
-        window.addEventListener( 'load', () => { this.rel = 'stylesheet' } );
-      }
-    }
-  </script>
+  ${ scripts }
+  <link rel="preload" as="style" href="/styles/webfont.css" onload="this.onload = null;requestIdleCallback(()=>this.rel='stylesheet')">
 </body>
 </html>
 `.replace( /\s\s+/g, '' ).replace( /\n/g, '' );

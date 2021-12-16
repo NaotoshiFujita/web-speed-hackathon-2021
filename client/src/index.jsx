@@ -6,7 +6,7 @@ import { loadableReady } from '@loadable/component';
 import { SWRConfig } from 'swr';
 
 
-window.addEventListener( 'load', () => {
+// window.addEventListener( 'load', () => {
   const fallbackElm = document.getElementById( 'swr-fallback' );
   let fallback = {};
 
@@ -39,4 +39,4 @@ window.addEventListener( 'load', () => {
       document.getElementById( 'app' )
     );
   }
-} );
+// } );
