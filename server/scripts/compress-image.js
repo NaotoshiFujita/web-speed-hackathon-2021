@@ -1,7 +1,7 @@
 const sharp = require( 'sharp' );
 const glob  = require( 'glob' );
 
-const IMAGE_FORMAT        = 'webp';
+const IMAGE_FORMAT        = 'avif';
 const GENERAL_WIDTH       = 600;
 const GENERAL_SMALL_WIDTH = 400;
 const PROFILE_WIDTH       = 128;
@@ -21,9 +21,11 @@ glob( '../public/images/**/*.jpg', {}, function ( err, files ) {
   } );
 } );
 
-function compress( path, width, suffix = '' ) {
+function compress( path, width, suffix = '', extension = 'jpg' ) {
   sharp( path )
-    .resize( { width } )
+    .resize( { height: width, width, fit: 'inside' } )
     .webp( OPTIONS )
-    .toFile( path.replace( '.jpg', `${ suffix }.${ IMAGE_FORMAT }` ) );
+    .toFile( path.replace( `.${ extension }`, `${ suffix }.${ IMAGE_FORMAT }` ) );
 }
+
+module.exports.compress = compress;

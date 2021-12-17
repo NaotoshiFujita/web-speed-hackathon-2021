@@ -1,4 +1,4 @@
-const IMAGE_FORMAT = 'webp';
+import { IMAGE_FORMAT } from '../constants/image';
 
 
 /**
@@ -6,7 +6,7 @@ const IMAGE_FORMAT = 'webp';
  * @param {boolean} small
  * @returns {string}
  */
-function getImagePath(imageId, small) {
+function getImagePath( imageId, small) {
   return `/images/${imageId}${ small ? '.small' : '' }.${ IMAGE_FORMAT }`;
 }
 
@@ -17,6 +17,15 @@ function getImagePath(imageId, small) {
 function getMoviePath(movieId) {
   return `/movies/${movieId}.webm`;
 }
+
+/**
+ * @param {string} movieId
+ * @returns {string}
+ */
+function getPosterPath(movieId) {
+  return `/images/posters/${movieId}.${ IMAGE_FORMAT }`;
+}
+
 
 /**
  * @param {string} soundId
@@ -43,4 +52,4 @@ function getProfileImagePath(profileImageId, small) {
   return `/images/profiles/${profileImageId}${ small ? '.small' : '' }.${ IMAGE_FORMAT }`;
 }
 
-export { getImagePath, getMoviePath, getSoundPath, getSoundWavePath, getProfileImagePath };
+export { getImagePath, getMoviePath, getPosterPath, getSoundPath, getSoundWavePath, getProfileImagePath };

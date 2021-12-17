@@ -61,8 +61,6 @@ const AppContainer = () => {
       { modalType === 'post' ? (
         <NewPostModalContainer onRequestCloseModal={ handleRequestCloseModal }/>
       ) : null }
-
-      {/*<Font />*/}
     </>
   );
 };

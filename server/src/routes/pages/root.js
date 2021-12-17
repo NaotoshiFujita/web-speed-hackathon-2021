@@ -14,7 +14,7 @@ router.get( PAGES.root, async ( req, res ) => {
   const posts = await getPosts(); // todo
   fallback[ '/api/v1/posts' ] = [ posts ];
 
-  const html   = await render( req.url, fallback );
+  const html   = await render( req.url, fallback, collectLinks( posts ) );
   const canUse = canUseBrotli( req );
 
   if ( canUse ) {
@@ -39,7 +39,7 @@ function collectLinks( posts ) {
   if ( posts ) {
     posts.slice( 0, 4 ).forEach( post => {
       images.push( ...post.images.map( image => {
-        return `/images/${ image.id }${ images.length > 3 ? '.small' : '' }.${ IMAGE_FORMAT }`;
+        return `/images/${ image.id }${ post.images.length > 3 ? '.small' : '' }.${ IMAGE_FORMAT }`;
       } ) );
       images.push( `/images/profiles/${ post.user.profileImage.id }.small.${ IMAGE_FORMAT }` );
     } );

@@ -7,6 +7,7 @@ import { SWRConfig } from 'swr';
 
 
 // window.addEventListener( 'load', () => {
+// setTimeout( () => {
   const fallbackElm = document.getElementById( 'swr-fallback' );
   let fallback = {};
 
@@ -39,4 +40,5 @@ import { SWRConfig } from 'swr';
       document.getElementById( 'app' )
     );
   }
+// } );
 // } );

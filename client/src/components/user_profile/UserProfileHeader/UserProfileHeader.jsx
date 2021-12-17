@@ -18,7 +18,9 @@ const UserProfileHeader = ({ user }) => {
   const imageCallbackRef = React.useCallback( el => {
     if ( el ) {
       if ( el.complete ) {
-        setAverageColor( extractRgb( el ) );
+        setTimeout( () => {
+          setAverageColor( extractRgb( el ) );
+        } );
       } else {
         el.onload = e => {
           setAverageColor( extractRgb( e.currentTarget ) );

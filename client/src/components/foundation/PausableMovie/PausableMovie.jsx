@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 
 import { AspectRatioBox } from '../AspectRatioBox';
 import { FontAwesomeIcon } from '../FontAwesomeIcon';
+import { getMoviePath, getPosterPath } from '../../../utils/get_path';
 
 /**
  * @typedef {object} Props
@@ -13,7 +14,7 @@ import { FontAwesomeIcon } from '../FontAwesomeIcon';
  * クリックすると再生・一時停止を切り替えます。
  * @type {React.VFC<Props>}
  */
-const PausableMovie = ({ src }) => {
+const PausableMovie = ({ id }) => {
   const [ isPlaying, setIsPlaying ] = React.useState( true );
 
   const videoRef = React.useRef( null );
@@ -51,11 +52,12 @@ const PausableMovie = ({ src }) => {
         <video
           ref={ videoCallbackRef }
           className="w-full h-full object-cover"
-          src={ src }
+          src={ getMoviePath( id ) }
           disablePictureInPicture
           loop
           muted
           playsInline
+          preload="metadata"
         />
         <div
           className={classNames(

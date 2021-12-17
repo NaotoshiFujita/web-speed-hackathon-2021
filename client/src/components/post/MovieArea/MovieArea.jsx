@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { getMoviePath } from '../../../utils/get_path';
 import { PausableMovie } from '../../foundation/PausableMovie';
 
 /**
@@ -12,7 +11,7 @@ import { PausableMovie } from '../../foundation/PausableMovie';
 const MovieArea = ({ movie }) => {
   return (
     <div className="h-full bg-gray-300 border border-gray-300 rounded-lg overflow-hidden">
-      <PausableMovie src={getMoviePath(movie.id)} />
+      <PausableMovie id={ movie.id } />
     </div>
   );
 };

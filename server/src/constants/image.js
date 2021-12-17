@@ -1,1 +1,1 @@
-export const IMAGE_FORMAT = 'webp';
+export const IMAGE_FORMAT = 'avif';

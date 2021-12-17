@@ -4,7 +4,7 @@ const fs   = require( 'fs' );
 
 const ffmpeg = createFFmpeg( { log: true } );
 const BITRATE = '300k';
-const WIDTH   = '600';
+const WIDTH   = '500';
 
 
 async function convert() {
@@ -17,22 +17,14 @@ async function convert() {
       ffmpeg.FS( 'writeFile', 'source', await fetchFile( file ) );
 
       await ffmpeg.run(
-        '-f',
-        'gif',
-        '-i',
-        'source',
-        '-quality',
-        'good',
-        '-b:v',
-        BITRATE,
-        '-crf',
-        '12',
-        '-pix_fmt',
-        'yuv420p',
-        '-movflags',
-        'faststart',
-        '-vf',
-        `scale=${ WIDTH }:-1`,
+        '-f', 'gif',
+        '-i', 'source',
+        '-quality', 'good',
+        '-b:v', BITRATE,
+        '-crf', '12',
+        '-pix_fmt', 'yuv420p',
+        '-movflags', 'faststart',
+        '-vf', `scale=${ WIDTH }:-1`,
         'output.webm'
       );
 

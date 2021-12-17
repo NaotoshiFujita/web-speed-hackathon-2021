@@ -13,7 +13,7 @@ import { Navigation } from '../Navigation';
 /** @type {React.VFC<Props>} */
 const AppPage = ({ activeUser, children, onRequestOpenAuthModal, onRequestOpenPostModal }) => {
   return (
-    <div className="flex justify-center bg-gray-100">
+    <div className="relative flex justify-center bg-gray-100">
       <div className="flex max-w-full min-h-screen text-gray-800 bg-white">
         <aside className="relative z-10">
           <Navigation
@@ -22,7 +22,7 @@ const AppPage = ({ activeUser, children, onRequestOpenAuthModal, onRequestOpenPo
             onRequestOpenPostModal={onRequestOpenPostModal}
           />
         </aside>
-        <main className="flex-shrink pb-12 w-screen min-w-0 max-w-screen-sm lg:pb-0">{children}</main>
+        <main className="relative flex-shrink pb-12 w-screen min-w-0 max-w-screen-sm lg:pb-0">{children}</main>
       </div>
     </div>
   );

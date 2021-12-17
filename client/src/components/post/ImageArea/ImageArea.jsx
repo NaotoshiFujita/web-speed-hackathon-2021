@@ -32,9 +32,9 @@ const ImageArea = ({ images, lazy = true }) => {
             >
               <img
                 alt={ image.alt }
-                className="w-full h-full object-cover overflow-hidden"
+                className="relative w-full h-full object-cover overflow-hidden"
                 src={ getImagePath( image.id, length > 3 ) }
-                loading={ lazy ? 'lazy' : null }
+                loading="lazy"
               />
             </div>
           );
