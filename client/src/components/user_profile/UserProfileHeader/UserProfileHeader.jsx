@@ -13,8 +13,9 @@ import { PROFILE_IMAGE_SIZE } from '../../../constants/image';
 
 /** @type {React.VFC<Props>} */
 const UserProfileHeader = ({ user }) => {
-  const [averageColor, setAverageColor] = React.useState(null);
+  const [averageColor, setAverageColor] = React.useState( user.color || null );
 
+  // todo
   const imageCallbackRef = React.useCallback( el => {
     if ( el ) {
       if ( el.complete ) {
@@ -36,10 +37,11 @@ const UserProfileHeader = ({ user }) => {
         <img
           alt=""
           crossOrigin="anonymous"
-          ref={ imageCallbackRef }
+          ref={ averageColor ? null : imageCallbackRef }
           src={getProfileImagePath(user.profileImage.id)}
           width={ PROFILE_IMAGE_SIZE }
           height={ PROFILE_IMAGE_SIZE }
+          loading="lazy"
         />
       </div>
       <div className="pt-20 px-4">

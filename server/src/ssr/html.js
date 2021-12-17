@@ -17,9 +17,8 @@ export function buildHtml( {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CAwitter</title>
   <style>${ readCSS() }</style>
+  ${ links }<link rel="preload" as="style" href="/styles/webfont.css" onload="this.onload = null;requestIdleCallback(() => {this.rel = 'stylesheet'})">
   ${ scripts }
-  <link rel="preload" as="style" href="/styles/webfont.css" onload="${ ONLOAD_HANDLER }">
-  ${ links }
 </head>
 <body>
   <div id="app">
@@ -31,20 +30,8 @@ export function buildHtml( {
   </script>
 </body>
 </html>
-`;
+`.replace( /\s\s+/g, '' ).replace( /\n/g, '' );
 }
-
-const ONLOAD_HANDLER = `
-this.onload = null;
-requestIdleCallback( () => { this.rel = 'stylesheet' } );
-`.replace( /\n|\s\s+/g, '' );
-
-// const ONLOAD_HANDLER = `
-// this.onload = null;
-// window.addEventListener( 'load', () => {
-//   setTimeout( () => { this.rel = 'stylesheet' } );
-// } );
-// `.replace( /\n|\s\s+/g, '' );
 
 function readCSS() {
   return fs.readFileSync( join( CLIENT_DIST_PATH, 'styles/main.css' ), 'utf-8' );

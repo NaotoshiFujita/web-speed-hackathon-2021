@@ -6,6 +6,7 @@ import { ImageArea } from '../../post/ImageArea';
 import { MovieArea } from '../../post/MovieArea';
 import { SoundArea } from '../../post/SoundArea';
 import { Time } from '../../foundation/Time';
+import { PROFILE_IMAGE_SMALL_SIZE } from '../../../constants/image';
 
 /**
  * @typedef {object} Props
@@ -26,6 +27,9 @@ const PostItem = ({ post }) => {
               <img
                 alt={ post.user.profileImage.alt }
                 src={ getProfileImagePath( post.user.profileImage.id, true ) }
+                loading="lazy"
+                width={ PROFILE_IMAGE_SMALL_SIZE }
+                height={ PROFILE_IMAGE_SMALL_SIZE }
               />
             </Link>
           </div>
