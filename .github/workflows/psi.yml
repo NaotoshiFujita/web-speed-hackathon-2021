@@ -24,6 +24,7 @@ jobs:
       with:
         url: "https://web-speed-hackathon-335112.an.r.appspot.com/"
         strategy: desktop
+        key: ${{ secrets.PSI_APIKEY }}
         
     - name: Measuring the terms page
       uses: jakepartusch/psi-action@v1.2
@@ -31,6 +32,7 @@ jobs:
       with:
         url: "https://web-speed-hackathon-335112.an.r.appspot.com/terms"
         strategy: desktop
+        key: ${{ secrets.PSI_APIKEY }}
         
     - name: Measuring the post page
       uses: jakepartusch/psi-action@v1.2
@@ -38,6 +40,7 @@ jobs:
       with:
         url: "https://web-speed-hackathon-335112.an.r.appspot.com/posts/01EXH20KRBVP34RYHYDTSX8JS2"
         strategy: desktop
+        key: ${{ secrets.PSI_APIKEY }}
         
     - name: Measuring the profile page
       uses: jakepartusch/psi-action@v1.2
@@ -45,3 +48,36 @@ jobs:
       with:
         url: "https://web-speed-hackathon-335112.an.r.appspot.com/users/mexicandraggle"
         strategy: desktop
+        key: ${{ secrets.PSI_APIKEY }}
+    
+    - name: Measuring the root page
+      uses: jakepartusch/psi-action@v1.2
+      id: root2
+      with:
+        url: "https://sandbox-wsh-2021.an.r.appspot.com/"
+        strategy: desktop
+        key: ${{ secrets.PSI_APIKEY }}
+        
+    - name: Measuring the terms page
+      uses: jakepartusch/psi-action@v1.2
+      id: terms2
+      with:
+        url: "https://sandbox-wsh-2021.an.r.appspot.com/terms"
+        strategy: desktop
+        key: ${{ secrets.PSI_APIKEY }}
+        
+    - name: Measuring the post page
+      uses: jakepartusch/psi-action@v1.2
+      id: post2
+      with:
+        url: "https://sandbox-wsh-2021.an.r.appspot.com/posts/01EXH20KRBVP34RYHYDTSX8JS2"
+        strategy: desktop
+        key: ${{ secrets.PSI_APIKEY }}
+        
+    - name: Measuring the profile page
+      uses: jakepartusch/psi-action@v1.2
+      id: profile2
+      with:
+        url: "https://sandbox-wsh-2021.an.r.appspot.com/users/mexicandraggle"
+        strategy: desktop
+        key: ${{ secrets.PSI_APIKEY }}
