@@ -3,6 +3,7 @@ import { render } from '../../ssr/render';
 import { brotli, canUseBrotli } from '../../utils/brotli';
 import { Comment, Post } from '../../models';
 import { PAGES } from '../../constants/pages';
+import { COMMENTS_LIMIT } from '../../../../constants/config';
 
 
 const router = Router();
@@ -33,7 +34,7 @@ router.get( PAGES.posts, async ( req, res ) => {
 
 async function getComments( postId ) {
   return await Comment.findAll( {
-    limit : 7, // todo
+    limit : COMMENTS_LIMIT,
     offset: 0,
     where : { postId },
   } );

@@ -9,12 +9,13 @@ import { fetchJSON } from '../../utils/fetchers';
 import NotFoundContainer from '../NotFoundContainer';
 import { Loading } from '../../components/foundation/Loading';
 import { Title } from '../../components/head/Title';
+import { COMMENTS_LIMIT } from '../../../../constants/config';
 
 /** @type {React.VFC} */
 const PostContainer = () => {
   const { postId } = useParams();
   const { data: post, isValidating } = useFetch(`/api/v1/posts/${postId}`, fetchJSON);
-  const { data: comments, fetchMore } = useInfiniteFetch(`/api/v1/posts/${postId}/comments`, fetchJSON);
+  const { data: comments, fetchMore } = useInfiniteFetch(`/api/v1/posts/${postId}/comments`, fetchJSON, COMMENTS_LIMIT);
 
   if ( isValidating || post === undefined ) {
     return <Loading/>;

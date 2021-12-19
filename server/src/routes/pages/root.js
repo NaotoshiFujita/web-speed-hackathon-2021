@@ -3,6 +3,7 @@ import { Post } from '../../models';
 import { render } from '../../ssr/render';
 import { brotli, canUseBrotli } from '../../utils/brotli';
 import { PAGES } from '../../constants/pages';
+import { POSTS_LIMIT } from '../../../../constants/config';
 
 
 const router = Router();
@@ -29,7 +30,7 @@ router.get( PAGES.root, async ( req, res ) => {
 
 // todo
 async function getPosts() {
-  return await Post.findAll( { limit : 7, offset: 0 } );
+  return await Post.findAll( { limit : POSTS_LIMIT, offset: 0 } );
 }
 
 // function collectLinks( posts ) {

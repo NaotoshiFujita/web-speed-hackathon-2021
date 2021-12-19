@@ -2,19 +2,18 @@ import React from 'react';
 import useSWRInfinite, { unstable_serialize } from 'swr/infinite'
 import { useSWRConfig } from 'swr';
 
-const LIMIT = 7;
 
-export function useInfiniteFetch( apiPath, fetcher ) {
+export function useInfiniteFetch( apiPath, fetcher, limit ) {
   const getKey = ( pageIndex, previousPageData ) => {
     if ( previousPageData && ! previousPageData.length ) {
       return null;
     }
 
-    return `${ apiPath }?limit=${ LIMIT }&offset=${ pageIndex * LIMIT }`
+    return `${ apiPath }?limit=${ limit }&offset=${ pageIndex * limit }`
   }
 
   const { fallback } = useSWRConfig();
-  const { data = [], isLoading, error, size, setSize } = useSWRInfinite( getKey, fetcher, {
+  const { data = [], isValidating, error, size, setSize } = useSWRInfinite( getKey, fetcher, {
     fallback: {
       [ unstable_serialize( getKey ) ]: fallback[ apiPath ],
     }
@@ -23,7 +22,7 @@ export function useInfiniteFetch( apiPath, fetcher ) {
   return {
     data: [].concat( ...data ),
     error,
-    isLoading,
+    isLoading: isValidating,
     fetchMore: () => setSize( size + 1 ),
   };
 }

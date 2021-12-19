@@ -8,6 +8,7 @@ import { resolve } from 'path';
 import { PUBLIC_PATH } from '../../paths';
 import { getAverageColor } from 'fast-average-color-node';
 import { IMAGE_FORMAT } from '../../constants/image';
+import { POSTS_LIMIT } from '../../../../constants/config';
 
 
 const router = Router();
@@ -47,7 +48,7 @@ router.get( PAGES.users, async ( req, res ) => {
 
 async function getPosts( userId ) {
   return await Post.findAll( {
-    limit : 7, // todo
+    limit : POSTS_LIMIT,
     offset: 0,
     where : { userId },
   } );

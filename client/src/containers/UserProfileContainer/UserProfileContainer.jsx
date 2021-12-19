@@ -9,12 +9,13 @@ import { fetchJSON } from '../../utils/fetchers';
 import NotFoundContainer from '../NotFoundContainer';
 import { Loading } from '../../components/foundation/Loading';
 import { Title } from '../../components/head/Title';
+import { POSTS_LIMIT } from '../../../../constants/config';
 
 /** @type {React.VFC} */
 const UserProfileContainer = () => {
   const { username } = useParams();
   const { data: user = null, isValidating } = useFetch(`/api/v1/users/${username}`, fetchJSON);
-  const { data: posts, fetchMore } = useInfiniteFetch(`/api/v1/users/${username}/posts`, fetchJSON);
+  const { data: posts, fetchMore } = useInfiniteFetch(`/api/v1/users/${username}/posts`, fetchJSON, POSTS_LIMIT);
 
   if ( isValidating ) {
     return <Loading />
