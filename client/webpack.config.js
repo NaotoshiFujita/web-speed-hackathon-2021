@@ -60,6 +60,7 @@ const config = {
     path         : DIST_PATH,
     publicPath   : '/',
     chunkFilename: 'chunks/[name].[fullhash].js',
+    iife         : false,
   },
   plugins: [
     new webpack.EnvironmentPlugin( {

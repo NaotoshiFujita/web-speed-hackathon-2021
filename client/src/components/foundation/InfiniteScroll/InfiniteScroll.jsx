@@ -1,5 +1,4 @@
-import React from 'react';
-import InView from 'react-intersection-observer';
+import React, { useEffect, useRef } from 'react';
 
 /**
  * @typedef {object} Props
@@ -11,19 +10,29 @@ import InView from 'react-intersection-observer';
 /** @type {React.VFC<Props>} */
 const InfiniteScroll = ( { children, fetchMore, items } ) => {
   const latestItem    = items[ items.length - 1 ];
-  const latestItemRef = React.useRef();
+  const latestItemRef = useRef();
+  const divRef        = useRef();
 
-  const onChange = inView => {
-    if ( inView && items.length && latestItem !== latestItemRef.current ) {
-      fetchMore();
-      latestItemRef.current = latestItem;
+  useEffect( () => {
+    const { current: el } = divRef;
+
+    if ( el ) {
+      const observer = new IntersectionObserver( ( [ entry ] ) => {
+        if ( entry && entry.isIntersecting && items.length && latestItem !== latestItemRef.current ) {
+          fetchMore();
+          latestItemRef.current = latestItem;
+        }
+      } );
+
+      observer.observe( el );
+      return () => observer.disconnect();
     }
-  };
+  }, [ fetchMore ] );
 
   return (
     <>
       { children }
-      <InView rootMargin="200px" as="div" onChange={ onChange } className="w-full h-px"/>
+      <div ref={ divRef } className="w-full h-px" />
     </>
   );
 };
