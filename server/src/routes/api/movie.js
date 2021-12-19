@@ -7,9 +7,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { convertMovie } from '../../converters/convert_movie';
 import { UPLOAD_PATH } from '../../paths';
+import { MOVIE_FORMAT } from '../../../../constants/config';
 
 // 変換した動画の拡張子
-const EXTENSION = 'webm';
+const EXTENSION = MOVIE_FORMAT;
 
 const router = Router();
 

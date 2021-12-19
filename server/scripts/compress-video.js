@@ -3,7 +3,7 @@ const glob = require( 'glob' );
 const fs   = require( 'fs' );
 
 const ffmpeg = createFFmpeg( { log: true } );
-const BITRATE = '300k';
+const BITRATE = '250k';
 const WIDTH   = '500';
 
 
@@ -33,4 +33,4 @@ async function convert() {
   } );
 }
 
-convert().catch( e => console.error( e ) );
+convert().catch( console.error );

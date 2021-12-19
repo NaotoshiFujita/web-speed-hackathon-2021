@@ -1,4 +1,5 @@
 const { createFFmpeg, fetchFile } = require( '@ffmpeg/ffmpeg' );
+const { AUDIO_FORMAT } = require( '../../constants/config' );
 const glob = require( 'glob' );
 const fs   = require( 'fs' );
 
@@ -10,7 +11,7 @@ async function convert() {
 
   glob( '../public/sounds/**/*.mp3', {}, async function ( err, files ) {
     for ( const file of files ) {
-      const out  = file.replace( '.mp3', '.aac' );
+      const out  = file.replace( '.mp3', `.${ AUDIO_FORMAT }` );
 
       ffmpeg.FS( 'writeFile', 'source', await fetchFile( file ) );
 
@@ -21,10 +22,10 @@ async function convert() {
         'aac',
         '-b:a',
         BITRATE,
-        'output.aac'
+        `output${ AUDIO_FORMAT }`
       );
 
-      await fs.promises.writeFile( out, ffmpeg.FS( 'readFile', 'output.aac' ) );
+      await fs.promises.writeFile( out, ffmpeg.FS( 'readFile', `output.${ AUDIO_FORMAT }` ) );
     }
   } );
 }

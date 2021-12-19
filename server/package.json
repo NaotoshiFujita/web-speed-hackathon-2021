@@ -9,7 +9,7 @@
     "prestart": "npm-run-all prestart:clean prestart:init",
     "start": "node --experimental-wasm-threads dist/index.js",
     "prestart:clean": "rimraf ../upload",
-    "prestart:init": "mkdirp ../upload/images ../upload/movies ../upload/sounds"
+    "prestart:init": "mkdirp ../upload/images ../upload/images/waves ../upload/movies ../upload/sounds"
   },
   "dependencies": {
     "@babel/core": "7.16.0",

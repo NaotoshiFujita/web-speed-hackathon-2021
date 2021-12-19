@@ -1,4 +1,4 @@
-import { IMAGE_FORMAT } from '../constants/image';
+import { AUDIO_FORMAT, IMAGE_FORMAT, MOVIE_FORMAT } from '../../../constants/config';
 
 
 /**
@@ -15,7 +15,7 @@ function getImagePath( imageId, small) {
  * @returns {string}
  */
 function getMoviePath(movieId) {
-  return `/movies/${movieId}.webm`;
+  return `/movies/${movieId}.${ MOVIE_FORMAT }`;
 }
 
 /**
@@ -32,7 +32,7 @@ function getPosterPath(movieId) {
  * @returns {string}
  */
 function getSoundPath(soundId) {
-  return `/sounds/${soundId}.aac`;
+  return `/sounds/${soundId}.${ AUDIO_FORMAT }`;
 }
 
 /**

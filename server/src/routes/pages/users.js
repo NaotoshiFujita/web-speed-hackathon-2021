@@ -6,8 +6,7 @@ import { PAGES } from '../../constants/pages';
 import { resolve } from 'path';
 import { PUBLIC_PATH } from '../../paths';
 import { getAverageColor } from 'fast-average-color-node';
-import { IMAGE_FORMAT } from '../../constants/image';
-import { POSTS_LIMIT } from '../../../../constants/config';
+import { IMAGE_FORMAT, POSTS_LIMIT } from '../../../../constants/config';
 import { collectPreAssets } from '../../ssr/collectPreAssets';
 
 

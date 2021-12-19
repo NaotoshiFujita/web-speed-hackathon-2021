@@ -67,10 +67,10 @@ function svg( max, peaks ) {
   return svg;
 }
 
-async function build( data ) {
+async function generateWave( data ) {
   const { max, peaks } = await decode( data );
   return svg( max, peaks );
 }
 
 module.exports.decode = decode;
-module.exports.build  = build;
+module.exports.generateWave = generateWave;

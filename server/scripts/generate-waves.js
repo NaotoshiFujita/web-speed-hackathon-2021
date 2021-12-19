@@ -1,7 +1,7 @@
-const fs        = require( 'fs' ).promises;
-const { build } = require( '../src/utils/sound-wave' );
-const glob      = require( 'glob' );
-const path      = require( 'path' );
+const { generateWave } = require( '../src/utils/sound-wave' );
+const glob = require( 'glob' );
+const path = require( 'path' );
+const fs   = require( 'fs' ).promises;
 
 
 async function generateWaves() {

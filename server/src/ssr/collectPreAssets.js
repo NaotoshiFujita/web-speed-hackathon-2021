@@ -1,4 +1,4 @@
-import { IMAGE_FORMAT } from '../constants/image';
+import { IMAGE_FORMAT } from '../../../constants/config';
 
 
 export function collectPreAssets( items, endIndex ) {
