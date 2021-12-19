@@ -3,12 +3,12 @@ import { render } from '../../ssr/render';
 import { brotli, canUseBrotli } from '../../utils/brotli';
 import { Post, User } from '../../models';
 import { PAGES } from '../../constants/pages';
-// import { collectPreAssets } from '../../ssr/collectLinks';
 import { resolve } from 'path';
 import { PUBLIC_PATH } from '../../paths';
 import { getAverageColor } from 'fast-average-color-node';
 import { IMAGE_FORMAT } from '../../constants/image';
 import { POSTS_LIMIT } from '../../../../constants/config';
+import { collectPreAssets } from '../../ssr/collectPreAssets';
 
 
 const router = Router();
@@ -28,8 +28,7 @@ router.get( PAGES.users, async ( req, res ) => {
 
     // todo hack
     user.color = await getColor( user.profileImage.id );
-
-    // links = collectPreAssets( posts, 3 );
+    links = collectPreAssets( posts, 3 );
   }
 
   const html   = await render( req.url, fallback, links );

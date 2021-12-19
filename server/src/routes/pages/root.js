@@ -4,6 +4,7 @@ import { render } from '../../ssr/render';
 import { brotli, canUseBrotli } from '../../utils/brotli';
 import { PAGES } from '../../constants/pages';
 import { POSTS_LIMIT } from '../../../../constants/config';
+import { collectPreAssets } from '../../ssr/collectPreAssets';
 
 
 const router = Router();
@@ -14,7 +15,7 @@ router.get( PAGES.root, async ( req, res ) => {
   const posts = await getPosts(); // todo
   fallback[ '/api/v1/posts' ] = [ posts ];
 
-  const html   = await render( req.url, fallback );
+  const html   = await render( req.url, fallback, collectPreAssets( posts, 3 ) );
   const canUse = canUseBrotli( req );
 
   if ( canUse ) {
@@ -32,21 +33,5 @@ router.get( PAGES.root, async ( req, res ) => {
 async function getPosts() {
   return await Post.findAll( { limit : POSTS_LIMIT, offset: 0 } );
 }
-
-// function collectLinks( posts ) {
-//   const images = [];
-//
-//   if ( posts ) {
-//     posts.slice( 0, 4 ).forEach( post => {
-//       images.push( ...post.images.map( image => {
-//         return `/images/${ image.id }${ post.images.length > 3 ? '.small' : '' }.${ IMAGE_FORMAT }`;
-//       } ) );
-//       images.push( `/images/profiles/${ post.user.profileImage.id }.small.${ IMAGE_FORMAT }` );
-//     } );
-//   }
-//
-//   return images.map( path => `<link rel="preload" href="${ path }" as="image">` ).join( '' );
-// }
-
 
 export { router as rootRouter };

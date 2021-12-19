@@ -17,7 +17,7 @@ export function buildHtml( {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CAwitter</title>
   <style>${ readCSS() }</style>
-  ${ links }<link rel="preload" as="style" href="/styles/webfont.css" onload="this.onload = null;requestIdleCallback(() => {this.rel = 'stylesheet'})">
+  ${ links }<link rel="preload" as="style" href="/styles/webfont.css" id="webfont">
   ${ scripts }
 </head>
 <body>
