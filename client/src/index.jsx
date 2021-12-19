@@ -3,42 +3,38 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { AppContainer } from './containers/AppContainer';
 import { loadableReady } from '@loadable/component';
-import { SWRConfig } from 'swr';
+import { SWRConfigWrapper } from './components/swr';
 
 
-// window.addEventListener( 'load', () => {
-// setTimeout( () => {
-  const fallbackElm = document.getElementById( 'swr-fallback' );
-  let fallback = {};
+const fallbackElm = document.getElementById( 'swr-fallback' );
+let fallback = {};
 
-  if ( fallbackElm ) {
-    try {
-      fallback = JSON.parse( fallbackElm.textContent );
-    } catch ( e ) {
-      console.error( e );
-    }
-
-    loadableReady( render );
-  } else {
-    render();
+if ( fallbackElm ) {
+  try {
+    fallback = JSON.parse( fallbackElm.textContent );
+  } catch ( e ) {
+    console.error( e );
   }
 
-  const config = {
-    shouldRetryOnError: false,
-    revalidateIfStale : false,
-    revalidateOnFocus : false,
-    fallback,
-  };
+  loadableReady( render );
+} else {
+  render();
+}
 
-  function render() {
-    ReactDOM.hydrate(
-      <BrowserRouter>
-        <SWRConfig value={ config }>
-          <AppContainer/>
-        </SWRConfig>
-      </BrowserRouter>,
-      document.getElementById( 'app' )
-    );
-  }
-// } );
-// } );
+const config = {
+  shouldRetryOnError: false,
+  revalidateIfStale : false,
+  revalidateOnFocus : false,
+  fallback,
+};
+
+function render() {
+  ReactDOM.hydrate(
+    <BrowserRouter>
+      <SWRConfigWrapper config={ config }>
+        <AppContainer/>
+      </SWRConfigWrapper>
+    </BrowserRouter>,
+    document.getElementById( 'app' )
+  );
+}

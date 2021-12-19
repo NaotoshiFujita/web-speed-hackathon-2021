@@ -1,0 +1,1 @@
+export { SWRConfigWrapper } from './SWRConfigWrapper';

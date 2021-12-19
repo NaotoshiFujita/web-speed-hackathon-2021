@@ -14,7 +14,7 @@ export async function render( url, fallback = {}, links = '' ) {
 
   const app = extractor.collectChunks( (
     <StaticRouter location={ url } context={ {} }>
-      <SWRConfig value={ { fallback } }>
+      <SWRConfig value={ { fallback, revalidateIfStale: false } }>
         <AppContainer />
       </SWRConfig>
     </StaticRouter>

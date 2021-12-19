@@ -23,7 +23,7 @@ const AppContainer = () => {
   }, [ pathname ] );
 
   const [ activeUser, setActiveUser ] = useState( null );
-  const { data = null, isLoading } = useFetch( '/api/v1/me', fetchJSON );
+  const { data = null, isValidating } = useFetch( '/api/v1/me', fetchJSON );
 
   useEffect( () => {
     setActiveUser( data );
@@ -34,7 +34,7 @@ const AppContainer = () => {
   const handleRequestOpenPostModal = useCallback( () => setModalType( 'post' ), [] );
   const handleRequestCloseModal    = useCallback( () => setModalType( 'none' ), [] );
 
-  if ( isLoading && typeof window !== 'undefined' ) {
+  if ( isValidating ) {
     return <Loading />
   }
 
