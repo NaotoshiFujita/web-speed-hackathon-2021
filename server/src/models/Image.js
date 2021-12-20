@@ -25,6 +25,27 @@ const Image = sequelize.define('Image', {
     primaryKey: true,
     type: DataTypes.UUID,
   },
+  width: {
+    allowNull: false,
+    defaultValue: 0,
+    type: DataTypes.NUMBER,
+  },
+  height: {
+    allowNull: false,
+    defaultValue: 0,
+    type: DataTypes.NUMBER,
+  },
+  // todo: horrible
+  smallWidth: {
+    allowNull: false,
+    defaultValue: 0,
+    type: DataTypes.NUMBER,
+  },
+  smallHeight: {
+    allowNull: false,
+    defaultValue: 0,
+    type: DataTypes.NUMBER,
+  },
 });
 
 export { Image };

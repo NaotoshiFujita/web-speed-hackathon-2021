@@ -1,7 +1,7 @@
 const { fetchFile, createFFmpeg } = require( '@ffmpeg/ffmpeg' );
 const glob                        = require( 'glob' );
 const fs                          = require( 'fs' );
-const { compress }                = require( './compress-image' );
+const { compressImage }           = require( './compress-image' );
 
 const ffmpeg = createFFmpeg( { log: true } );
 
@@ -24,7 +24,7 @@ async function convert() {
       await fs.promises.writeFile( out, ffmpeg.FS( 'readFile', 'output.jpg' ) );
 
       // todo
-      await compress( out, 600 );
+      await compressImage( out, 600 );
       await fs.promises.unlink( out );
     }
   } );

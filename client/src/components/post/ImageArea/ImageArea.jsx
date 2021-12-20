@@ -19,6 +19,7 @@ const ImageArea = ({ images, lazy = true }) => {
       <div className="grid gap-1 grid-cols-2 grid-rows-2 w-full h-full border border-gray-300 rounded-lg overflow-hidden">
         {images.map((image, idx) => {
           const { length } = images;
+          const small = length > 3;
 
           return (
             <div
@@ -34,8 +35,10 @@ const ImageArea = ({ images, lazy = true }) => {
               <InViewImg
                 alt={ image.alt }
                 className="relative w-full h-full object-cover overflow-hidden"
-                src={ getImagePath( image.id, length > 3 ) }
+                src={ getImagePath( image.id, small ) }
                 lazy={ lazy }
+                width={ small ? image.smallWidth : image.width }
+                height={ small ? image.smallHeight : image.height }
               />
             </div>
           );
