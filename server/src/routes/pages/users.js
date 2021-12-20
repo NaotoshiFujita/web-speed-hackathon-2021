@@ -3,11 +3,10 @@ import { render } from '../../ssr/render';
 import { brotli, canUseBrotli } from '../../utils/brotli';
 import { Post, User } from '../../models';
 import { PAGES } from '../../constants/pages';
-import { resolve } from 'path';
-import { PUBLIC_PATH } from '../../paths';
-import { getAverageColor } from 'fast-average-color-node';
 import { IMAGE_FORMAT, POSTS_LIMIT } from '../../../../constants/config';
 import { collectPreAssets } from '../../ssr/collectPreAssets';
+import { pathToPreloadLink } from '../../ssr/pathToPreloadLink';
+import { extractUserColor } from '../../utils/extract-user-color';
 
 
 const router = Router();
@@ -20,14 +19,16 @@ router.get( PAGES.users, async ( req, res ) => {
   let links = '';
 
   if ( user ) {
+    // todo hack
+    // user.color = await extractUserColor( user.profileImage.id );
+
     fallback[ `/api/v1/users/${ username }` ] = user;
 
     const posts = await getPosts( user.id );
     fallback[ `/api/v1/users/${ username }/posts` ] = [ posts ];
 
-    // todo hack
-    user.color = await getColor( user.profileImage.id );
-    links = collectPreAssets( posts, 3 );
+    links = pathToPreloadLink( `/images/profiles/${ user.profileImage.id }.${ IMAGE_FORMAT }` );
+    links += collectPreAssets( posts, 2 );
   }
 
   const html   = await render( req.url, fallback, links );
@@ -50,15 +51,6 @@ async function getPosts( userId ) {
     offset: 0,
     where : { userId },
   } );
-}
-
-async function getColor( profileImageId ) {
-  const { rgb } = await getAverageColor(
-    resolve( PUBLIC_PATH, `./images/profiles/${ profileImageId }.${ IMAGE_FORMAT }` ),
-    { mode: 'precision' }
-  );
-
-  return rgb;
 }
 
 export { router as usersRouter };

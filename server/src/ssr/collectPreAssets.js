@@ -1,4 +1,5 @@
 import { IMAGE_FORMAT } from '../../../constants/config';
+import { pathToPreloadLink } from './pathToPreloadLink';
 
 
 export function collectPreAssets( items, endIndex ) {
@@ -18,5 +19,5 @@ export function collectPreAssets( items, endIndex ) {
     } );
   }
 
-  return images.map( path => `<link rel="preload" href="${ path }" as="image">` ).join( '' );
+  return images.map( path => pathToPreloadLink( path ) ).join( '' );
 }
