@@ -31,6 +31,11 @@ const Sound = sequelize.define('Sound', {
     defaultValue: 'Unknown',
     type: DataTypes.STRING,
   },
+  wave: {
+    allowNull: false,
+    defaultValue: '',
+    type: DataTypes.JSON,
+  }
 });
 
 export { Sound };

@@ -1,8 +1,9 @@
-import React, { useRef, useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 
-import { getSoundPath, getSoundWavePath } from '../../../utils/get_path';
+import { getSoundPath } from '../../../utils/get_path';
 import { AspectRatioBox } from '../AspectRatioBox';
 import { FontAwesomeIcon } from '../FontAwesomeIcon';
+import { SoundWaveSVG } from '../SoundWaveSVG';
 
 /**
  * @typedef {object} Props
@@ -62,7 +63,7 @@ const SoundPlayer = ( { sound } ) => {
         <div className="pt-2">
           <AspectRatioBox aspectHeight={ 1 } aspectWidth={ 10 }>
             <div className="absolute inset-0 w-full h-full">
-              <img className="w-full h-full" src={ getSoundWavePath( sound.id ) } />
+              <SoundWaveSVG wave={ sound.wave } />
             </div>
             <div
               className="absolute inset-0 w-full h-full bg-gray-300 opacity-75"

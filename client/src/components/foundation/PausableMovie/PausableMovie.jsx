@@ -17,26 +17,8 @@ import { getMoviePath, getPosterPath } from '../../../utils/get_path';
 const PausableMovie = ({ id }) => {
   const [ isPlaying, setIsPlaying ] = React.useState( true );
 
-  const videoRef = React.useRef( null );
-  const videoCallbackRef = useCallback(
-    el => {
-      if ( el ) {
-        if ( window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches ) {
-          setIsPlaying( false );
-          el.pause();
-        } else {
-          setIsPlaying( true );
-          el.play()
-        }
-
-        videoRef.current = el;
-      }
-    },
-    []
-  );
-
-  const handleClick = useCallback( () => {
-    const { current } = videoRef;
+  const handleClick = useCallback( e => {
+    const { currentTarget: current } = e;
 
     if ( current ) {
       setIsPlaying( isPlaying => {
@@ -50,7 +32,6 @@ const PausableMovie = ({ id }) => {
     <AspectRatioBox aspectHeight={1} aspectWidth={1}>
       <button className="group relative block h-full" onClick={ handleClick } type="button">
         <video
-          ref={ videoCallbackRef }
           className="w-full h-full object-cover"
           src={ getMoviePath( id ) }
           disablePictureInPicture
@@ -58,6 +39,10 @@ const PausableMovie = ({ id }) => {
           muted
           playsInline
           preload="metadata"
+          autoPlay={ typeof window !== 'undefined' && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches
+            ? null
+            : true
+          }
         />
         <div
           className={classNames(

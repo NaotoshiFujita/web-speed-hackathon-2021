@@ -73,4 +73,5 @@ async function generateWave( data ) {
 }
 
 module.exports.decode = decode;
+module.exports.svg = svg;
 module.exports.generateWave = generateWave;

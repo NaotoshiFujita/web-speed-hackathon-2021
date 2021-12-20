@@ -9,7 +9,7 @@ import { convertSound } from '../../converters/convert_sound';
 import { UPLOAD_PATH } from '../../paths';
 import { extractMetadataFromSound } from '../../utils/extract_metadata_from_sound';
 import { AUDIO_FORMAT } from '../../../../constants/config';
-import { generateWave } from '../../utils/sound-wave';
+import { decode, generateWave } from '../../utils/sound-wave';
 
 // 変換した音声の拡張子
 const EXTENSION = AUDIO_FORMAT;
@@ -36,10 +36,9 @@ router.post('/sounds', async (req, res) => {
   const filePath = path.resolve(UPLOAD_PATH, `./sounds/${soundId}.${EXTENSION}`);
   await fs.writeFile(filePath, converted);
 
-  const waveFilePath = path.resolve(UPLOAD_PATH, `./images/waves/${soundId}.svg`);
-  await fs.writeFile(waveFilePath, await generateWave( converted ));
+  const wave = JSON.stringify( await decode( converted ) );
 
-  return res.status(200).type('application/json').send({ artist, id: soundId, title });
+  return res.status(200).type('application/json').send({ artist, id: soundId, title, wave });
 });
 
 export { router as soundRouter };

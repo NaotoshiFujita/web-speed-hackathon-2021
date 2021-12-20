@@ -26,6 +26,7 @@ const CommentItem = ({ comment }) => {
               src={getProfileImagePath(comment.user.profileImage.id, true)}
               width={ PROFILE_IMAGE_SMALL_SIZE }
               height={ PROFILE_IMAGE_SMALL_SIZE }
+              loading="lazy"
             />
           </Link>
         </div>

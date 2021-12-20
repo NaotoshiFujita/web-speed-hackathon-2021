@@ -6,7 +6,7 @@ const GENERAL_SIZE       = 600;
 const GENERAL_SMALL_SIZE = 400;
 const PROFILE_SIZE       = 128;
 const PROFILE_SMALL_SIZE = 80;
-const OPTIONS             = { quality: 10, alphaQuality: 0 };
+const OPTIONS            = { quality: 10, alphaQuality: 0 };
 
 
 glob( '../public/images/**/*.jpg', {}, function ( err, files ) {

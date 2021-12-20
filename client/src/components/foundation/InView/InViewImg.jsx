@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 
-export const InViewImg = ( { src, alt = '', lazy, ...props } ) => {
+export const InViewImg = ( { src, alt = '', lazy, ssr = true, ...props } ) => {
   const imageRef = useRef();
 
   if ( lazy ) {
@@ -26,7 +26,7 @@ export const InViewImg = ( { src, alt = '', lazy, ...props } ) => {
     <img
       ref={ imageRef }
       src={ lazy
-        ? ''
+        ? 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mO8ePX2fwAIggOCR8M6ygAAAABJRU5ErkJggg=='
         : src
       }
       alt={ alt }
