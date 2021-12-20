@@ -20,7 +20,7 @@ router.get( PAGES.posts, async ( req, res ) => {
     const comments = await getComments( postId );
     fallback[ `/api/v1/posts/${ postId }` ] = post;
     fallback[ `/api/v1/posts/${ postId }/comments` ] = [ comments ];
-    links = collectPreAssets( [ post ], 1 ) + collectPreAssets( comments, 5 );
+    links = collectPreAssets( [ post ], 1 ) + collectPreAssets( comments, COMMENTS_LIMIT );
   }
 
   const html   = await render( req.url, fallback, links );

@@ -6,7 +6,7 @@ const GENERAL_SIZE       = 600;
 const GENERAL_SMALL_SIZE = 400;
 const PROFILE_SIZE       = 128;
 const PROFILE_SMALL_SIZE = 80;
-const OPTIONS             = { quality: 30, alphaQuality: 0 };
+const OPTIONS             = { quality: 10, alphaQuality: 0 };
 
 
 glob( '../public/images/**/*.jpg', {}, function ( err, files ) {
@@ -22,7 +22,7 @@ glob( '../public/images/**/*.jpg', {}, function ( err, files ) {
 } );
 
 function compress( path, size, suffix = '', extension = 'jpg' ) {
-  sharp( path )
+  return sharp( path )
     .resize( { height: size, width: size, fit: 'inside' } )
     .webp( OPTIONS )
     .toFile( path.replace( `.${ extension }`, `${ suffix }.${ IMAGE_FORMAT }` ) );

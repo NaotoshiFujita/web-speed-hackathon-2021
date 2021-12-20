@@ -1,24 +1,35 @@
-import React, { useCallback } from 'react';
-import InView from 'react-intersection-observer';
+import React, { useEffect, useRef } from 'react';
 
 
-export const InViewImg = ( { src, lazy, ...props } ) => {
-  const onChange = useCallback( ( inView, entry ) => {
-    if ( inView ) {
-      entry.target.src = src;
-    }
-  }, [ src ] );
+export const InViewImg = ( { src, alt = '', lazy, ...props } ) => {
+  const imageRef = useRef();
+
+  if ( lazy ) {
+    useEffect( () => {
+      const { current: el } = imageRef;
+
+      if ( el && el.src !== src ) {
+        const observer = new IntersectionObserver( ( [ entry ] ) => {
+          if ( entry && entry.isIntersecting ) {
+            el.src = src;
+            observer.disconnect();
+          }
+        } );
+
+        observer.observe( el );
+        return () => observer.disconnect();
+      }
+    }, [] );
+  }
 
   return (
-    <InView
-      rootMargin="200px"
-      as="img"
+    <img
+      ref={ imageRef }
       src={ lazy
-        ? 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
+        ? ''
         : src
       }
-      triggerOnce
-      onChange={ onChange }
+      alt={ alt }
       { ...props }
     />
   );

@@ -10,7 +10,7 @@ async function convert() {
 
   glob( '../public/movies/**/*.gif', {}, async function ( err, files ) {
     for ( const file of files ) {
-      const out = file.replace( '/movies/', '/images/posters/' ).replace( '.gif', '.webp' );
+      const out = file.replace( '/movies/', '/images/posters/' ).replace( '.gif', '.jpg' );
 
       ffmpeg.FS( 'writeFile', 'source', await fetchFile( file ) );
 
@@ -18,13 +18,14 @@ async function convert() {
         '-f', 'gif',
         '-i', 'source',
         '-frames:v', '1',
-        'output.webp',
+        'output.jpg',
       );
 
-      await fs.promises.writeFile( out, ffmpeg.FS( 'readFile', 'output.webp' ) );
+      await fs.promises.writeFile( out, ffmpeg.FS( 'readFile', 'output.jpg' ) );
 
       // todo
-      compress( out, 600, '', 'webp' );
+      await compress( out, 600 );
+      await fs.promises.unlink( out );
     }
   } );
 }

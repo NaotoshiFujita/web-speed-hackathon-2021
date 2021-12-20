@@ -23,9 +23,8 @@ export async function render( url, fallback = {}, links = '' ) {
   return buildHtml( {
     fallback: JSON.stringify( fallback ),
     app     : renderToString( app ),
-    scripts : extractor.getScriptTags( { defer: true } ),
+    scripts : extractor.getScriptTags( { defer: true } ).replace( /async\s/g, '' ),
     links,
-    // links   : links + extractor.getLinkTags().replace( /<link.*?style.*?>/g, ''),
   } );
 }
 

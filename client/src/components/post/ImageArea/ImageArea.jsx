@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { getImagePath } from '../../../utils/get_path';
 import { AspectRatioBox } from '../../foundation/AspectRatioBox';
+import { InViewImg } from '../../foundation/InView';
 
 
 /**
@@ -30,11 +31,11 @@ const ImageArea = ({ images, lazy = true }) => {
                 'row-span-2': length <= 2 || (length === 3 && idx === 0),
               })}
             >
-              <img
+              <InViewImg
                 alt={ image.alt }
                 className="relative w-full h-full object-cover overflow-hidden"
                 src={ getImagePath( image.id, length > 3 ) }
-                loading="lazy"
+                lazy={ lazy }
               />
             </div>
           );

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { getProfileImagePath } from '../../../utils/get_path';
 import { Time } from '../../foundation/Time';
 import { PROFILE_IMAGE_SMALL_SIZE } from '../../../constants/image';
+import { InViewImg } from '../../foundation/InView';
 
 /**
  * @typedef {object} Props
@@ -20,12 +21,11 @@ const CommentItem = ({ comment }) => {
             className="block w-8 h-8 bg-gray-300 border border-gray-300 rounded-full hover:opacity-75 overflow-hidden sm:w-12 sm:h-12"
             to={`/users/${comment.user.username}`}
           >
-            <img
+            <InViewImg
               alt={comment.user.profileImage.alt}
               src={getProfileImagePath(comment.user.profileImage.id, true)}
               width={ PROFILE_IMAGE_SMALL_SIZE }
               height={ PROFILE_IMAGE_SMALL_SIZE }
-              loading="lazy"
             />
           </Link>
         </div>

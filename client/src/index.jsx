@@ -5,7 +5,6 @@ import { AppContainer } from './containers/AppContainer';
 import { loadableReady } from '@loadable/component';
 import { SWRConfigWrapper } from './components/swr';
 import { requestIdleCallback } from './utils/requestIdleCallback';
-import 'swr'; // Disables code splitting
 
 
 const fallbackElm = document.getElementById( 'swr-fallback' );
