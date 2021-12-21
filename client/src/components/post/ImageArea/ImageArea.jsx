@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { getImagePath } from '../../../utils/get_path';
 import { AspectRatioBox } from '../../foundation/AspectRatioBox';
-import { InViewImg } from '../../foundation/InView';
+import { InViewImg } from '../../foundation/Lazy';
 
 
 /**

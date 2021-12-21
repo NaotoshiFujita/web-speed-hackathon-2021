@@ -26,7 +26,9 @@ export function buildHtml( {
     ${ app }
   </div>
   <div id="modal"></div>
+  <div hidden>
   ${ readIcons() }
+  </div>
   <script id="swr-fallback" type="application/json">
     ${ fallback }
   </script>

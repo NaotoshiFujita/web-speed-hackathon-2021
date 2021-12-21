@@ -14,7 +14,7 @@ export function collectPreAssets( items, endIndex ) {
       }
 
       if ( item.user ) {
-        images.push( `/images/profiles/${ item.user.profileImage.id }.small.${ IMAGE_FORMAT }` );
+        // images.push( `/images/profiles/${ item.user.profileImage.id }.small.${ IMAGE_FORMAT }` );
       }
     } );
   }

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { getProfileImagePath } from '../../../utils/get_path';
 import { Time } from '../../foundation/Time';
 import { PROFILE_IMAGE_SMALL_SIZE } from '../../../constants/image';
-import { InViewImg } from '../../foundation/InView';
+import { InViewImg } from '../../foundation/Lazy';
 
 /**
  * @typedef {object} Props
@@ -26,7 +26,7 @@ const CommentItem = ({ comment }) => {
               src={getProfileImagePath(comment.user.profileImage.id, true)}
               width={ PROFILE_IMAGE_SMALL_SIZE }
               height={ PROFILE_IMAGE_SMALL_SIZE }
-              loading="lazy"
+              lazy={ true }
             />
           </Link>
         </div>

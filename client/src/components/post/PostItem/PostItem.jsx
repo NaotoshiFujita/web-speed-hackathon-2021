@@ -7,6 +7,7 @@ import { MovieArea } from '../../post/MovieArea';
 import { SoundArea } from '../../post/SoundArea';
 import { Time } from '../../foundation/Time';
 import { PROFILE_IMAGE_SMALL_SIZE } from '../../../constants/image';
+import { InViewImg } from '../../foundation/Lazy';
 
 /**
  * @typedef {object} Props
@@ -24,11 +25,12 @@ const PostItem = ({ post }) => {
               className="block w-14 h-14 bg-gray-300 border border-gray-300 rounded-full hover:opacity-95 overflow-hidden sm:w-16 sm:h-16"
               to={ `/users/${ post.user.username }` }
             >
-              <img
+              <InViewImg
                 alt={ post.user.profileImage.alt }
                 src={ getProfileImagePath( post.user.profileImage.id, true ) }
                 width={ PROFILE_IMAGE_SMALL_SIZE }
                 height={ PROFILE_IMAGE_SMALL_SIZE }
+                lazy={ true }
               />
             </Link>
           </div>

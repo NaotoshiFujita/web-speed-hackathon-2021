@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 
 import { AspectRatioBox } from '../AspectRatioBox';
 import { FontAwesomeIcon } from '../FontAwesomeIcon';
-import { getMoviePath, getPosterPath } from '../../../utils/get_path';
+import { getMoviePath } from '../../../utils/get_path';
 
 /**
  * @typedef {object} Props
@@ -38,7 +38,6 @@ const PausableMovie = ({ id }) => {
           loop
           muted
           playsInline
-          preload="metadata"
           autoPlay={ typeof window !== 'undefined' && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches
             ? null
             : true

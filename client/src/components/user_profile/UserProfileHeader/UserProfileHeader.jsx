@@ -40,7 +40,6 @@ const UserProfileHeader = ({ user }) => {
           src={getProfileImagePath(user.profileImage.id)}
           width={ PROFILE_IMAGE_SIZE }
           height={ PROFILE_IMAGE_SIZE }
-          loading="lazy"
         />
       </div>
       <div className="pt-20 px-4">

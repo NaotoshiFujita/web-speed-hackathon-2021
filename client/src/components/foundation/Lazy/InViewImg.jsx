@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { PLACEHOLDER } from './constants';
 
 
 export const InViewImg = ( { src, alt = '', lazy, ssr = true, ...props } ) => {
@@ -23,14 +24,6 @@ export const InViewImg = ( { src, alt = '', lazy, ssr = true, ...props } ) => {
   }
 
   return (
-    <img
-      ref={ imageRef }
-      src={ lazy
-        ? 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mO8ePX2fwAIggOCR8M6ygAAAABJRU5ErkJggg=='
-        : src
-      }
-      alt={ alt }
-      { ...props }
-    />
+    <img ref={ imageRef } src={ lazy ? PLACEHOLDER : src } alt={ alt } { ...props } />
   );
 }
