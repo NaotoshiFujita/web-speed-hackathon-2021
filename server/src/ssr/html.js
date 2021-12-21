@@ -18,7 +18,7 @@ export function buildHtml( {
   <title>CAwitter</title>
   ${ scripts }
   ${ links }
-  <link rel="prefetch" as="style" href="/styles/webfont.css" id="webfont">
+<!--  <link rel="prefetch" as="style" href="/styles/webfont.css" id="webfont">-->
   <style>${ readCSS() }</style>
 </head>
 <body>

@@ -1,5 +1,9 @@
-exports.COMMENTS_LIMIT = 10;
-exports.POSTS_LIMIT    = 7;
-exports.IMAGE_FORMAT   = 'avif';
-exports.MOVIE_FORMAT   = 'webm';
-exports.AUDIO_FORMAT   = 'aac';
+exports.COMMENTS_LIMIT                  = 10;
+exports.POSTS_LIMIT                     = 7;
+exports.IMAGE_FORMAT                    = 'avif';
+exports.MOVIE_FORMAT                    = 'webm';
+exports.AUDIO_FORMAT                    = 'aac';
+exports.PROFILE_IMAGE_SIZE              = 128;
+exports.PROFILE_IMAGE_SMALL_SIZE        = 80;
+exports.TIMELINE_LAZYLOAD_MIN_INDEX     = 3;
+exports.USER_PROFILE_LAZYLOAD_MIN_INDEX = 2;

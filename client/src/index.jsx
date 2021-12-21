@@ -41,10 +41,27 @@ function render() {
 }
 
 // Ensures the loading order.
-const webfontLink = document.getElementById( 'webfont' );
+// document.head.insertAdjacentHTML(
+//   'beforeend',
+//   `<link rel="preload" as="style" href="/styles/webfont.css" id="webfont">`
+// );
 
-if ( webfontLink ) {
-  requestIdleCallback( () => {
-    webfontLink.rel = 'stylesheet';
-  } );
-}
+const link = document.createElement( 'link' );
+link.rel  = 'preload';
+link.as   = 'style';
+link.href = '/styles/webfont.css';
+
+document.head.append( link );
+
+requestIdleCallback( () => {
+  link.rel = 'stylesheet';
+} );
+
+// const webfontLink = document.getElementById( 'webfont' );
+
+// if ( webfontLink ) {
+//   requestIdleCallback( () => {
+//     webfontLink.rel = 'stylesheet';
+//   } );
+// }
+

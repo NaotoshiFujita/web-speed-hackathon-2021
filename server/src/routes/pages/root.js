@@ -3,7 +3,7 @@ import { Post } from '../../models';
 import { render } from '../../ssr/render';
 import { brotli, canUseBrotli } from '../../utils/brotli';
 import { PAGES } from '../../constants/pages';
-import { POSTS_LIMIT } from '../../../../constants/config';
+import { POSTS_LIMIT, TIMELINE_LAZYLOAD_MIN_INDEX } from '../../../../constants/config';
 import { collectPreAssets } from '../../ssr/collectPreAssets';
 
 
@@ -15,7 +15,7 @@ router.get( PAGES.root, async ( req, res ) => {
   const posts = await getPosts(); // todo
   fallback[ '/api/v1/posts' ] = [ posts ];
 
-  const html   = await render( req.url, fallback, collectPreAssets( posts, 3 ) );
+  const html   = await render( req.url, fallback, collectPreAssets( posts, TIMELINE_LAZYLOAD_MIN_INDEX ) );
   const canUse = canUseBrotli( req );
 
   if ( canUse ) {

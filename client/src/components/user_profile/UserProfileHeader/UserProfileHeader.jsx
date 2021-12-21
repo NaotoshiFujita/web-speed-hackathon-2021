@@ -4,7 +4,7 @@ import React from 'react';
 import { getProfileImagePath } from '../../../utils/get_path';
 import { FontAwesomeIcon } from '../../foundation/FontAwesomeIcon';
 import { Time } from '../../foundation/Time';
-import { PROFILE_IMAGE_SIZE } from '../../../constants/image';
+import { PROFILE_IMAGE_SIZE } from '../../../../../constants/config';
 
 /**
  * @typedef {object} Props
@@ -40,6 +40,7 @@ const UserProfileHeader = ({ user }) => {
           src={getProfileImagePath(user.profileImage.id)}
           width={ PROFILE_IMAGE_SIZE }
           height={ PROFILE_IMAGE_SIZE }
+          style={ { transform: 'translateZ(.1px)' } }
         />
       </div>
       <div className="pt-20 px-4">

@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 import { getProfileImagePath } from '../../../utils/get_path';
 import { Time } from '../../foundation/Time';
-import { PROFILE_IMAGE_SMALL_SIZE } from '../../../constants/image';
 import { InViewImg } from '../../foundation/Lazy';
+import { PROFILE_IMAGE_SMALL_SIZE } from '../../../../../constants/config';
 
 /**
  * @typedef {object} Props

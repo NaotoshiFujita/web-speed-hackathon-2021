@@ -37,6 +37,7 @@ const ImageArea = ({ images, lazy = true }) => {
                 className="relative w-full h-full object-cover overflow-hidden"
                 src={ getImagePath( image.id, small ) }
                 lazy={ lazy }
+                data-lazy={ lazy }
                 width={ small ? image.smallWidth : image.width }
                 height={ small ? image.smallHeight : image.height }
               />

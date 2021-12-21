@@ -6,8 +6,8 @@ import { ImageArea } from '../../post/ImageArea';
 import { MovieArea } from '../../post/MovieArea';
 import { SoundArea } from '../../post/SoundArea';
 import { Time } from '../../foundation/Time';
-import { LAZYLOAD_MIN_INDEX, PROFILE_IMAGE_SMALL_SIZE } from '../../../constants/image';
 import { InViewImg } from '../../foundation/Lazy';
+import { PROFILE_IMAGE_SMALL_SIZE } from '../../../../../constants/config';
 
 
 /**
@@ -36,9 +36,8 @@ const isClickedAnchorOrButton = (target, currentTarget) => {
  */
 
 /** @type {React.VFC<Props>} */
-const TimelineItem = ({ post, index }) => {
+const TimelineItem = ({ post, lazy }) => {
   const navigate = useNavigate();
-  const lazy     = index >= LAZYLOAD_MIN_INDEX;
 
   /**
    * ボタンやリンク以外の箇所をクリックしたとき かつ 文字が選択されてないとき、投稿詳細ページに遷移する

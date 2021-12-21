@@ -6,8 +6,8 @@ import { ImageArea } from '../../post/ImageArea';
 import { MovieArea } from '../../post/MovieArea';
 import { SoundArea } from '../../post/SoundArea';
 import { Time } from '../../foundation/Time';
-import { PROFILE_IMAGE_SMALL_SIZE } from '../../../constants/image';
 import { InViewImg } from '../../foundation/Lazy';
+import { PROFILE_IMAGE_SMALL_SIZE } from '../../../../../constants/config';
 
 /**
  * @typedef {object} Props
@@ -51,7 +51,7 @@ const PostItem = ({ post }) => {
           <p className="text-gray-800 text-xl leading-relaxed">{post.text}</p>
           { post.images?.length > 0 && (
             <div className="mt-2">
-              <ImageArea images={ post.images }/>
+              <ImageArea images={ post.images } lazy={ false }/>
             </div>
           ) }
           { post.movie && (

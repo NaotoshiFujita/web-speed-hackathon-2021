@@ -3,10 +3,9 @@ import { render } from '../../ssr/render';
 import { brotli, canUseBrotli } from '../../utils/brotli';
 import { Post, User } from '../../models';
 import { PAGES } from '../../constants/pages';
-import { IMAGE_FORMAT, POSTS_LIMIT } from '../../../../constants/config';
+import { IMAGE_FORMAT, POSTS_LIMIT, USER_PROFILE_LAZYLOAD_MIN_INDEX } from '../../../../constants/config';
 import { collectPreAssets } from '../../ssr/collectPreAssets';
 import { pathToPreloadLink } from '../../ssr/pathToPreloadLink';
-import { extractUserColor } from '../../utils/extract-user-color';
 
 
 const router = Router();
@@ -19,16 +18,13 @@ router.get( PAGES.users, async ( req, res ) => {
   let links = '';
 
   if ( user ) {
-    // todo hack
-    // user.color = await extractUserColor( user.profileImage.id );
-
     fallback[ `/api/v1/users/${ username }` ] = user;
 
     const posts = await getPosts( user.id );
     fallback[ `/api/v1/users/${ username }/posts` ] = [ posts ];
 
     links = pathToPreloadLink( `/images/profiles/${ user.profileImage.id }.${ IMAGE_FORMAT }` );
-    links += collectPreAssets( posts, 2 );
+    links += collectPreAssets( posts, USER_PROFILE_LAZYLOAD_MIN_INDEX );
   }
 
   const html   = await render( req.url, fallback, links );

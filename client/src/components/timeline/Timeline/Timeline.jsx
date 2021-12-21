@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { TimelineItem } from '../TimelineItem';
+import { TIMELINE_LAZYLOAD_MIN_INDEX } from '../../../../../constants/config';
 
 /**
  * @typedef {object} Props
@@ -8,11 +9,11 @@ import { TimelineItem } from '../TimelineItem';
  */
 
 /** @type {React.VFC<Props>} */
-const Timeline = ( { timeline } ) => {
+const Timeline = ( { timeline, lazyLoadMinIndex = TIMELINE_LAZYLOAD_MIN_INDEX } ) => {
   return (
     <section>
       { timeline.map( ( post, index ) => {
-        return <TimelineItem key={ post.id } post={ post } index={ index }/>;
+        return <TimelineItem key={ post.id } post={ post } lazy={ index >= lazyLoadMinIndex }/>;
       } ) }
     </section>
   );

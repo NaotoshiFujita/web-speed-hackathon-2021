@@ -1,14 +1,13 @@
-const sharp            = require( 'sharp' );
-const glob             = require( 'glob-promise' );
-const { IMAGE_FORMAT } = require( '../../constants/config' );
-const seeds            = require( '../seeds/images.json' );
-const path             = require( 'path' );
-const fs               = require( 'fs' ).promises;
+const sharp = require( 'sharp' );
+const glob  = require( 'glob-promise' );
+const seeds = require( '../seeds/images.json' );
+const path  = require( 'path' );
+const fs    = require( 'fs' ).promises;
+
+const { IMAGE_FORMAT, PROFILE_IMAGE_SIZE, PROFILE_IMAGE_SMALL_SIZE } = require( '../../constants/config' );
 
 const GENERAL_SIZE       = 600;
 const GENERAL_SMALL_SIZE = 400;
-const PROFILE_SIZE       = 128;
-const PROFILE_SMALL_SIZE = 80;
 const OPTIONS            = { quality: 10, alphaQuality: 0 };
 
 
@@ -19,8 +18,8 @@ async function compress() {
     const id = path.basename( file, '.jpg' );
 
     if ( file.includes( '/profiles/' ) ) {
-      compressImage( file, PROFILE_SIZE );
-      compressImage( file, PROFILE_SMALL_SIZE, '.small' );
+      compressImage( file, PROFILE_IMAGE_SIZE );
+      compressImage( file, PROFILE_IMAGE_SMALL_SIZE, '.small' );
     } else {
       const seed = seeds.find( seed => seed.id === id );
 
@@ -39,7 +38,8 @@ async function compress() {
 
 function compressImage( file, size, suffix = '', extension = 'jpg' ) {
   return sharp( file )
-    .resize( { height: size, width: size, fit: 'inside' } )
+    // .resize( { height: size, width: size, fit: 'inside' } )
+    .resize( { width: size } )
     .webp( OPTIONS )
     .toFile( file.replace( `.${ extension }`, `${ suffix }.${ IMAGE_FORMAT }` ) );
 }
