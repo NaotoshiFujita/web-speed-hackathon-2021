@@ -17,8 +17,16 @@ import { getMoviePath } from '../../../utils/get_path';
 const PausableMovie = ({ id }) => {
   const [ isPlaying, setIsPlaying ] = React.useState( true );
 
-  const handleClick = useCallback( e => {
-    const { currentTarget: current } = e;
+  const videoRef = React.useRef( null );
+  const videoCallbackRef = useCallback( el => {
+    if ( el ) {
+      el.src = getMoviePath( id );
+      videoRef.current = el;
+    }
+  }, [] );
+
+  const handleClick = useCallback( () => {
+    const { current } = videoRef;
 
     if ( current ) {
       setIsPlaying( isPlaying => {
@@ -32,8 +40,8 @@ const PausableMovie = ({ id }) => {
     <AspectRatioBox aspectHeight={1} aspectWidth={1}>
       <button className="group relative block h-full" onClick={ handleClick } type="button">
         <video
+          ref={ videoCallbackRef }
           className="w-full h-full object-cover"
-          src={ getMoviePath( id ) }
           disablePictureInPicture
           loop
           muted
