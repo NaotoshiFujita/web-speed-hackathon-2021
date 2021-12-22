@@ -1,6 +1,6 @@
 import Router from 'express-promise-router';
 import { render } from '../../ssr/render';
-import { brotli, canUseBrotli } from '../../utils/brotli';
+import { brotli } from '../../utils/brotli';
 import { Comment, Post } from '../../models';
 import { PAGES } from '../../constants/pages';
 import { COMMENTS_LIMIT } from '../../../../constants/config';
@@ -11,7 +11,7 @@ const router = Router();
 
 router.get( PAGES.posts, async ( req, res ) => {
   const { postId } = req.params;
-  const { fallback } = res.locals;
+  const { fallback, br } = res.locals;
   const post = await Post.findByPk( postId );
 
   let links;
@@ -23,18 +23,8 @@ router.get( PAGES.posts, async ( req, res ) => {
     links = collectPreAssets( [ post ], 1 );
   }
 
-  const html   = await render( req.url, fallback, links );
-  const canUse = canUseBrotli( req );
-
-  if ( canUse ) {
-    res.set( 'Content-Encoding', 'br' )
-  }
-
-  return res
-    .set( 'Content-Type', 'text/html; charset=UTF-8' )
-    .set( 'Cache-control', 'max-age=0, no-store' )
-    .status( 200 )
-    .send( canUse ? await brotli( html ) : html );
+  const html = await render( req.url, fallback, links );
+  return res.status( 200 ).send( br ? await brotli( html ) : html );
 } );
 
 async function getComments( postId ) {

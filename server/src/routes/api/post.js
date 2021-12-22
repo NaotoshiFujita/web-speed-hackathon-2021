@@ -2,6 +2,8 @@ import Router from 'express-promise-router';
 import httpErrors from 'http-errors';
 
 import { Comment, Post } from '../../models';
+import { remove } from '../../cache/cache';
+import { PAGES } from '../../constants/pages';
 
 const router = Router();
 
@@ -57,6 +59,8 @@ router.post('/posts', async (req, res) => {
       ],
     },
   );
+
+  await remove( PAGES.root );
 
   return res.status(200).type('application/json').send(post);
 });

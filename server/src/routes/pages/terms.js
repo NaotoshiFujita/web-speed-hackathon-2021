@@ -1,24 +1,30 @@
 import Router from 'express-promise-router';
 import { render } from '../../ssr/render';
-import { brotli, canUseBrotli } from '../../utils/brotli';
+import { brotli } from '../../utils/brotli';
 import { PAGES } from '../../constants/pages';
+import { create, getPath } from '../../cache/cache';
 
 
 const router = Router();
 
 router.get( PAGES.terms, async ( req, res ) => {
-  const html   = await render( req.url, res.locals.fallback );
-  const canUse = canUseBrotli( req );
+  const { fallback, br, signedIn } = res.locals;
 
-  if ( canUse ) {
-    res.set( 'Content-Encoding', 'br' )
+  if ( ! signedIn ) {
+    const path = await getPath( req.url, br );
+
+    if ( path ) {
+      return res.status( 200 ).sendFile( path );
+    }
   }
 
-  return res
-    .set( 'Content-Type', 'text/html; charset=UTF-8' )
-    .set( 'Cache-control', 'max-age=0, no-store' )
-    .status( 200 )
-    .send( canUse ? await brotli( html ) : html );
+  const html = await render( req.url, fallback );
+
+  if ( ! signedIn ) {
+    await create( req.url, html );
+  }
+
+  return res.status( 200 ).send( br ? await brotli( html ) : html );
 } );
 
 

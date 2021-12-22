@@ -12,7 +12,7 @@ const router = Router();
 
 router.get( PAGES.users, async ( req, res ) => {
   const { username } = req.params;
-  const { fallback } = res.locals;
+  const { fallback, br } = res.locals;
   const user = await User.findOne( { where: { username } } );
 
   let links = '';
@@ -27,18 +27,8 @@ router.get( PAGES.users, async ( req, res ) => {
     links += collectPreAssets( posts, USER_PROFILE_LAZYLOAD_MIN_INDEX );
   }
 
-  const html   = await render( req.url, fallback, links );
-  const canUse = canUseBrotli( req );
-
-  if ( canUse ) {
-    res.set( 'Content-Encoding', 'br' )
-  }
-
-  return res
-    .set( 'Content-Type', 'text/html; charset=UTF-8' )
-    .set( 'Cache-control', 'max-age=0, no-store' )
-    .status( 200 )
-    .send( canUse ? await brotli( html ) : html );
+  const html = await render( req.url, fallback, links );
+  return res.status( 200 ).send( br ? await brotli( html ) : html );
 } );
 
 async function getPosts( userId ) {
