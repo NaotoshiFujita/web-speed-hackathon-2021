@@ -12,6 +12,10 @@ export function collectPreAssets( items, endIndex ) {
           return `/images/${ image.id }${ item.images.length > 3 ? '.small' : '' }.${ IMAGE_FORMAT }`;
         } ) );
       }
+
+      if ( item.user ) {
+        images.push( `/images/profiles/${ item.user.profileImage.id }.small.${ IMAGE_FORMAT }` );
+      }
     } );
   }
 

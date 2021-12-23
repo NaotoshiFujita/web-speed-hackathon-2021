@@ -40,13 +40,18 @@ function render() {
   );
 }
 
-const link = document.createElement( 'link' );
-link.rel  = 'preload';
-link.as   = 'style';
-link.href = '/styles/webfont.css';
+// const link = document.createElement( 'link' );
+// link.rel  = 'preload';
+// link.as   = 'style';
+// link.href = '/styles/webfont.css';
+//
+// document.head.append( link );
 
-document.head.append( link );
+const link = document.getElementById( 'webfont' );
 
-requestIdleCallback( () => {
-  link.rel = 'stylesheet';
-} );
+if ( link ) {
+  requestIdleCallback( () => {
+    link.rel = 'stylesheet';
+  } );
+}
+

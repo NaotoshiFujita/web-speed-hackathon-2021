@@ -18,6 +18,7 @@ export function buildHtml( {
   ${ scripts }
   ${ links }
   <style>${ css.toString() }</style>
+  <link rel="prefetch" as="style" href="/styles/webfont.css" id="webfont">
 </head>
 <body>
   <div id="app">${ app }</div>
@@ -26,5 +27,5 @@ export function buildHtml( {
   <script id="swr-fallback" type="application/json">${ fallback }</script>
 </body>
 </html>
-`.replace( /(\s\s+|\n)/g, '' );
+`
 }

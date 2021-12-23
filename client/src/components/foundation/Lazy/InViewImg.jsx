@@ -1,29 +1,18 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { PLACEHOLDER } from './constants';
+import { InView } from 'react-intersection-observer';
 
 
-export const InViewImg = ( { src, alt = '', lazy, ssr = true, ...props } ) => {
-  const imageRef = useRef();
-
+export const InViewImg = ( { src, alt = '', lazy, ...props } ) => {
   if ( lazy ) {
-    useEffect( () => {
-      const { current: el } = imageRef;
-
-      if ( el && el.src !== src ) {
-        const observer = new IntersectionObserver( ( [ entry ] ) => {
-          if ( entry && entry.isIntersecting ) {
-            el.src = src;
-            observer.disconnect();
-          }
-        } );
-
-        observer.observe( el );
-        return () => observer.disconnect();
-      }
-    }, [] );
+    return (
+      <InView triggerOnce>
+        { ( { inView, ref } ) => (
+          <img ref={ ref } src={ inView ? src : PLACEHOLDER } alt={ alt } { ...props } />
+        ) }
+      </InView>
+    );
   }
 
-  return (
-    <img ref={ imageRef } src={ lazy ? PLACEHOLDER : src } alt={ alt } { ...props } />
-  );
+  return <img src={ src } alt={ alt } { ...props } />
 }

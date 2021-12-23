@@ -31,8 +31,8 @@ export async function getPath( url, br ) {
 }
 
 export async function remove( url ) {
-  await fs.unlink( toPath( url ) );
-  await fs.unlink( toPath( url, 'br' ) );
+  await fs.rm( toPath( url ), { force: true } );
+  await fs.rm( toPath( url, 'br' ), { force: true } );
 }
 
 export async function clear() {

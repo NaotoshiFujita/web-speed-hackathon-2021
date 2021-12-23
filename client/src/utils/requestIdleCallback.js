@@ -1,5 +1,8 @@
+import { isBrowser } from './isBrowser';
+
+
 export function requestIdleCallback( callback ) {
-  if ( typeof window !== 'undefined' && 'requestIdleCallback' in window ) {
+  if ( isBrowser() && 'requestIdleCallback' in window ) {
     window.requestIdleCallback( callback );
   } else {
     requestAnimationFrame( callback );

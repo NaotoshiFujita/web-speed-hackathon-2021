@@ -4,6 +4,8 @@ import React, { useCallback } from 'react';
 import { AspectRatioBox } from '../AspectRatioBox';
 import { FontAwesomeIcon } from '../FontAwesomeIcon';
 import { getMoviePath } from '../../../utils/get_path';
+import { isBrowser } from '../../../utils/isBrowser';
+import { requestIdleCallback } from '../../../utils/requestIdleCallback';
 
 /**
  * @typedef {object} Props
@@ -15,12 +17,21 @@ import { getMoviePath } from '../../../utils/get_path';
  * @type {React.VFC<Props>}
  */
 const PausableMovie = ({ id }) => {
-  const [ isPlaying, setIsPlaying ] = React.useState( true );
+  const [ isPlaying, setIsPlaying ] = React.useState( false );
 
   const videoRef = React.useRef( null );
   const videoCallbackRef = useCallback( el => {
     if ( el ) {
-      el.src = getMoviePath( id );
+      requestIdleCallback( () => {
+        if ( window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches ) {
+          setIsPlaying( false );
+          el.pause();
+        } else {
+          setIsPlaying( true );
+          el.play()
+        }
+      } );
+
       videoRef.current = el;
     }
   }, [] );
@@ -46,10 +57,7 @@ const PausableMovie = ({ id }) => {
           loop
           muted
           playsInline
-          autoPlay={ typeof window !== 'undefined' && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches
-            ? null
-            : true
-          }
+          src={ getMoviePath( id ) }
         />
         <div
           className={classNames(
