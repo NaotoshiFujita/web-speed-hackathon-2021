@@ -1,6 +1,6 @@
 import Router from 'express-promise-router';
 import { render } from '../../ssr/render';
-import { brotli, canUseBrotli } from '../../utils/brotli';
+import { compress, canUseBrotli } from '../../utils/compress';
 import { Post, User } from '../../models';
 import { PAGES } from '../../constants/pages';
 import { IMAGE_FORMAT, POSTS_LIMIT, USER_PROFILE_LAZYLOAD_MIN_INDEX } from '../../../../constants/config';
@@ -12,7 +12,7 @@ const router = Router();
 
 router.get( PAGES.users, async ( req, res ) => {
   const { username } = req.params;
-  const { fallback, br } = res.locals;
+  const { fallback, type } = res.locals;
   const user = await User.findOne( { where: { username } } );
 
   let links = '';
@@ -28,7 +28,7 @@ router.get( PAGES.users, async ( req, res ) => {
   }
 
   const html = await render( req.url, fallback, links );
-  return res.status( 200 ).send( br ? await brotli( html ) : html );
+  return res.status( 200 ).send( await compress( html, type ) );
 } );
 
 async function getPosts( userId ) {

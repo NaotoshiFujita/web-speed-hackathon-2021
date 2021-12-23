@@ -7,3 +7,4 @@ exports.PROFILE_IMAGE_SIZE              = 128;
 exports.PROFILE_IMAGE_SMALL_SIZE        = 80;
 exports.TIMELINE_LAZYLOAD_MIN_INDEX     = 3;
 exports.USER_PROFILE_LAZYLOAD_MIN_INDEX = 2;
+exports.ASSET_ENCODING                  = 'gzip';

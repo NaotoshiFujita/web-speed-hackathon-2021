@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import { CACHE_PATH } from '../paths';
-import { brotli } from '../utils/brotli';
+import { compress } from '../utils/compress';
 import { render } from '../ssr/render';
 import { collectPreAssets } from '../ssr/collectPreAssets';
 import { POSTS_LIMIT, TIMELINE_LAZYLOAD_MIN_INDEX } from '../../../constants/config';
@@ -12,15 +12,16 @@ import { createHash } from 'crypto';
 
 export async function create( url, content ) {
   await fs.writeFile( toPath( url ), content );
-  await fs.writeFile( toPath( url, 'br' ), await brotli( content ) );
+  await fs.writeFile( toPath( url, 'br' ), await compress( content, 'br' ) );
+  await fs.writeFile( toPath( url, 'gz' ), await compress( content, 'gz' ) );
 }
 
-export async function retrieve( url, br ) {
-  return await fs.readFile( toPath( url, br ? 'br' : 'html' ) );
+export async function retrieve( url, extension ) {
+  return await fs.readFile( toPath( url, extension ) );
 }
 
-export async function getPath( url, br ) {
-  const path = toPath( url, br ? 'br' : 'html' );
+export async function getPath( url, extension ) {
+  const path = toPath( url, extension === 'gzip' ? 'gz' : extension );
 
   try {
     await fs.access( path );
@@ -33,6 +34,7 @@ export async function getPath( url, br ) {
 export async function remove( url ) {
   await fs.rm( toPath( url ), { force: true } );
   await fs.rm( toPath( url, 'br' ), { force: true } );
+  await fs.rm( toPath( url, 'gz' ), { force: true } );
 }
 
 export async function clear() {
@@ -43,6 +45,8 @@ export async function initialize() {
   await clear();
   await fs.mkdir( CACHE_PATH );
   await generate();
+
+  console.log( 'initialize' );
 }
 
 function toHash( url ) {

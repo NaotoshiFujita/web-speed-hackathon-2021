@@ -5,26 +5,27 @@ import { postsRouter } from './pages/posts';
 import { usersRouter } from './pages/users';
 import { PAGES } from '../constants/pages';
 import { User } from '../models';
-import { canUseBrotli } from '../utils/brotli';
 
 
 const router = Router();
 
 router.get( Object.values( PAGES ), async ( req, res, next ) => {
-  const br = canUseBrotli( req );
+  // br, gzip and html are acceptable.
+  // Note that br seems to take more time for compression than gzip, which worsen SI.
+  const type = 'gzip';
 
   res.locals.fallback = {
     '/api/v1/me': await findUser( req ),
   };
 
-  res.locals.br = br;
+  res.locals.type     = type;
   res.locals.signedIn = !! req.session.userId;
 
-  if ( br ) {
-    res.set( 'Content-Encoding', 'br' );
+  if ( type && type !== 'html' ) {
+    res.set( 'Content-Encoding', type );
   }
 
-  res.set( 'Content-Type', 'text/html; charset=UTF-8' ).set( 'Cache-control', 'max-age=0, no-store' );
+  res.set( 'Content-Type', 'text/html; charset=UTF-8' ).set( 'Cache-control', 'max-age=1' );
   next();
 } );
 

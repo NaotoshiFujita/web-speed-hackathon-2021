@@ -17,7 +17,7 @@ import { requestIdleCallback } from '../../../utils/requestIdleCallback';
  * @type {React.VFC<Props>}
  */
 const PausableMovie = ({ id }) => {
-  const [ isPlaying, setIsPlaying ] = React.useState( false );
+  const [ isPlaying, setIsPlaying ] = React.useState( true );
 
   const videoRef = React.useRef( null );
   const videoCallbackRef = useCallback( el => {
@@ -58,6 +58,10 @@ const PausableMovie = ({ id }) => {
           muted
           playsInline
           src={ getMoviePath( id ) }
+          // autoPlay={ isBrowser() && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches
+          //   ? null
+          //   : true
+          // }
         />
         <div
           className={classNames(

@@ -17,7 +17,7 @@ if ( fallbackElm ) {
     console.error( e );
   }
 
-  loadableReady( render );
+  loadableReady( () => setTimeout( render ) );
 } else {
   render();
 }
@@ -40,18 +40,22 @@ function render() {
   );
 }
 
-// const link = document.createElement( 'link' );
-// link.rel  = 'preload';
-// link.as   = 'style';
-// link.href = '/styles/webfont.css';
+const link = document.createElement( 'link' );
+link.rel  = 'preload';
+link.as   = 'style';
+link.href = '/styles/webfont.css';
+
+document.head.append( link );
+
+requestIdleCallback( () => {
+  link.rel = 'stylesheet';
+} );
+
+// const link = document.getElementById( 'webfont' );
 //
-// document.head.append( link );
-
-const link = document.getElementById( 'webfont' );
-
-if ( link ) {
-  requestIdleCallback( () => {
-    link.rel = 'stylesheet';
-  } );
-}
+// if ( link ) {
+//   requestIdleCallback( () => {
+//     link.rel = 'stylesheet';
+//   } );
+// }
 

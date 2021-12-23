@@ -4,8 +4,10 @@ const HtmlWebpackPlugin    = require( 'html-webpack-plugin' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 const CssMinimizerPlugin   = require( 'css-minimizer-webpack-plugin' );
 const BrotliPlugin         = require( 'brotli-webpack-plugin' );
+const CompressionPlugin    = require( 'compression-webpack-plugin' );
 const LoadablePlugin       = require( '@loadable/webpack-plugin' );
 const webpack              = require( 'webpack' );
+const { ASSET_ENCODING }   = require( '../constants/config' );
 
 const SRC_PATH    = path.resolve( __dirname, './src' );
 const PUBLIC_PATH = path.resolve( __dirname, '../public' );
@@ -74,12 +76,13 @@ const config = {
       inject  : true,
       template: path.resolve( SRC_PATH, './index.html' ),
     } ),
-    new BrotliPlugin( {
+    ASSET_ENCODING === 'br' && new BrotliPlugin( {
       asset: '[file].br',
       test : /\.(js|css)$/,
     } ),
+    ASSET_ENCODING === 'gzip' && new CompressionPlugin(),
     new LoadablePlugin(),
-  ],
+  ].filter( Boolean ),
   resolve: {
     extensions: ['.js', '.jsx'],
     fallback: {

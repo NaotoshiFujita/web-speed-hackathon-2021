@@ -18,7 +18,6 @@ export function buildHtml( {
   ${ scripts }
   ${ links }
   <style>${ css.toString() }</style>
-  <link rel="prefetch" as="style" href="/styles/webfont.css" id="webfont">
 </head>
 <body>
   <div id="app">${ app }</div>

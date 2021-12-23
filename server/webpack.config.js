@@ -61,7 +61,7 @@ const config = {
   ],
   plugins: [
     new webpack.IgnorePlugin( {
-      resourceRegExp: /\.(html|br)$/,
+      resourceRegExp: /\.(html|br|gz)$/,
     } ),
   ],
   optimization: {
